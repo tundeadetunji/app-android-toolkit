@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeFragment"
+        android:icon="@drawable/ic_home"
+        android:title=" "
+
+        />
+
+    <item
+        android:id="@+id/localTaskFragment"
+        android:icon="@drawable/baseline_event_repeat_24"
+        android:title=" "
+
+        />
+
+
+    <item
+        android:id="@+id/searchFragment"
+        android:icon="@drawable/ic_search"
+        android:title=" "
+
+        />
+    <item
+        android:id="@+id/linkFragment"
+        android:icon="@drawable/ic_laptop"
+        android:title=" "
+
+        />
+    <item
+        android:id="@+id/transferFragment"
+        android:icon="@drawable/baseline_wifi_24"
+        android:title=" "
+
+        />
+</menu>

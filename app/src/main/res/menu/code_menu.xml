@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <group android:id="@+id/converterGroup">
+                <item
+                    android:id="@+id/converterMenuItem"
+                    android:icon="@drawable/baseline_published_with_changes_24"
+                    android:title="Convert Unit"
+                    app:showAsAction="never" />
+        </group>
+        <group android:id="@+id/githubGroup">
+                <item
+                    android:id="@+id/githubMenuItem"
+                    android:icon="@drawable/baseline_cloud_sync_24"
+                    android:title="GitHub"
+                    app:showAsAction="never" />
+        </group>
+
+
+</menu>

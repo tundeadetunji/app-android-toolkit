@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/urlMenuItem"
+        android:icon="@drawable/ic_open_in_new"
+        android:title="Home"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/cyclesMenuItem"
+        android:icon="@drawable/baseline_event_repeat_24"
+        android:title="Cycles"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/homeMenuItem"
+        android:icon="@drawable/outline_home_24"
+        android:title="Home"
+        app:showAsAction="always" />
+</menu>

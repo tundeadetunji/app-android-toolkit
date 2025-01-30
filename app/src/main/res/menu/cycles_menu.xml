@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/print"
+        android:icon="@drawable/baseline_print_24"
+        android:title="Home"
+        app:showAsAction="always" />
+    <group android:id="@+id/day">
+        <item
+            android:id="@+id/dayView"
+            android:icon="@drawable/ic_settings"
+            android:title="Day View"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/weekView"
+            android:icon="@drawable/ic_settings"
+            android:title="Week View"
+            app:showAsAction="never" />
+    </group>
+    <group android:id="@+id/family">
+        <item
+            android:id="@+id/moreActionsMenuItem"
+            android:icon="@drawable/ic_settings"
+            android:title="Family View"
+            app:showAsAction="never" />
+    </group>
+
+</menu>
