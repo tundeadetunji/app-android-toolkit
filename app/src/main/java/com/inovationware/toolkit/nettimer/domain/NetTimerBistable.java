@@ -32,12 +32,12 @@ public class NetTimerBistable {
 
     public void startRegular(){
         this.regularService = Executors.newSingleThreadScheduledExecutor();
-        regularService.scheduleAtFixedRate(regular,regular.getInterval(), regular.getInterval(), regular.getTimeUnit());
+        regularService.scheduleWithFixedDelay(regular,regular.getInterval(), regular.getInterval(), regular.getTimeUnit());
     }
 
     public void startReverse(){
         this.reverseService = Executors.newSingleThreadScheduledExecutor();
-        reverseService.scheduleAtFixedRate(reverse,reverse.getInterval(), reverse.getInterval() , reverse.getTimeUnit());
+        reverseService.scheduleWithFixedDelay(reverse,reverse.getInterval(), reverse.getInterval() , reverse.getTimeUnit());
     }
 
     public void cancel() {
