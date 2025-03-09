@@ -1,5 +1,6 @@
 package com.inovationware.toolkit.ui.fragment;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,10 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
+import com.inovationware.toolkit.databinding.FragmentHomeBinding;
+import com.inovationware.toolkit.databinding.FragmentLinkBinding;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.ui.activity.SettingsActivity;
 import com.inovationware.toolkit.ui.adapter.LinkRecyclerViewAdapter;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
@@ -40,45 +44,63 @@ import static com.inovationware.toolkit.global.library.utility.Support.responseS
 
 public class LinkFragment extends Fragment {
     private SharedPreferencesManager store;
-
     private View view;
-
-    private RecyclerView linkRecyclerView;
-    private ProgressBar remoteLinkProgressBar;
+    private FragmentLinkBinding binding;
     private Handler getAppsListRoutineHandler;
-
     private Feedback feedback;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_link, container, false);
+        binding = FragmentLinkBinding.inflate(inflater, container, false);
+        view = binding.getRoot();
 
-        linkRecyclerView = view.findViewById(R.id.linkRecyclerView);
-        remoteLinkProgressBar = view.findViewById(R.id.remoteLinkProgressBar);
-        remoteLinkProgressBar.setIndeterminate(true);
+        setupAccess();
+        setupReferences();
+        setupListeners();
+        setupUi();
+
+        return view;
+    }
+
+    private void setupAccess(){
         feedback = new Feedback(view.getContext());
         store = SharedPreferencesManager.getInstance();
+    }
 
+    private void setupReferences(){
         getAppsListRoutineHandler = new Handler();
-        if (!initialParamsAreSet(view.getContext(), store, GroupManager.getInstance())) {
-            return view;
-        }
+    }
+
+    private void setupListeners(){
+        binding.defaultTargetTextBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(view.getContext(), SettingsActivity.class));
+            }
+        });
+
+    }
+    private void setupUi(){
+        setupProgressBar();
+        hideGuide();
+        setupGuide();
+
+        if (!initialParamsAreSet(view.getContext(), store, GroupManager.getInstance())) return;
 
         if (apps == null) {
             if (store.getString(view.getContext(), SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, EMPTY_STRING).trim().isEmpty() && thereIsInternet(view.getContext())) {
-                remoteLinkProgressBar.setVisibility(View.VISIBLE);
-                linkRecyclerView.setVisibility(View.INVISIBLE);
+                showProgressBar();
+                hideRecyclerView();
+                hideGuide();
                 getAppsListRoutineHandler.post(getAppsListRoutine);
             }
         } else {
             apps = stringToList(store.getString(view.getContext(), SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, EMPTY_STRING).trim());
-            remoteLinkProgressBar.setVisibility(View.INVISIBLE);
-            linkRecyclerView.setAdapter(new LinkRecyclerViewAdapter(view.getContext(), apps));
-            linkRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            linkRecyclerView.setVisibility(View.VISIBLE);
+            hideProgressBar();
+            setupRecyclerView();
+            showGuide();
+            showRecyclerView();
         }
-
-        return view;
     }
 
     Runnable getAppsListRoutine = new Runnable() {
@@ -106,14 +128,11 @@ public class LinkFragment extends Fragment {
                         if (responseStringIsValid(response.body())) {
                             store.setString(view.getContext(), SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, response.body().replace(store.getSender(view.getContext()), "").trim());
                             try {
-                                /*if (!responseStringIsValid(response.body())){
-                                    return;
-                                }*/
                                 apps = stringToList(response.body());
-                                remoteLinkProgressBar.setVisibility(View.INVISIBLE);
-                                linkRecyclerView.setAdapter(new LinkRecyclerViewAdapter(view.getContext(), apps));
-                                linkRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                                linkRecyclerView.setVisibility(View.VISIBLE);
+                                hideProgressBar();
+                                setupRecyclerView();
+                                showGuide();
+                                showRecyclerView();
                             } catch (Exception ignored) {
                                 if (!store.shouldDisplayErrorMessage(view.getContext())) {
                                     return;
@@ -141,5 +160,51 @@ public class LinkFragment extends Fragment {
             });
         }
     };
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private void setupRecyclerView(){
+        binding.linkRecyclerView.setAdapter(new LinkRecyclerViewAdapter(view.getContext(), apps));
+        binding.linkRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+
+    }
+
+    private void showRecyclerView(){
+        binding.linkRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    private void hideRecyclerView(){
+        binding.linkRecyclerView.setVisibility(View.INVISIBLE);
+    }
+
+    private void setupGuide(){
+        binding.defaultTargetTextBox.setText(
+                "\uD83D\uDCCC  " + GroupManager.getInstance().getDefaultDevice(view.getContext())
+        );
+    }
+
+    private void showGuide(){
+        binding.defaultTargetTextBox.setVisibility(View.VISIBLE);
+    }
+
+    private void hideGuide(){
+        binding.defaultTargetTextBox.setVisibility(View.INVISIBLE);
+    }
+
+    private void setupProgressBar(){
+        binding.remoteLinkProgressBar.setIndeterminate(true);
+    }
+
+    private void showProgressBar(){
+        binding.remoteLinkProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideProgressBar(){
+        binding.remoteLinkProgressBar.setVisibility(View.INVISIBLE);
+    }
 
 }

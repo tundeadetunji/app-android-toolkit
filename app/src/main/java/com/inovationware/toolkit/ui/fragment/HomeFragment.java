@@ -113,10 +113,10 @@ public class HomeFragment extends Fragment {
         binding.schedulerButton.setOnClickListener(schedulerButtonClick);
         binding.meetingButton.setOnClickListener(meetingButtonClick);
         binding.guideImageView.setOnClickListener(guideImageViewClick);
+        binding.guideImageView.setOnLongClickListener(guideImageViewLongClick);
     }
 
     private void setupUi() {
-
         SignInManager signInManager = SignInManager.getInstance();
         binding.captionTextView.setText(
                 signInManager.thereIsPrincipal(view.getContext()) ?
@@ -178,6 +178,13 @@ public class HomeFragment extends Fragment {
         @Override
         public void onClick(View v) {
             startActivity(new Intent(context, CyclesActivity.class));
+        }
+    };
+
+    private final View.OnLongClickListener guideImageViewLongClick = new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View v) {
+            return true;
         }
     };
 

@@ -76,6 +76,7 @@ public abstract class InputDialog {
 
         layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(8,8,8,8);
         text.setHint(hint);
         layout.addView(text);
         builder.setView(layout);
