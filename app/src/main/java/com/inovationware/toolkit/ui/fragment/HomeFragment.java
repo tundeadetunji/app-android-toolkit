@@ -1,7 +1,9 @@
 package com.inovationware.toolkit.ui.fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,33 +14,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.FragmentHomeBinding;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
+import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
-import com.inovationware.toolkit.global.library.external.ProgramRunner;
 import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.tracking.service.LocationService;
+import com.inovationware.toolkit.tracking.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.memo.entity.Memo;
-import com.inovationware.toolkit.ui.activity.AboutActivity;
 import com.inovationware.toolkit.ui.activity.BoardActivity;
 import com.inovationware.toolkit.ui.activity.CodeActivity;
 import com.inovationware.toolkit.ui.activity.CyclesActivity;
 import com.inovationware.toolkit.ui.activity.CyclesDayViewActivity;
 import com.inovationware.toolkit.ui.activity.EspActivity;
-import com.inovationware.toolkit.ui.activity.MainActivity;
 import com.inovationware.toolkit.ui.activity.NetTimerActivity;
 import com.inovationware.toolkit.ui.activity.ReplyActivity;
 import com.inovationware.toolkit.ui.activity.ScheduleActivity;
@@ -69,18 +72,23 @@ public class HomeFragment extends Fragment {
     private SharedPreferencesManager store;
     private GroupManager machines;
     private View view;
+    private Factory factory;
 
     private Handler readNotesHandler;
 
     private FragmentHomeBinding binding;
+    private RecyclerView memoRecyclerView;
+    private FusedLocationProviderClient client;
 
     private Feedback feedback;
-
+    private LocationService loc;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 12;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
+        memoRecyclerView = view.findViewById(R.id.memoRecyclerView);
         setupVariables();
         setupListeners();
         setupUi();
@@ -93,7 +101,9 @@ public class HomeFragment extends Fragment {
         store = SharedPreferencesManager.getInstance();
         machines = GroupManager.getInstance();
         feedback = new Feedback(view.getContext());
+        factory = Factory.getInstance();
         readNotesHandler = new Handler();
+        loc = LocationServiceImpl.getInstance(view.getContext(), getActivity());
     }
 
     private void setupListeners() {
@@ -181,9 +191,37 @@ public class HomeFragment extends Fragment {
         }
     };
 
+    /**
+        LongClick should gps.startLocationUpdates()
+     */
     private final View.OnLongClickListener guideImageViewLongClick = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
+            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // Request permissions
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+            } else {
+                // Start location updates
+                loc.startLocationUpdates(true);
+            }
+            //LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            /*if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+                return true;
+            }
+
+            client.getLastLocation().addOnSuccessListener(
+                    getActivity(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            Toast.makeText(context, String.valueOf(location == null), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+            );*/
+
             return true;
         }
     };
@@ -356,12 +394,12 @@ public class HomeFragment extends Fragment {
     };
 
     public void setupNotes(View view) {
-        binding.memoRecyclerView.setVisibility(View.GONE);
+        memoRecyclerView.setVisibility(View.GONE);
 
         if (cachedMemos != null) {
-            binding.memoRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            binding.memoRecyclerView.setAdapter(new MemoRecyclerViewAdapter(view.getContext(), cachedMemos, getFragmentManager(), binding.memoRecyclerView, store, machines));
-            binding.memoRecyclerView.setVisibility(View.VISIBLE);
+            memoRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+            memoRecyclerView.setAdapter(new MemoRecyclerViewAdapter(view.getContext(), cachedMemos, getFragmentManager(), memoRecyclerView, store, machines));
+            memoRecyclerView.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -401,9 +439,9 @@ public class HomeFragment extends Fragment {
                     if (memos == null) return;
                     if (memos.isEmpty()) return;
 
-                    binding.memoRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                    binding.memoRecyclerView.setAdapter(new MemoRecyclerViewAdapter(view.getContext(), memos, getFragmentManager(), binding.memoRecyclerView, store, machines));
-                    binding.memoRecyclerView.setVisibility(View.VISIBLE);
+                    memoRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                    memoRecyclerView.setAdapter(new MemoRecyclerViewAdapter(view.getContext(), memos, getFragmentManager(), memoRecyclerView, store, machines));
+                    memoRecyclerView.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -416,6 +454,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        try{
+
+        }catch (Exception ignored){
+            loc.stopLocationUpdates();
+        }
         binding = null;
     }
 
@@ -460,5 +503,31 @@ public class HomeFragment extends Fragment {
 
     boolean isInternetResource(String url) {
         return url.toLowerCase().startsWith("http");
+    }
+    private void requestLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            // Permissions already granted, proceed to get location
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, start location updates
+                loc.startLocationUpdates();
+            } else {
+                // Permission denied, show a message to the user
+                Toast.makeText(getContext(), "Location permission is required to access GPS.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestLocationPermissions();
     }
 }

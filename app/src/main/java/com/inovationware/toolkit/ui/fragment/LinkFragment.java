@@ -7,17 +7,13 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.inovationware.generalmodule.Feedback;
-import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.databinding.FragmentHomeBinding;
 import com.inovationware.toolkit.databinding.FragmentLinkBinding;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
@@ -183,7 +179,9 @@ public class LinkFragment extends Fragment {
 
     private void setupGuide(){
         binding.defaultTargetTextBox.setText(
-                "\uD83D\uDCCC  " + GroupManager.getInstance().getDefaultDevice(view.getContext())
+                //"\uD83D\uDCCC  " + GroupManager.getInstance().getDefaultDevice(view.getContext())
+                "\uD83D\uDCBB  " + GroupManager.getInstance().getDefaultDevice(view.getContext())
+
         );
     }
 
