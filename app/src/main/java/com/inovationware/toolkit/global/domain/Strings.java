@@ -23,6 +23,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class Strings {
 
+    public static final String START_LOCATION_UPDATES_MESSAGE = "Have a nice day!";
+
     public static List<String> apps = new ArrayList<>();
     public static List<NetTimerObject> net_timer_objects = new ArrayList<>();
 

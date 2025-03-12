@@ -983,7 +983,10 @@ public class Vocabulary {
             "TextButton",
             "Scaffold",
             "Dialog",
-            "Iterator"
+            "Iterator",
+            "LocationManager",
+            "Manifest",
+            "LocationListener"
     );
 
 
@@ -1180,7 +1183,10 @@ public class Vocabulary {
             "ÌṣeṣeỌ̀rọ̀",
             "Ìwọ̀nÈlò",
             "Àjọsọ",
-            "Olùyẹ̀wò"
+            "Olùyẹ̀wò",
+            "AlámójútóÀyè",
+            "ÌwéÈtò",
+            "Olùfetísílẹ̀Àyè"
     );
     public List<String> CodeInBulgarian = List.of(
             "ширина",
@@ -1375,7 +1381,10 @@ public class Vocabulary {
             "Текстовбутон",
             "Скеле",
             "Диалог",
-            "Итератор"
+            "Итератор",
+            "Мениджър_на_местоположението",
+            "Манифест",
+            "Слушател_на_местоположение"
     );
 
     public List<String> CodeDescription = List.of(
@@ -1571,7 +1580,10 @@ public class Vocabulary {
             "TextButton is a simple button with a text OutlinedButton is a type of button that has a border around it, but is not filled with a color, and is typically used for secondary actions, e.g. TextButton(onPressed: () {}, child: Text('Text Button')); (Flutter)",
             "a top-level widget that provides a basic material design visual layout structure, e.g. Scaffold(appBar: AppBar(title: Text('App Bar')), body: Center(child: Text('Body'))); (Flutter)",
             "widget that displays a dialog box to the user, e.g. showDialog(context: context, builder: (context) => AlertDialog(title: Text('Dialog Title'), content: Text('Dialog Content'), actions: [TextButton(onPressed: () => Navigator.of(context).pop(), child: Text('Close'))])); (Flutter)",
-            "something that enables going over the items in a collection (e.g. list or set) one at a time sequentially without exposing its underlying structure, e.g. Iterator<String> iterator = collection.iterator(); (Java)"
+            "something that enables going over the items in a collection (e.g. list or set) one at a time sequentially without exposing its underlying structure, e.g. Iterator<String> iterator = collection.iterator(); (Java)",
+            "a system service in Android that helps apps access the device's location using GPS, Wi-Fi, or cellular networks, e.g. ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, location -> {int latitude = (int) location.getLatitude();}); //gets current latitude of the device (Android/Java)",
+            "a special file in an Android app that contains essential information about the app, like its name, version, and permissions it needs to run (Android)",
+            "an interface in Android that allows apps to receive updates about the device's location changes in real-time, e.g. LocationListener locationListener = location -> {int longitude = (int) location.getLongitude();}; //gets current longitude of the device (Android/Java)"
     );
 
 

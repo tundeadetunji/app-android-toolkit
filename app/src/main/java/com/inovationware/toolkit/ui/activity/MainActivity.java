@@ -1,9 +1,13 @@
 package com.inovationware.toolkit.ui.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.MenuCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -30,6 +35,8 @@ import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
+import com.inovationware.toolkit.tracking.service.LocationService;
+import com.inovationware.toolkit.tracking.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.notification.service.PushNotificationService;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
@@ -55,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private ApkClient apkClient;
     private Context context;
 
+    private LocationService loc;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void initializeReferences(){
+    private void initializeReferences() {
         context = MainActivity.this;
         authority = MainAuthority.getInstance();
         ttsServiceProvider = TTSService.getInstance(context);
@@ -81,16 +90,17 @@ public class MainActivity extends AppCompatActivity {
         security = EncryptionManager.getInstance();
         user = SignInManager.getInstance();
         apkClient = ApkClient.getInstance();
+        loc = LocationServiceImpl.getInstance(context, this);
     }
 
-    private void initializeVariables(){
+    private void initializeVariables() {
         store.setString(MainActivity.this, SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, "");
         apps = null;
         Strings.cachedMemos = null;
         Strings.getListOfInstalledApps(apkClient, getPackageManager(), true);
     }
 
-    private void setupUi(){
+    private void setupUi() {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fragment = Navigation.findNavController(this, R.id.fragment);
@@ -103,23 +113,41 @@ public class MainActivity extends AppCompatActivity {
 
         customizeBottomNavigationView(bottomNavigationView);
     }
-    private void setupListeners(){
+
+    private void setupListeners() {
         binding.QuickSendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 authority.sendToPCFromClipboard(context, factory, store, machines, security);
             }
         });
+
+        /**
+         * if LocationService#isGettingUpdates, then calls #stopLocationUpdates, if not
+         * calls #getCurrentLocation
+         */
+        binding.QuickSendButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (loc.isGettingUpdates()) {
+                    loc.stopLocationUpdates();
+                } else {
+                    loc.sendCurrentLocation();
+                }
+                return true;
+            }
+        });
     }
 
-    private void startServices(){
+    private void startServices() {
         //ToDo fix: requires context
         if (!NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING) {
             startService(new Intent(getApplicationContext(), PushNotificationService.class));
             NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING = true;
         }
     }
-    private void otherStartupProcedures(){
+
+    private void otherStartupProcedures() {
         authority.onFinishedLoading(context);
     }
 
@@ -127,6 +155,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         ttsServiceProvider.shutdown();
         super.onDestroy();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, location -> {int lat = (int) location.getLatitude();}); //gets current latitude of the device
+
+
+        LocationListener locationListener = location -> {int longitude = (int) location.getLongitude();};
+
     }
 
 
@@ -141,6 +185,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.settingsMainMenuItem) {
             authority.openSettingsActivity(context, SignInManager.getInstance());
+            return true;
+        } else if (item.getItemId() == R.id.startLocationUpdatesMenuItem) {
+            //silently start location updates
+            loc.startLocationUpdates(false);
+            //Todo open dialer
+            //Todo create setting that saves favorite contact, this number is what should show on dialer automatically (probably an option in setting to automatically call the contact, not just show it on dialer)
+            startActivity(new Intent(Intent.ACTION_DIAL));
             return true;
         } else if (item.getItemId() == R.id.pcMainMenuItem) {
             startActivity(new Intent(MainActivity.this, ReplyActivity.class));
