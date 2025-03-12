@@ -23,6 +23,7 @@ import lombok.Getter;
 
 public class LocationServiceImpl implements LocationService {
     private LocationStrategy strategy;
+
     private LocationListener callback;
     private Context context;
     private Activity activity;
