@@ -36,6 +36,7 @@ import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.repository.Repo;
 import com.inovationware.toolkit.tracking.service.LocationService;
 import com.inovationware.toolkit.memo.entity.Memo;
+import com.inovationware.toolkit.tracking.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.ui.activity.BoardActivity;
 import com.inovationware.toolkit.ui.activity.CodeActivity;
 import com.inovationware.toolkit.ui.activity.CyclesActivity;
@@ -61,6 +62,7 @@ import static com.inovationware.toolkit.global.library.utility.Support.initialPa
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -77,11 +79,11 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private RecyclerView memoRecyclerView;
-    private FusedLocationProviderClient client;
 
     private Feedback feedback;
-    private LocationService loc;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 12;
+    private LocationService service;
+    private static final int PERMISSION_LOCATION_REQUEST = 997;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -102,6 +104,7 @@ public class HomeFragment extends Fragment {
         feedback = new Feedback(view.getContext());
         factory = Factory.getInstance();
         readNotesHandler = new Handler();
+        service = LocationServiceImpl.getInstance(context);
     }
 
     private void setupListeners() {
@@ -190,11 +193,13 @@ public class HomeFragment extends Fragment {
     };
 
     /**
-        LongClick should gps.startLocationUpdates()
+     * calls #updatePeriodically
      */
     private final View.OnLongClickListener guideImageViewLongClick = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
+            service.updateLocationPeriodically();
+            Toast.makeText(context, Strings.FRIENDLY_MESSAGES.get(new Random().nextInt(Strings.FRIENDLY_MESSAGES.size() - 0) + 0), Toast.LENGTH_SHORT).show();
             return true;
         }
     };
@@ -472,23 +477,27 @@ public class HomeFragment extends Fragment {
     boolean isInternetResource(String url) {
         return url.toLowerCase().startsWith("http");
     }
+
     private void requestLocationPermissions() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_LOCATION_REQUEST);
+
+            //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {requestPermissions(...);}
         } else {
             // Permissions already granted, proceed to get location
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, start location updates
-            } else {
-                // Permission denied, show a message to the user
-                Toast.makeText(getContext(), "Location permission is required to access GPS.", Toast.LENGTH_SHORT).show();
-            }
+        switch (requestCode) {
+            case PERMISSION_LOCATION_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                } else {
+                    //Toast.makeText(context, "Permission is required for Location to work!", Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 

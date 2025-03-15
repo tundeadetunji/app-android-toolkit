@@ -5,10 +5,7 @@ import android.location.Location;
 import com.inovationware.toolkit.tracking.model.LocationData;
 
 public interface LocationService {
-    void sendCurrentLocation();
-    void startLocationUpdates(boolean showFriendlyMessage);
-    void startLocationUpdates();
+    void updateLocation();
+    void updateLocationPeriodically();
     void stopLocationUpdates();
-    LocationData from(Location location);
-    boolean isGettingUpdates();
 }

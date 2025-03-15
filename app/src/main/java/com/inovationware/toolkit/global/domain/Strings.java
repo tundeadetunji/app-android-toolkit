@@ -291,4 +291,18 @@ public class Strings {
         installedApps = client.packageNameListing(packageManager, includeSystemApps);
     }
 
+    public static final List<String> FRIENDLY_MESSAGES = List.of(
+            "Enjoy your day!",
+            "Have fun today!",
+            "Smile today!",
+            "Make today great!",
+            "Have a super day!",
+            "Shine bright today!",
+            "Happy day to you!",
+            "Have a good one!",
+            "Be awesome today!",
+            "Have a nice day!"
+    );
+    public static final String FRIENDLY_MESSAGE = "Go have fun!";
+
 }

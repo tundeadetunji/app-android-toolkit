@@ -46,23 +46,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HelpActivity extends AppCompatActivity {
-
-    private static final int INTERVAL_MILLIS = 30000;
-    private static final int MAX_ADDRESSES_TO_RETURN = 15;
-    private static final int FASTEST_INTERVAL_MILLIS = 5000;
-    private static final int PRIORITY = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
-    private static final int PERMISSION_LOCATION_REQUEST = 997;
-    private static final int PERMISSION_LOCATION_REQUESTS = 996;
     private ActivityHelpBinding binding;
     private Context context;
-    private FusedLocationProviderClient service;
-    private LocationRequest requests;
-    private CurrentLocationRequest request;
-    private CancellationToken requestCancellationToken;
-    private SharedPreferencesManager store;
-    private OnSuccessListener<Location> requestCallback;
-    private LocationCallback requestsCallback;
-    private Geocoder geocoder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,177 +56,12 @@ public class HelpActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setReferences();
-        setConfigurations();
-        setCallbacks();
-        setUi();
 
     }
-    private void setUi() {
-        updateLocationPeriodically();
-    }
-    private void setCallbacks() {
-        requestCallback = new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                updateUi(location);
-            }
-        };
 
-        requestsCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(@NonNull LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-
-                Location lastLocation = locationResult.getLastLocation();
-                updateUi(lastLocation);
-            }
-        };
-
-
-    }
-    private void setConfigurations() {
-        requests.setInterval(INTERVAL_MILLIS);
-        requests.setFastestInterval(FASTEST_INTERVAL_MILLIS);
-        requests.setPriority(PRIORITY);
-
-        request = new CurrentLocationRequest.Builder()
-                .setPriority(PRIORITY)
-                .setDurationMillis(INTERVAL_MILLIS)
-                .build();
-
-        requestCancellationToken = new CancellationToken() {
-            @NonNull
-            @Override
-            public CancellationToken onCanceledRequested(@NonNull OnTokenCanceledListener onTokenCanceledListener) {
-                return null;
-            }
-
-            @Override
-            public boolean isCancellationRequested() {
-                return false;
-            }
-        };
-
-    }
     private void setReferences() {
         context = HelpActivity.this;
-        store = SharedPreferencesManager.getInstance();
-
-        requests = new LocationRequest();
-        service = LocationServices.getFusedLocationProviderClient(context);
-        geocoder = new Geocoder(context);
-    }
-    private void updateUi(Location location) {
-        //Todo what happens if user didn't turn on Location?
-
-        LocationData data = LocationData.create(context, location, store.getSender(context), createLocationToAddressConverter(location, MAX_ADDRESSES_TO_RETURN));
-        binding.textDetail.setText(data.toString());
-
-        GroupManager machines = GroupManager.getInstance();
-        EncryptionManager security = EncryptionManager.getInstance();
-        Factory factory = Factory.getInstance();
-        factory.transfer.service.sendText(
-                context,
-                store,
-                machines,
-                SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
-                        store.getUsername(context),
-                        store.getID(context),
-                        Transfer.Intent.writeText,
-                        store.getSender(context),
-                        determineTarget(context, store, machines),
-                        Strings.POST_PURPOSE_REGULAR,
-                        Support.determineMeta(context, store),
-                        security.encrypt(context, store, data.toString()),
-                        Strings.EMPTY_STRING
-                ),
-                DEFAULT_ERROR_MESSAGE_SUFFIX,
-                DEFAULT_FAILURE_MESSAGE_SUFFIX);
-    }
-
-    private void updateLocation() {
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-
-            service.getCurrentLocation(request, requestCancellationToken).addOnSuccessListener(requestCallback);
-
-            //service.getLastLocation().addOnSuccessListener(this, callback);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSION_LOCATION_REQUEST
-                );
-            }
-        }
 
     }
 
-    private void updateLocationPeriodically(){
-        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            service.requestLocationUpdates(requests, requestsCallback, null);
-        } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        PERMISSION_LOCATION_REQUESTS
-                );
-            }
-        }
-
-
-    }
-
-    private void stopUpdatingLocationPeriodically(){
-        service.removeLocationUpdates(requestsCallback);
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode) {
-            case PERMISSION_LOCATION_REQUEST:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    updateLocation();
-                } else {
-                    //Toast.makeText(context, "Permission is required for Location to work!", Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case PERMISSION_LOCATION_REQUESTS:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    updateLocationPeriodically();
-                } else {
-                    //Toast.makeText(context, "Permission is required for Location to work!", Toast.LENGTH_SHORT).show();
-                }
-                break;
-        }
-    }
-
-    private LocationData.AddressFinderClient createLocationToAddressConverter(Location location, int maxAddressesToReturn){
-        List<Address> addressesFromProvider = new ArrayList<>();
-
-        try{
-            addressesFromProvider = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), maxAddressesToReturn);
-        } catch (Exception ignored) {
-        }
-
-        List<Address> addresses = addressesFromProvider;
-        LocationData.AddressFinderClient service = new LocationData.AddressFinderClient() {
-
-            @Override
-            public String covertLocationToAddress() {
-                return addresses == null ? " somewhere I can't figure out" : addresses.get(0).getAddressLine(0);
-            }
-
-            @Override
-            public List<String> getNearbyPlaces() {
-                List<String> places = new ArrayList<>();
-                for(int i = 1; i < addresses.size(); i++){
-                    places.add(addresses.get(i).getAddressLine(0));
-                }
-                return places;
-            }
-        };
-
-        return service;
-    }
 }

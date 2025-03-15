@@ -1,9 +1,13 @@
 package com.inovationware.toolkit.tracking.strategy;
 
-import android.location.Location;
-
 public interface LocationStrategy {
-    Location getCurrentLocation();
-    void startLocationUpdates();
+    void updateLocation();
+    void updateLocationPeriodically();
     void stopLocationUpdates();
+
+    /**
+     * Sets priority based on if device is low in power or not
+     * @return
+     */
+    int determineBestPriority();
 }

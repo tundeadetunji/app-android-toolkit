@@ -39,6 +39,7 @@ import com.inovationware.toolkit.tracking.service.LocationService;
 import com.inovationware.toolkit.notification.service.PushNotificationService;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.tracking.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.tts.service.TTSService;
 import com.inovationware.toolkit.ui.authority.MainAuthority;
 
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     private SignInManager user;
     private ApkClient apkClient;
     private Context context;
+    private LocationService service;
+
 
     private LocationService loc;
 
@@ -89,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
         security = EncryptionManager.getInstance();
         user = SignInManager.getInstance();
         apkClient = ApkClient.getInstance();
+        service = LocationServiceImpl.getInstance(context);
     }
 
     private void initializeVariables() {
@@ -121,17 +125,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         /**
-         * if LocationService#isGettingUpdates, then calls #stopLocationUpdates, if not
-         * calls #getCurrentLocation
+         LongClick should stop sending Location Updates
          */
         binding.QuickSendButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (loc.isGettingUpdates()) {
-                    loc.stopLocationUpdates();
-                } else {
-                    loc.sendCurrentLocation();
-                }
+                service.stopLocationUpdates();
                 return true;
             }
         });
