@@ -1,29 +1,33 @@
 # Remote Linq
-<br>
-<p>
-From your android phone/tablet, on the tap of a button, you can
-</p>
-<li>start playing music on</li>
-<li>shut down</li>
-<li>restart</li>
-<li>hibernate</li>
-<li>lock</li>
-<li>run any program on</li>
-<li>open any file on</li>
-<br>
-<p>
-your Windows computer from anywhere, as long as there's internet, completely remotely and unobtrusively, the mouse pointer doesn't even move. I found equivalents to this app, but what led me to try this out was to have the feature which I found lacking in the equivalents - I don't want the user in front of the PC to feel like I'm controlling the machine.😎
-</p>
-<p>
-The PC listens for commands which are sent to a web server (running ASP.NET) via HTTP request from the android device. The request is stored in the database temporarily, and the entry is deleted when the PC has begun the action. Each request is targeted to a particular PC via its
-name, and the user on the android has to log in with an email address to send any request, if the PC is not paired with this email, it won't respond.
-</p>
-<p>
-  You can play media, send commands, turn on caps lock/numlock etc, interact with other programs, create/update files etc. Mostly Command Pattern + Chain Of Responsibility at work.
-</p>
+
+![SOS](https://github.com/user-attachments/assets/cb16c31a-d4d3-4e05-9a11-5992069f36fd)
+
+When you long-tap on the image, it DISCREETLY starts sending your current location updates to a server at home
+
+![GITHUB](https://github.com/user-attachments/assets/f22f2935-49ca-497d-ba37-948a95bb1603)
+
+You can create/read GitHub repos, and more
+
+![ESP](https://github.com/user-attachments/assets/8b792387-cecc-4339-aa2a-d73aee0ddb89)
+
+For ESP Home services, if installed, the app can create config file and place it wherever you want on your server system
+
+![SCHEDULER](https://github.com/user-attachments/assets/a490184b-22d5-4626-a9b0-51bd8249386f)
+
+You can initiate a task schedule on your ocmputer. Say, run a script file on Mondays at 9.00 AM.
+
+![COMMAND](https://github.com/user-attachments/assets/9fed0d70-83f4-4fdf-8ab6-562c53992afe)
+
+You can send commands to your PC
+
+
 
 <br>
-<h3>Runs on</h3>
-Android + Windows PC
 <br>
-<br>
+
+## How it works:
+Desktop Client (.NET) constantly checks Web Server (.NET) for commands meant for this computer (if the name maches). It can also send command to another PC, group of PCs or Android Client.
+
+Web Server (.NET) listens for commands. If a command comes in, it stores it (SQL). Command can come from Desktop Client or Android Client.
+
+Android Client sends command meant for a particular PC or group of PCs. It can also check Web Server for any command meant for it.
