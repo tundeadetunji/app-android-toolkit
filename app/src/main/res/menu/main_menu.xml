@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <group android:id="@+id/alwaysVisible">
-    <item
-        android:id="@+id/startLocationUpdatesMenuItem"
-        android:icon="@drawable/outline_call_24"
-        android:title="Phone"
-        android:visible="true"
-        app:showAsAction="always" />
-    </group>
 
     <group android:id="@+id/regular">
         <item
@@ -65,12 +57,22 @@
             android:visible="false"
             app:showAsAction="never" />
     </group>
-    <group android:id="@+id/stub">
+
+    <group android:id="@+id/settings">
 
         <item
             android:id="@+id/settingsMainMenuItem"
             android:icon="@drawable/ic_settings"
             android:title="Settings"
+            app:showAsAction="never" />
+
+    </group>
+    <group android:id="@+id/stub">
+
+        <item
+            android:id="@+id/helpMainMenuItem"
+            android:icon="@drawable/baseline_help_outline_24"
+            android:title="Help"
             app:showAsAction="never" />
 
         <item

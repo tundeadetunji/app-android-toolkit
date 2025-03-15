@@ -36,7 +36,6 @@ import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.tracking.service.LocationService;
-import com.inovationware.toolkit.tracking.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.notification.service.PushNotificationService;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
@@ -90,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         security = EncryptionManager.getInstance();
         user = SignInManager.getInstance();
         apkClient = ApkClient.getInstance();
-        loc = LocationServiceImpl.getInstance(context, this);
     }
 
     private void initializeVariables() {
@@ -155,22 +153,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         ttsServiceProvider.shutdown();
         super.onDestroy();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, location -> {int lat = (int) location.getLatitude();}); //gets current latitude of the device
-
-
-        LocationListener locationListener = location -> {int longitude = (int) location.getLongitude();};
-
     }
 
 
@@ -186,15 +168,11 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settingsMainMenuItem) {
             authority.openSettingsActivity(context, SignInManager.getInstance());
             return true;
-        } else if (item.getItemId() == R.id.startLocationUpdatesMenuItem) {
-            //silently start location updates
-            loc.startLocationUpdates(false);
-            //Todo open dialer
-            //Todo create setting that saves favorite contact, this number is what should show on dialer automatically (probably an option in setting to automatically call the contact, not just show it on dialer)
-            startActivity(new Intent(Intent.ACTION_DIAL));
-            return true;
         } else if (item.getItemId() == R.id.pcMainMenuItem) {
             startActivity(new Intent(MainActivity.this, ReplyActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.helpMainMenuItem) {
+            startActivity(new Intent(MainActivity.this, HelpActivity.class));
             return true;
         } else if (item.getItemId() == R.id.tasksMainMenuItem) {
             openTasksActivity(SignInManager.getInstance());

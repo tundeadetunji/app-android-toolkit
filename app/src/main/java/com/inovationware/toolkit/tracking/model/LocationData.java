@@ -1,5 +1,9 @@
 package com.inovationware.toolkit.tracking.model;
 
+import android.content.Context;
+import android.location.Location;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,43 +11,40 @@ public class LocationData {
     private double longitude;
     private double latitude;
     private double altitude;
+    private boolean hasAltitude;
     private float speed; // in meters/second
+    private boolean hasSpeed;
     private float bearing; // in degrees
+    private boolean hasBearing;
     private float accuracy; // in meters
+    private boolean hasAccuracy;
     private long timestamp; // in milliseconds since epoch
     private String provider; // e.g., "GPS", "Network"
     private String physicalAddress; // Address from geocoding
-    private List<String> nearbyPlaces; // List of nearby places
-    private String subject = "Subject";
+    //Todo remove this field
+    private List<String> nearbyPlaces = new ArrayList<>(); // List of nearby places
+    private String subject;
 
-    public LocationData(double longitude, double latitude, double altitude, float speed, float bearing,
-                        float accuracy, long timestamp, String provider, String physicalAddress,
-                        List<String> nearbyPlaces) {
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.altitude = altitude;
-        this.speed = speed;
-        this.bearing = bearing;
-        this.accuracy = accuracy;
-        this.timestamp = timestamp;
-        this.provider = provider;
-        this.physicalAddress = physicalAddress;
-        this.nearbyPlaces = nearbyPlaces;
-    }
-    public LocationData(String subject, double longitude, double latitude, double altitude, float speed, float bearing,
-                        float accuracy, long timestamp, String provider, String physicalAddress,
-                        List<String> nearbyPlaces) {
+    private LocationData(Context context, Location location, String subject, AddressFinderClient addressService) {
         this.subject = subject;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.altitude = altitude;
-        this.speed = speed;
-        this.bearing = bearing;
-        this.accuracy = accuracy;
-        this.timestamp = timestamp;
-        this.provider = provider;
-        this.physicalAddress = physicalAddress;
-        this.nearbyPlaces = nearbyPlaces;
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
+        this.hasAccuracy = location.hasAccuracy();
+        this.accuracy = location.getAccuracy();
+        this.hasAltitude = location.hasAltitude();
+        this.altitude = location.hasAltitude() ? location.getAltitude() : 0;
+        this.hasSpeed = location.hasSpeed();
+        this.speed = location.getSpeed();
+        this.hasBearing = location.hasBearing();
+        this.bearing = location.getBearing();
+        this.timestamp = location.getTime();
+        this.provider = location.getProvider();
+        this.physicalAddress = addressService.covertLocationToAddress();
+        this.nearbyPlaces = addressService.getNearbyPlaces();
+    }
+
+    public static LocationData create(Context context, Location location, String subject, AddressFinderClient addressService){
+        return new LocationData(context, location, subject, addressService);
     }
 
 
@@ -76,9 +77,19 @@ public class LocationData {
 
         double speedInKnots = speed * 1.94384; // Convert m/s to knots
 
-        return String.format("[%s], as at [%s], is at [%s] which is on Long [%.6f], Lat [%.6f], Altitude [%.2f] meters, " +
-                        "going at [%.2f] m/s (%.2f km/hr, %.2f knots), accurate to approximately [%.2f] meters, heading [%.2f degrees]. " +
+        String altitudeInfo = hasAltitude ? String.format("Altitude [%.2f] meters,", altitude) : "Altitude information not available,";
+        String speedInfo = hasSpeed ? String.format("going at [%.2f] m/s (%.2f km/hr, %.2f knots),", speed, speed * 3.6, speedInKnots) : "Speed information not available,";
+        String bearingInfo = hasBearing ? String.format("heading [%.2f degrees]", bearing) : "Bearing information not available";
+        String accuracyInfo = hasAccuracy ? String.format("accurate to approximately [%.2f] meters,", accuracy) : "Accuracy information not available,";
+
+        return String.format("[%s], as at [%s], is at [%s] which is on Long [%.6f], Lat [%.6f], %s, " +
+                        "%s %s %s. " +
                         "Nearby places include: [%s]. Provider: [%s].",
-                subject, timestamp, physicalAddress, longitude, latitude, altitude, speed, speed * 3.6, speedInKnots, accuracy, bearing, nearbyPlacesString, provider);
+                subject, timestamp, physicalAddress, longitude, latitude, altitudeInfo, speedInfo, accuracyInfo, bearingInfo, nearbyPlacesString, provider);
+    }
+
+    public interface AddressFinderClient {
+        String covertLocationToAddress();
+        List<String> getNearbyPlaces();
     }
 }

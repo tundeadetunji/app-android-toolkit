@@ -22,9 +22,7 @@
         <package android:name="android.permission.QUERY_ALL_PACKAGES" />
     </queries>
 
-    <!-- remove android:usesCleartextTraffic="true" -->
     <application
-
         android:name=".global.library.app.Shared"
         android:allowBackup="true"
         android:clearTaskOnLaunch="true"
@@ -35,6 +33,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/CustomTheme">
+        <activity
+            android:name=".ui.activity.HelpActivity"
+            android:exported="false"
+            android:label="Help"
+            android:parentActivityName=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.ManageBoardActivity"
             android:exported="false"

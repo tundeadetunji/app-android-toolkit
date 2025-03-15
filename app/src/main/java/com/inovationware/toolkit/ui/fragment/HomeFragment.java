@@ -35,7 +35,6 @@ import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.repository.Repo;
 import com.inovationware.toolkit.tracking.service.LocationService;
-import com.inovationware.toolkit.tracking.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.ui.activity.BoardActivity;
 import com.inovationware.toolkit.ui.activity.CodeActivity;
@@ -103,7 +102,6 @@ public class HomeFragment extends Fragment {
         feedback = new Feedback(view.getContext());
         factory = Factory.getInstance();
         readNotesHandler = new Handler();
-        loc = LocationServiceImpl.getInstance(view.getContext(), getActivity());
     }
 
     private void setupListeners() {
@@ -197,31 +195,6 @@ public class HomeFragment extends Fragment {
     private final View.OnLongClickListener guideImageViewLongClick = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
-            if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // Request permissions
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-            } else {
-                // Start location updates
-                loc.startLocationUpdates(true);
-            }
-            //LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-            /*if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
-                return true;
-            }
-
-            client.getLastLocation().addOnSuccessListener(
-                    getActivity(), new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            Toast.makeText(context, String.valueOf(location == null), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            );*/
-
             return true;
         }
     };
@@ -454,11 +427,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        try{
-
-        }catch (Exception ignored){
-            loc.stopLocationUpdates();
-        }
         binding = null;
     }
 
@@ -517,7 +485,6 @@ public class HomeFragment extends Fragment {
         if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted, start location updates
-                loc.startLocationUpdates();
             } else {
                 // Permission denied, show a message to the user
                 Toast.makeText(getContext(), "Location permission is required to access GPS.", Toast.LENGTH_SHORT).show();
