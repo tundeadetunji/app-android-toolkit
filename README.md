@@ -13,9 +13,7 @@ The setup can do these, and more:
 <br>
 <br>
 
-![alt text](https://github.com/[tundeadetunji]/[app-android-toolkit]/blob/[master]/app/src/main/res/raw/sos.jpg?raw=true)
-![alt text](https://github.com/tundeadetunji/app-android-toolkit/blob/master/app/src/main/res/raw/sos.jpg)
-![alt text](https://github.com/tundeadetunji/app-android-toolkit/blob/master/app/src/main/res/raw/sos.jpg?raw=true)
+![alt text3](https://github.com/tundeadetunji/app-android-toolkit/blob/master/app/src/main/res/raw/sos.jpg?raw=true)
 
 When you long-tap the image, it DISCREETLY starts sending your current location updates to a server at home
 
