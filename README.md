@@ -1,5 +1,8 @@
 # Remote Linq
+Remote interactivity with your PCs
 
+<br>
+<br>
 
 ## How it works:
 Desktop Client (.NET) constantly checks Web Server (.NET) for commands meant for this computer (if the name maches). It can also send command to another PC, group of PCs or Android Client.
@@ -13,25 +16,25 @@ The setup can do these, and more:
 <br>
 <br>
 
-![alt text3](https://github.com/tundeadetunji/app-android-toolkit/blob/master/app/src/main/res/raw/sos.jpg?raw=true)
+![](app/src/main/res/drawable/sos.jpg)
 
-When you long-tap the image, it DISCREETLY starts sending your current location updates to a server at home
+When you long-tap the image on the home screen, it DISCREETLY starts sending your current location updates to your server (or all target PCs) at home.
 
-![Image](https://github.com/user-attachments/assets/5f07e473-a2b0-400c-b9cd-923f4acf8400)
+![](app/src/main/res/drawable/github.jpg)
 
-You can create/read GitHub repos, and more
+With your GitHub account, you can create/read repos, and more.
 
-![Image](https://github.com/user-attachments/assets/3764138c-3a74-44ce-adbc-b8fe9340a443)
+![](app/src/main/res/drawable/esp.jpg)
 
-For ESP Home services, if installed, the app can create config file and place it wherever you want on your server system
+For ESP Home services, if installed, the app can create config file and place it wherever you want on your server system.
 
-![Image](https://github.com/user-attachments/assets/31562376-593a-431c-a486-83245beb82c4)
+![](app/src/main/res/drawable/scheduler.jpg)
 
 You can initiate a task schedule on your ocmputer. Say, run a script file on Mondays at 9.00 AM.
 
-![Image](https://github.com/user-attachments/assets/a09d6664-c236-4693-bbc5-eb820e0e3e52)
+![](app/src/main/res/drawable/command.jpg)
 
-You can send commands to your PC
+You can send commands to your PC.
 
 
 
