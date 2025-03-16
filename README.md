@@ -1,29 +1,37 @@
 # Remote Linq
-<br>
-<p>
-From your android phone/tablet, on the tap of a button, you can
-</p>
-<li>start playing music on</li>
-<li>shut down</li>
-<li>restart</li>
-<li>hibernate</li>
-<li>lock</li>
-<li>run any program on</li>
-<li>open any file on</li>
-<br>
-<p>
-your Windows computer from anywhere, as long as there's internet, completely remotely and unobtrusively, the mouse pointer doesn't even move. I found equivalents to this app, but what led me to try this out was to have the feature which I found lacking in the equivalents - I don't want the user in front of the PC to feel like I'm controlling the machine.😎
-</p>
-<p>
-The PC listens for commands which are sent to a web server (running ASP.NET) via HTTP request from the android device. The request is stored in the database temporarily, and the entry is deleted when the PC has begun the action. Each request is targeted to a particular PC via its
-name, and the user on the android has to log in with an email address to send any request, if the PC is not paired with this email, it won't respond.
-</p>
-<p>
-  You can play media, send commands, turn on caps lock/numlock etc, interact with other programs, create/update files etc. Mostly Command Pattern + Chain Of Responsibility at work.
-</p>
+
+
+## How it works:
+Desktop Client (.NET) constantly checks Web Server (.NET) for commands meant for this computer (if the name maches). It can also send command to another PC, group of PCs or Android Client.
+
+Web Server (.NET) listens for commands. If a command comes in, it stores it (SQL). Command can come from Desktop Client or Android Client.
+
+Android Client sends command meant for a particular PC or group of PCs. It can also check Web Server for any command meant for it.
+
+The setup can do these, and more:
 
 <br>
-<h3>Runs on</h3>
-Android + Windows PC
 <br>
-<br>
+
+![Image](https://icons.iconarchive.com/icons/github/octicons/96/alert-24-icon.png)
+
+When you long-tap on the image, it DISCREETLY starts sending your current location updates to a server at home
+
+![Image](https://github.com/user-attachments/assets/5f07e473-a2b0-400c-b9cd-923f4acf8400)
+
+You can create/read GitHub repos, and more
+
+![Image](https://github.com/user-attachments/assets/3764138c-3a74-44ce-adbc-b8fe9340a443)
+
+For ESP Home services, if installed, the app can create config file and place it wherever you want on your server system
+
+![Image](https://github.com/user-attachments/assets/31562376-593a-431c-a486-83245beb82c4)
+
+You can initiate a task schedule on your ocmputer. Say, run a script file on Mondays at 9.00 AM.
+
+![Image](https://github.com/user-attachments/assets/a09d6664-c236-4693-bbc5-eb820e0e3e52)
+
+You can send commands to your PC
+
+
+
