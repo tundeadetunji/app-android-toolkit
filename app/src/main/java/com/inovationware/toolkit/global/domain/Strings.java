@@ -200,6 +200,8 @@ public class Strings {
     public static final String POST_PURPOSE_BLOB_VIDEO = "BlobVideo";
     public static final String POST_PURPOSE_LOGGER = "Logger";
     public static final String POST_PURPOSE_REGULAR = "Regular";
+    public static final String POST_PURPOSE_SINGLE_SOS = "SingleSos";
+    public static final String POST_PURPOSE_PERIODIC_SOS = "PeriodicSos";
     public static final String POST_PURPOSE_INTERACTION = "Interaction";
     public static final String POST_PURPOSE_APP = "App";
     public static final String POST_PURPOSE_ENGAGE = "Engage";

@@ -27,8 +27,7 @@ public class Transfer {
         meetingContribute,
         meetingArchiveMeeting,
         meetingEnableMeeting,
-        meetingDeleteMeeting,
-        sos
+        meetingDeleteMeeting
     }
 
     public enum Tag{

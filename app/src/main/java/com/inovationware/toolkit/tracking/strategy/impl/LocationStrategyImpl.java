@@ -3,9 +3,7 @@ package com.inovationware.toolkit.tracking.strategy.impl;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Geocoder;
 import android.location.Location;
-import android.os.Build;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -19,10 +17,8 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationToken;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.OnTokenCanceledListener;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.tracking.model.CallbackCommand;
 import com.inovationware.toolkit.tracking.strategy.LocationStrategy;
-import com.inovationware.toolkit.ui.activity.HelpActivity;
 
 public class LocationStrategyImpl implements LocationStrategy {
 
@@ -33,20 +29,22 @@ public class LocationStrategyImpl implements LocationStrategy {
     private FusedLocationProviderClient service;
     private LocationRequest requests;
     private static LocationStrategyImpl instance;
-    private CallbackCommand callback;
+    private CallbackCommand currentLocationCallback;
+    private CallbackCommand periodicUpdatesCallback;
     private OnSuccessListener<Location> requestCallback;
     private LocationCallback requestsCallback;
     private Context context;
 
 
-    public static LocationStrategyImpl getInstance(Context context, CallbackCommand callback, int intervalInMilliseconds, int fastestIntervalInMilliseconds) {
-        if (instance == null) instance = new LocationStrategyImpl(context,callback, intervalInMilliseconds,  fastestIntervalInMilliseconds);
+    public static LocationStrategyImpl getInstance(Context context, CallbackCommand currentLocationCallback, CallbackCommand periodicUpdatesCallback, int intervalInMilliseconds, int fastestIntervalInMilliseconds) {
+        if (instance == null) instance = new LocationStrategyImpl(context,currentLocationCallback, periodicUpdatesCallback, intervalInMilliseconds,  fastestIntervalInMilliseconds);
         return instance;
     }
 
-    private LocationStrategyImpl(Context context, CallbackCommand callback, int intervalInMilliseconds, int fastestIntervalInMilliseconds) {
+    private LocationStrategyImpl(Context context, CallbackCommand currentLocationCallback, CallbackCommand periodicUpdatesCallback, int intervalInMilliseconds, int fastestIntervalInMilliseconds) {
         this.context = context;
-        this.callback = callback;
+        this.currentLocationCallback = currentLocationCallback;
+        this.periodicUpdatesCallback = periodicUpdatesCallback;
         this.intervalInMilliseconds = intervalInMilliseconds;
         this.fastestIntervalInMilliseconds = fastestIntervalInMilliseconds;
 
@@ -89,7 +87,7 @@ public class LocationStrategyImpl implements LocationStrategy {
         requestCallback = new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                callback.execute(location);
+                currentLocationCallback.execute(location);
             }
         };
 
@@ -97,7 +95,7 @@ public class LocationStrategyImpl implements LocationStrategy {
             @Override
             public void onLocationResult(@NonNull LocationResult locationResult) {
                 super.onLocationResult(locationResult);
-                callback.execute(locationResult.getLastLocation());
+                periodicUpdatesCallback.execute(locationResult.getLastLocation());
             }
         };
 

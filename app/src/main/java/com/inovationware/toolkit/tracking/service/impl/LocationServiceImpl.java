@@ -3,6 +3,8 @@ package com.inovationware.toolkit.tracking.service.impl;
 import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_PERIODIC_SOS;
+import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_SINGLE_SOS;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
 import android.content.Context;
@@ -41,11 +43,11 @@ public class LocationServiceImpl implements LocationService {
     }
 
     private LocationServiceImpl(Context context) {
-        setStrategy(context, createCallback(context));
+        setStrategy(context, createCallback(context, POST_PURPOSE_SINGLE_SOS), createCallback(context, POST_PURPOSE_PERIODIC_SOS));
     }
 
-    private void setStrategy(Context context, CallbackCommand command){
-        strategy = LocationStrategyImpl.getInstance(context, command, INTERVAL_MILLIS, FASTEST_INTERVAL_MILLIS);
+    private void setStrategy(Context context, CallbackCommand currentLocationCallback, CallbackCommand periodicUpdatesCallback){
+        strategy = LocationStrategyImpl.getInstance(context, currentLocationCallback, periodicUpdatesCallback, INTERVAL_MILLIS, FASTEST_INTERVAL_MILLIS);
     }
 
     @Override
@@ -63,7 +65,7 @@ public class LocationServiceImpl implements LocationService {
         strategy.stopLocationUpdates();
     }
 
-    private CallbackCommand createCallback(Context context){
+    private CallbackCommand createCallback(Context context, String purpose){
         //Todo what happens if user didn't turn on Location?
 
         CallbackCommand command = new CallbackCommand() {
@@ -84,10 +86,10 @@ public class LocationServiceImpl implements LocationService {
                         SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
                                 store.getUsername(context),
                                 store.getID(context),
-                                Transfer.Intent.sos,
+                                Transfer.Intent.writeText,
                                 store.getSender(context),
                                 determineTarget(context, store, machines),
-                                Strings.POST_PURPOSE_REGULAR,
+                                purpose,
                                 Support.determineMeta(context, store),
                                 security.encrypt(context, store, data.toString()),
                                 Strings.EMPTY_STRING
