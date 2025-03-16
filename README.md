@@ -13,9 +13,11 @@ The setup can do these, and more:
 <br>
 <br>
 
-![Image](https://icons.iconarchive.com/icons/github/octicons/96/alert-24-icon.png)
+![alt text](https://github.com/[tundeadetunji]/[app-android-toolkit]/blob/[master]/app/src/main/res/raw/sos.jpg?raw=true)
+![alt text](https://github.com/tundeadetunji/app-android-toolkit/blob/master/app/src/main/res/raw/sos.jpg)
+![alt text](https://github.com/tundeadetunji/app-android-toolkit/blob/master/app/src/main/res/raw/sos.jpg?raw=true)
 
-When you long-tap on the image, it DISCREETLY starts sending your current location updates to a server at home
+When you long-tap the image, it DISCREETLY starts sending your current location updates to a server at home
 
 ![Image](https://github.com/user-attachments/assets/5f07e473-a2b0-400c-b9cd-923f4acf8400)
 
