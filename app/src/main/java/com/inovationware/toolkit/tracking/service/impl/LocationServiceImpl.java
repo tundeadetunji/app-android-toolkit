@@ -84,7 +84,7 @@ public class LocationServiceImpl implements LocationService {
                         SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
                                 store.getUsername(context),
                                 store.getID(context),
-                                Transfer.Intent.writeText,
+                                Transfer.Intent.sos,
                                 store.getSender(context),
                                 determineTarget(context, store, machines),
                                 Strings.POST_PURPOSE_REGULAR,
