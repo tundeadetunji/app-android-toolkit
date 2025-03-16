@@ -130,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
         binding.QuickSendButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                service.stopLocationUpdates();
+                service.updateLocation();
+                //service.stopLocationUpdates();
                 return true;
             }
         });

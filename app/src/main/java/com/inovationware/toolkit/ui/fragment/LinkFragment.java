@@ -52,7 +52,6 @@ public class LinkFragment extends Fragment {
 
         setupAccess();
         setupReferences();
-        setupListeners();
         setupUi();
 
         return view;
@@ -67,19 +66,8 @@ public class LinkFragment extends Fragment {
         getAppsListRoutineHandler = new Handler();
     }
 
-    private void setupListeners(){
-        binding.defaultTargetTextBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(view.getContext(), SettingsActivity.class));
-            }
-        });
-
-    }
     private void setupUi(){
         setupProgressBar();
-        hideGuide();
-        setupGuide();
 
         if (!initialParamsAreSet(view.getContext(), store, GroupManager.getInstance())) return;
 
@@ -87,14 +75,12 @@ public class LinkFragment extends Fragment {
             if (store.getString(view.getContext(), SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, EMPTY_STRING).trim().isEmpty() && thereIsInternet(view.getContext())) {
                 showProgressBar();
                 hideRecyclerView();
-                hideGuide();
                 getAppsListRoutineHandler.post(getAppsListRoutine);
             }
         } else {
             apps = stringToList(store.getString(view.getContext(), SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, EMPTY_STRING).trim());
             hideProgressBar();
             setupRecyclerView();
-            showGuide();
             showRecyclerView();
         }
     }
@@ -127,7 +113,6 @@ public class LinkFragment extends Fragment {
                                 apps = stringToList(response.body());
                                 hideProgressBar();
                                 setupRecyclerView();
-                                showGuide();
                                 showRecyclerView();
                             } catch (Exception ignored) {
                                 if (!store.shouldDisplayErrorMessage(view.getContext())) {
@@ -175,22 +160,6 @@ public class LinkFragment extends Fragment {
 
     private void hideRecyclerView(){
         binding.linkRecyclerView.setVisibility(View.INVISIBLE);
-    }
-
-    private void setupGuide(){
-        binding.defaultTargetTextBox.setText(
-                //"\uD83D\uDCCC  " + GroupManager.getInstance().getDefaultDevice(view.getContext())
-                "\uD83D\uDCBB  " + GroupManager.getInstance().getDefaultDevice(view.getContext())
-
-        );
-    }
-
-    private void showGuide(){
-        binding.defaultTargetTextBox.setVisibility(View.VISIBLE);
-    }
-
-    private void hideGuide(){
-        binding.defaultTargetTextBox.setVisibility(View.INVISIBLE);
     }
 
     private void setupProgressBar(){
