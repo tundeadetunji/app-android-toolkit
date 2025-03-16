@@ -13,7 +13,7 @@ The setup can do these, and more:
 <br>
 <br>
 
-![Image](https://github.com/user-attachments/assets/31498495-55e6-435b-a140-1140c15a111b)
+![Image](https://icons.iconarchive.com/icons/github/octicons/96/alert-24-icon.png)
 
 When you long-tap on the image, it DISCREETLY starts sending your current location updates to a server at home
 
