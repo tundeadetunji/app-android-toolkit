@@ -1,5 +1,5 @@
 # Remote Linq
-Remote interactivity with your PCs
+(GPS) Location Tracker & Remote interactivity with your PCs.
 
 <br>
 <br>
