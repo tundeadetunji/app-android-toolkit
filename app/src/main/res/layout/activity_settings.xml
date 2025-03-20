@@ -475,7 +475,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
-                    android:hint="Alias of this device"
+                    android:hint="Others will see this device as..."
                     app:boxBackgroundMode="outline"
                     app:endIconMode="clear_text"
                     app:startIconDrawable="@drawable/baseline_badge_24"
@@ -635,6 +635,56 @@
 
         </LinearLayout>
 
+        <!--feedback-->
+        <TextView
+            android:id="@+id/feedbackLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginBottom="8dp"
+            android:text="Haptic Feedback"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AliasGroup" />
+
+        <LinearLayout
+            android:id="@+id/feedbackGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/ErrorMessagesLabel">
+
+
+            <!-- Buttons -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:id="@+id/vibrateOnAcknowledgementCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="Vibrate only, when device receives acknowledgement" />
+
+                <CheckBox
+                    android:id="@+id/vibrateFeedbackOnlyCheckBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="72dp"
+                    android:layout_weight="1"
+                    android:text="Vibrate only, for every feedback" />
+            </LinearLayout>
+
+        </LinearLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

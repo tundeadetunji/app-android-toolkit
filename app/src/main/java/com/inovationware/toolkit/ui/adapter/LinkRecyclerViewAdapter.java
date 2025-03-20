@@ -9,6 +9,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
+import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
@@ -44,12 +46,14 @@ public class LinkRecyclerViewAdapter extends RecyclerView.Adapter<LinkRecyclerVi
     private List<String> apps;
     private SharedPreferencesManager store;
     private GroupManager machines;
+    private Factory factory;
 
     public LinkRecyclerViewAdapter(Context context, List<String> apps) {
         this.context = context;
         this.apps = apps;
         store = SharedPreferencesManager.getInstance();
         machines = GroupManager.getInstance();
+        factory = Factory.getInstance();
     }
 
 
@@ -100,7 +104,8 @@ public class LinkRecyclerViewAdapter extends RecyclerView.Adapter<LinkRecyclerVi
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    new Feedback(context).toast(response.body());
+                    factory.feedback.service.giveFeedback(context, store, response.body(), true, Toast.LENGTH_LONG);
+                    //new Feedback(context).toast(response.body());
                 } else {
                     if (!store.shouldDisplayErrorMessage(context)){
                         return;

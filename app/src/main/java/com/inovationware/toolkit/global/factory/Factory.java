@@ -1,6 +1,7 @@
 package com.inovationware.toolkit.global.factory;
 
 import com.inovationware.toolkit.code.verb.Vocabulary;
+import com.inovationware.toolkit.global.library.app.FeedbackManager;
 import com.inovationware.toolkit.global.library.external.EncoderLite;
 import com.inovationware.toolkit.global.library.app.GlideClient;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -12,6 +13,7 @@ import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStra
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StringFunctions;
 import com.inovationware.toolkit.global.library.utility.Ui;
+import com.inovationware.toolkit.tts.service.TTSService;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 public class Factory {
     public TransferFactory transfer = TransferFactory.getInstance();
     public WorksFactory works = WorksFactory.getInstance();
+    public FeedbackManagerFactory feedback = FeedbackManagerFactory.getInstance();
 
     public EncryptionFactory encryption = EncryptionFactory.getInstance();
 
@@ -75,6 +78,17 @@ public class Factory {
         }
 
         public final DataTransferService service = RestDataTransferService.getInstance(RestDataTransferStrategy.getInstance());
+    }
+
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class FeedbackManagerFactory{
+        private static FeedbackManagerFactory instance;
+        public static FeedbackManagerFactory getInstance(){
+            if (instance == null) instance = new FeedbackManagerFactory();
+            return instance;
+        }
+
+        public final FeedbackManager service = new FeedbackManager();
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)

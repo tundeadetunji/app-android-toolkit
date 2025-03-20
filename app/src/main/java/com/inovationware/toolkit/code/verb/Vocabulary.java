@@ -986,7 +986,8 @@ public class Vocabulary {
             "Iterator",
             "LocationManager",
             "Manifest",
-            "LocationListener"
+            "LocationListener",
+            "Vibrator"
     );
 
 
@@ -1186,7 +1187,8 @@ public class Vocabulary {
             "Olùyẹ̀wò",
             "AlámójútóÀyè",
             "ÌwéÈtò",
-            "Olùfetísílẹ̀Àyè"
+            "Olùfetísílẹ̀Àyè",
+            "ÒṣeGbígbọ̀n"
     );
     public List<String> CodeInBulgarian = List.of(
             "ширина",
@@ -1384,7 +1386,9 @@ public class Vocabulary {
             "Итератор",
             "Мениджър_на_местоположението",
             "Манифест",
-            "Слушател_на_местоположение"
+            "Слушател_на_местоположение",
+            "Вибратор"
+
     );
 
     public List<String> CodeDescription = List.of(
@@ -1583,7 +1587,8 @@ public class Vocabulary {
             "something that enables going over the items in a collection (e.g. list or set) one at a time sequentially without exposing its underlying structure, e.g. Iterator<String> iterator = collection.iterator(); (Java)",
             "a system service in Android that helps apps access the device's location using GPS, Wi-Fi, or cellular networks, e.g. ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, location -> {int latitude = (int) location.getLatitude();}); //gets current latitude of the device (Android/Java)",
             "a special file in an Android app that contains essential information about the app, like its name, version, and permissions it needs to run (Android)",
-            "an interface in Android that allows apps to receive updates about the device's location changes in real-time, e.g. LocationListener locationListener = location -> {int longitude = (int) location.getLongitude();}; //gets current longitude of the device (Android/Java)"
+            "an interface in Android that allows apps to receive updates about the device's location changes in real-time, e.g. LocationListener locationListener = location -> {int longitude = (int) location.getLongitude();}; //gets current longitude of the device (Android/Java)",
+            "a system service in Android that allows you to control the device's vibration feature, e.g. ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(500) //the phone vibrates for half a second, context could be getApplicationContext() or other source (Android/Java)"
     );
 
 

@@ -18,6 +18,7 @@ public class Transfer {
         deleteNote,
         readWhoIs,
         readPing,
+        readWhatIsOn,
         readWhoIsTimestamp,
         readLast30,
         meetingGetIds,
@@ -27,7 +28,10 @@ public class Transfer {
         meetingContribute,
         meetingArchiveMeeting,
         meetingEnableMeeting,
-        meetingDeleteMeeting
+        meetingDeleteMeeting,
+        readHaptic,
+        clearHaptic
+
     }
 
     public enum Tag{

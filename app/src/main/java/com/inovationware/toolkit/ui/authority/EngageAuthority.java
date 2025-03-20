@@ -23,6 +23,9 @@ public class EngageAuthority {
         this.context = context;
     }
 
+    public String readPingUrl(){
+        return Support.createUrl(context, Transfer.Intent.readPing, SharedPreferencesManager.getInstance());
+    }
     public String getLast30Url(){
         return Support.createUrl(context, Transfer.Intent.readLast30, SharedPreferencesManager.getInstance());
         //return "https://tundeadetunji2017.bsite.net/audio.mp3";
@@ -32,8 +35,8 @@ public class EngageAuthority {
         //Todo coordinate with Desktop to get startTime, endTime probably writing it into timestamp
         return Support.createTimestampForFile() + ".mp3";
     }
-    public String getPingUrl() {
-        return Support.createUrl(context, Transfer.Intent.readPing, SharedPreferencesManager.getInstance());
+    public String getWhatIsOnUrl() {
+        return Support.createUrl(context, Transfer.Intent.readWhatIsOn, SharedPreferencesManager.getInstance());
     }
     public String getEngagementUrl() {
         return Support.createUrl(context, Transfer.Intent.readWhoIs, SharedPreferencesManager.getInstance());

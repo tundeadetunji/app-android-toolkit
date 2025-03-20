@@ -11,6 +11,8 @@ import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.global.domain.Strings;
 
 import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.Strings.HAPTIC_FEEDBACK_ONLY_KEY;
+import static com.inovationware.toolkit.global.domain.Strings.HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_BASE_URL_KEY;
@@ -122,6 +124,22 @@ public class SharedPreferencesManager {
 
     public void updateShouldShowVocabulary(Context context, boolean value) {
         setChecked(context, SHARED_PREFERENCES_SHOW_VOCABULARY, value);
+    }
+
+    public boolean hapticFeedbackOnly(Context context){
+        return getChecked(context, HAPTIC_FEEDBACK_ONLY_KEY, false);
+    }
+
+    public void setHapticFeedbackOnly(Context context, boolean value){
+        setChecked(context, HAPTIC_FEEDBACK_ONLY_KEY, value);
+    }
+
+    public boolean hapticFeedbackOnAcknowledgement(Context context){
+        return getChecked(context, HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY, false);
+    }
+
+    public void setHapticFeedbackOnAcknowledgement(Context context, boolean value){
+        setChecked(context, HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY, value);
     }
 
     public String getID(Context context) {

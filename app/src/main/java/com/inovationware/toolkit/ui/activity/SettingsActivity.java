@@ -3,6 +3,7 @@ package com.inovationware.toolkit.ui.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -41,6 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
     private Factory factory;
     private GroupManager machines;
     private SharedPreferencesManager store;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,11 +57,26 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupProperties(){
+        context = binding.getRoot().getContext();
         store = SharedPreferencesManager.getInstance();
         machines = GroupManager.getInstance();
         factory = Factory.getInstance();
     }
     private void setupListeners(){
+        binding.vibrateFeedbackOnlyCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                store.setHapticFeedbackOnly(context, binding.vibrateFeedbackOnlyCheckBox.isChecked());
+            }
+        });
+
+        binding.vibrateOnAcknowledgementCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                store.setHapticFeedbackOnAcknowledgement(context, binding.vibrateOnAcknowledgementCheckBox.isChecked());
+            }
+        });
+
         binding.baseUrlSaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -286,6 +303,8 @@ public class SettingsActivity extends AppCompatActivity {
         binding.appendUuidCheckbox.setChecked(store.shouldAppendUuidToOutput(SettingsActivity.this));
         binding.appendTimezoneCheckbox.setChecked(store.shouldAppendTimezoneToOutput(SettingsActivity.this));
         binding.syncCheckBox.setChecked(store.shouldPromptToSyncNote(SettingsActivity.this));
+        binding.vibrateFeedbackOnlyCheckBox.setChecked(store.hapticFeedbackOnly(SettingsActivity.this));
+        binding.vibrateOnAcknowledgementCheckBox.setChecked(store.hapticFeedbackOnAcknowledgement(SettingsActivity.this));
     }
 
 

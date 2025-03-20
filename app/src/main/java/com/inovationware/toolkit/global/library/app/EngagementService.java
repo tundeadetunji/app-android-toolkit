@@ -29,6 +29,7 @@ public class EngagementService {
         Who_Was,
         Workstation,
         Last_30,
+        What_Is_On,
         Ping;
 
         public static boolean isNotApp(String engagementValue) {

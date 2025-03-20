@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityReplyBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
 import com.inovationware.toolkit.datatransfer.service.rest.RestDataTransferService;
 import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStrategy;
 import com.inovationware.toolkit.global.domain.Transfer;
@@ -39,6 +41,7 @@ import com.inovationware.toolkit.global.repository.Repo;
 import com.inovationware.toolkit.interaction.model.InteractionToken;
 import com.inovationware.toolkit.ui.authority.EngageAuthority;
 
+import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -49,6 +52,7 @@ import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
 import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_ENGAGE;
 import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_LAST_30;
 import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_PING;
+import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_WHAT_IS_ON;
 import static com.inovationware.toolkit.global.domain.Strings.WORKSTATION;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
@@ -60,6 +64,7 @@ import static com.inovationware.toolkit.global.library.utility.Support.announce;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
 import java.io.IOException;
 
@@ -186,11 +191,11 @@ public class ReplyActivity extends AppCompatActivity {
 
             //Last_30
             if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.Last_30) {
-                binding.engageButton.setEnabled(false);
+                /*binding.engageButton.setEnabled(false);
                 factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
                 requestLast30(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
                 //engagementHandler.post(readLast30);
-                return;
+                return;*/
             }
 
             //Who_Was
@@ -207,13 +212,25 @@ public class ReplyActivity extends AppCompatActivity {
             }
 
             //Ping
-            if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.Ping) {
+            if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Ping.name().replace("_", " "))) {
                 hideEngageControl();
                 requestPing(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
                 binding.engageButton.setEnabled(false);
                 factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
                 showEngageControl();
-                engagementHandler.postDelayed(readPing, 30000);
+                engagementHandler.postDelayed(readPingHandler, 20000);
+                return;
+            }
+
+
+            //What_Is_On
+            if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.What_Is_On) {
+                hideEngageControl();
+                requestWhatIsOn(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
+                binding.engageButton.setEnabled(false);
+                factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
+                showEngageControl();
+                engagementHandler.postDelayed(readWhatIsOn, 30000);
                 return;
             }
 
@@ -230,6 +247,49 @@ public class ReplyActivity extends AppCompatActivity {
                     engagementHandler.postDelayed(readWhoIs, 30000);
                 }
             }
+        }
+    };
+
+    private final Runnable readPingHandler = new Runnable() {
+        @Override
+        public void run() {
+
+            Retrofit retrofitImpl = Repo.getInstance().create(context, store);
+
+            Call<String> navigate = retrofitImpl.readText(
+                    authority.readPingUrl(),
+                    store.getUsername(context),
+                    store.getID(context),
+                    String.valueOf(Transfer.Intent.readPing),
+                    Strings.EMPTY_STRING
+            );
+            navigate.enqueue(new Callback<String>() {
+                @SneakyThrows
+                @RequiresApi(api = Build.VERSION_CODES.M)
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    hideEngageControl();
+                    binding.engageButton.setEnabled(true);
+
+                    if (response.isSuccessful()) {
+
+                        if (response.body() == null) return;
+                        factory.feedback.service.giveFeedback(context, store, response.body(), true, Toast.LENGTH_LONG);
+                    } else {
+                        if (SharedPreferencesManager.getInstance().shouldDisplayErrorMessage(context)) {
+                            new Feedback(context).toast(DEFAULT_ERROR_MESSAGE_SUFFIX);
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    if (SharedPreferencesManager.getInstance().shouldDisplayErrorMessage(context)) {
+                        new Feedback(context).toast(DEFAULT_FAILURE_MESSAGE_SUFFIX);
+                    }
+                }
+            });
+
         }
     };
 
@@ -268,6 +328,48 @@ public class ReplyActivity extends AppCompatActivity {
         return initialParamsAreSet(ReplyActivity.this, store, machines);
     }
 
+    void requestWhatIsOn(String info, String target) {
+        if (!thereIsInternet(getApplicationContext())) return;
+
+        Retrofit retrofitImpl = Repo.getInstance().create(context, store);
+
+        Call<String> navigate = retrofitImpl.sendText(
+                HTTP_TRANSFER_URL(context, store),
+                store.getUsername(ReplyActivity.this),
+                store.getID(ReplyActivity.this),
+                String.valueOf(Transfer.Intent.writeText),
+                store.getSender(ReplyActivity.this),
+                target,
+                POST_PURPOSE_WHAT_IS_ON,
+                TARGET_MODE_TO_DEVICE,
+                info,
+                Strings.EMPTY_STRING);
+
+        navigate.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null)
+                        if (!response.body().isEmpty())
+                            new Feedback(ReplyActivity.this).toast(response.body());
+                } else {
+                    if (!store.shouldDisplayErrorMessage(ReplyActivity.this)) {
+                        return;
+                    }
+                    feedback.toast(DEFAULT_ERROR_MESSAGE_SUFFIX);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                if (!store.shouldDisplayErrorMessage(ReplyActivity.this)) {
+                    return;
+                }
+                feedback.toast(DEFAULT_FAILURE_MESSAGE_SUFFIX);
+            }
+        });
+    }
+
     void requestPing(String info, String target) {
         if (!thereIsInternet(getApplicationContext())) return;
 
@@ -291,6 +393,7 @@ public class ReplyActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body() != null)
                         if (!response.body().isEmpty())
+                            //factory.feedback.service.giveFeedback(context, store,response.body(), false, Toast.LENGTH_LONG);
                             new Feedback(ReplyActivity.this).toast(response.body());
                 } else {
                     if (!store.shouldDisplayErrorMessage(ReplyActivity.this)) {
@@ -439,11 +542,11 @@ public class ReplyActivity extends AppCompatActivity {
         });
     }
 
-    private final Runnable readPing = new Runnable() {
+    private final Runnable readWhatIsOn = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void run() {
-            factory.image.service.loadStaticImage(ReplyActivity.this, binding.engageImageView, authority.getPingUrl(), R.mipmap.ic_launcher, R.drawable.baseline_question_mark_24, R.drawable.baseline_question_mark_24);
+            factory.image.service.loadStaticImage(ReplyActivity.this, binding.engageImageView, authority.getWhatIsOnUrl(), R.mipmap.ic_launcher, R.drawable.baseline_question_mark_24, R.drawable.baseline_question_mark_24);
             binding.engageButton.setEnabled(true);
         }
     };

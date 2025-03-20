@@ -26,9 +26,12 @@ public class Strings {
     public static final String START_LOCATION_UPDATES_MESSAGE = "Have a nice day!";
 
     public static List<String> apps = new ArrayList<>();
+    public static boolean networkServiceShouldRun = true;
+    public static boolean networkServiceIsRunning = false;
     public static List<NetTimerObject> net_timer_objects = new ArrayList<>();
 
     public static final String EMPTY_STRING = "";
+    public static final String NULL = "Null";
     public static final String value_saved = "Value has been saved";
     public static final String WELCOME = "Welcome";
     public static final String yes = "Yes";
@@ -207,6 +210,7 @@ public class Strings {
     public static final String POST_PURPOSE_ENGAGE = "Engage";
     public static final String POST_PURPOSE_PING = "Ping";
     public static final String POST_PURPOSE_LAST_30 = "Last30";
+    public static final String POST_PURPOSE_WHAT_IS_ON = "WhatIsOn";
     public static final String POST_PURPOSE_EMPHASIZE = "Emphasize";
     public static final String POST_PURPOSE_READ_NOTE = "readNote";
     public static final String POST_PURPOSE_WRITE_NOTE = "writeNote";
@@ -275,6 +279,8 @@ public class Strings {
     public static final String WRITE_FILE_FAILED = "That resulted in an error. Ensure file was created.";
 
     public static final String TRANSFER_FRAGMENT_MEMENTO_KEY = "TRANSFER_FRAGMENT_MEMENTO_KEY";
+    public static final String HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY = "HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT";
+    public static final String HAPTIC_FEEDBACK_ONLY_KEY = "HAPTIC_FEEDBACK_ONLY";
     public static final String DELIMITER = "Delimiter";
     public static final String SUCCESS_MESSAGE = "Go, Going, Gone!";
 

@@ -18,6 +18,7 @@ import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.GroupManager;
+import com.inovationware.toolkit.global.library.app.NetworkChecker;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SiteManager;
@@ -97,6 +98,7 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
         binding.resetSearchSitesButton.setOnClickListener(resetSearchSitesButtonHandler);
         binding.resetNotesButton.setOnClickListener(resetNotesButtonHandler);
         binding.saveLinksButton.setOnClickListener(saveLinksButtonHandler);
+        binding.stopNetworkServiceButton.setOnClickListener(stopNetworkServiceButtonHandler);
 
         /*resetLocalTasksKeysButton = findViewById(R.id.resetLocalTasksKeysButton);
         resetLocalTasksKeysButton.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +158,29 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
         setEncryptionDetails();
         setGithubDetails();
     }
+
+    private final View.OnClickListener stopNetworkServiceButtonHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            MessageBox template = new MessageBox() {
+                @Override
+                public void positiveButtonAction() {
+                    Strings.networkServiceShouldRun = false;
+                    stopService(new Intent(AdvancedSettingsActivity.this, NetworkChecker.class));
+                    Strings.networkServiceIsRunning = false;
+                }
+
+                @Override
+                public void negativeButtonAction() {
+
+                }
+            };
+            template.setMessage("Really stop constantly listening for relevant information?");
+            template.setPositiveButtonText(Strings.sure);
+            template.setNegativeButtonText(Strings.never_mind);
+            template.show(AdvancedSettingsActivity.this);
+        }
+    };
 
     private final View.OnClickListener saveLinksButtonHandler = new View.OnClickListener() {
         @Override

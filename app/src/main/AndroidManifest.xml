@@ -14,9 +14,11 @@
     <uses-permission android:name="android.permission.MANAGE_BACKGROUND_ACTIVITIES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         android:minSdkVersion="30" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <queries>
         <package android:name="android.permission.QUERY_ALL_PACKAGES" />
@@ -36,7 +38,7 @@
         <activity
             android:name=".ui.activity.HelpActivity"
             android:exported="false"
-            android:label="Help"
+            android:label=""
             android:parentActivityName=".ui.activity.MainActivity" />
         <activity
             android:name=".ui.activity.ManageBoardActivity"
@@ -147,6 +149,9 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
+        <service android:name=".global.library.app.NetworkChecker"
+            android:foregroundServiceType="dataSync" />
 
         <receiver
             android:name=".system.service.OsBootReceiver"

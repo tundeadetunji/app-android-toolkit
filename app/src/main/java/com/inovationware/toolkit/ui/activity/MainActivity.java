@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -33,6 +34,7 @@ import com.inovationware.toolkit.databinding.ActivityMainBinding;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
+import com.inovationware.toolkit.global.library.app.NetworkChecker;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.tracking.service.LocationService;
@@ -85,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
     private void initializeReferences() {
         context = MainActivity.this;
         authority = MainAuthority.getInstance();
-        ttsServiceProvider = TTSService.getInstance(context);
         store = SharedPreferencesManager.getInstance();
         machines = GroupManager.getInstance();
         factory = Factory.getInstance();
+        ttsServiceProvider = TTSService.getInstance(context);
         security = EncryptionManager.getInstance();
         user = SignInManager.getInstance();
         apkClient = ApkClient.getInstance();
@@ -138,9 +140,18 @@ public class MainActivity extends AppCompatActivity {
 
     private void startServices() {
         //ToDo fix: requires context
+        //ToDo fix: check battery status, don't run if batter is below threshold
         if (!NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING) {
             startService(new Intent(getApplicationContext(), PushNotificationService.class));
             NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING = true;
+        }
+
+        if (Strings.networkServiceShouldRun){
+            if (!Strings.networkServiceIsRunning){
+                Intent serviceIntent = new Intent(this, NetworkChecker.class);
+                ContextCompat.startForegroundService(this, serviceIntent);
+                Strings.networkServiceIsRunning = true;
+            }
         }
     }
 
