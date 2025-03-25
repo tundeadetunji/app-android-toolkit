@@ -18,12 +18,13 @@ import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.NetworkChecker;
+import com.inovationware.toolkit.system.foreground.NetworkChecker;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SiteManager;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.system.service.ServiceManager;
 
 import lombok.SneakyThrows;
 import retrofit2.Call;
@@ -46,6 +47,7 @@ import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_TODO_KEY;
 import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_DEVICE;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
+import static com.inovationware.toolkit.global.library.utility.Support.getOutOfThere;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
 public class AdvancedSettingsActivity extends AppCompatActivity {
@@ -56,6 +58,7 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
     private Factory factory;
 
     private Feedback feedback;
+    private ServiceManager services;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,7 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
         sites = SiteManager.getInstance(getApplicationContext());
         feedback = new Feedback(getApplicationContext());
         factory = Factory.getInstance();
+        services = ServiceManager.getInstance();
 
     }
 
@@ -165,9 +169,8 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
             MessageBox template = new MessageBox() {
                 @Override
                 public void positiveButtonAction() {
-                    Strings.networkServiceShouldRun = false;
-                    stopService(new Intent(AdvancedSettingsActivity.this, NetworkChecker.class));
-                    Strings.networkServiceIsRunning = false;
+                    services.stopServices(AdvancedSettingsActivity.this);
+                    getOutOfThere(AdvancedSettingsActivity.this);
                 }
 
                 @Override

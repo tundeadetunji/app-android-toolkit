@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.nettimer.dto.NetTimerObject;
+import com.inovationware.toolkit.nettimer.model.NetTimerObject;
 import com.inovationware.toolkit.ui.activity.NetTimerResponseActivity;
 
 import java.util.List;

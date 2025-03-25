@@ -13,6 +13,7 @@ import com.inovationware.toolkit.global.domain.Strings;
 import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
 import static com.inovationware.toolkit.global.domain.Strings.HAPTIC_FEEDBACK_ONLY_KEY;
 import static com.inovationware.toolkit.global.domain.Strings.HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY;
+import static com.inovationware.toolkit.global.domain.Strings.LAST_WEB_PAGE_SENT_KEY;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_BASE_URL_KEY;
@@ -136,6 +137,13 @@ public class SharedPreferencesManager {
 
     public boolean hapticFeedbackOnAcknowledgement(Context context){
         return getChecked(context, HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY, false);
+    }
+
+    public String getLastSentWebPage(Context context){
+        return getString(context, LAST_WEB_PAGE_SENT_KEY, "");
+    }
+    public void setLastSentWebPage(Context context, String url){
+        setString(context, LAST_WEB_PAGE_SENT_KEY, url);
     }
 
     public void setHapticFeedbackOnAcknowledgement(Context context, boolean value){

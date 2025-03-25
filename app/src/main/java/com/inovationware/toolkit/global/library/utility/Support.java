@@ -16,6 +16,7 @@ import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.ui.activity.MainActivity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -86,6 +87,11 @@ public class Support {
     public static void visit(Context context, String url){
         openUrlInBrowser(context, url);
     }
+    public static void visit(Context context, String url, boolean isFromNonActivityClass){
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        if (isFromNonActivityClass) intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String createTimestamp(FormatForDateAndTime format){
@@ -94,6 +100,11 @@ public class Support {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String createTimestampForFile(){
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern(formatForDateAndTimeStringMap.get(FormatForDateAndTime.DATE_TIME_FOR_FILE)));
+    }
+
+    public static void getOutOfThere(Context context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
     }
 
     public enum FormatForDateAndTime{

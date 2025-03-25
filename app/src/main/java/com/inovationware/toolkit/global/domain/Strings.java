@@ -3,14 +3,13 @@ package com.inovationware.toolkit.global.domain;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
-import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.memo.entity.Memo;
-import com.inovationware.toolkit.nettimer.dto.NetTimerObject;
+import com.inovationware.toolkit.nettimer.model.NetTimerObject;
 import com.inovationware.toolkit.tts.service.TTSService;
 import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.nettimer.domain.NetTimerBistable;
+import com.inovationware.toolkit.bistable.verb.BistableCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,16 +17,12 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
-import retrofit2.converter.scalars.ScalarsConverterFactory;
-
 
 public class Strings {
 
     public static final String START_LOCATION_UPDATES_MESSAGE = "Have a nice day!";
 
     public static List<String> apps = new ArrayList<>();
-    public static boolean networkServiceShouldRun = true;
-    public static boolean networkServiceIsRunning = false;
     public static List<NetTimerObject> net_timer_objects = new ArrayList<>();
 
     public static final String EMPTY_STRING = "";
@@ -133,7 +128,7 @@ public class Strings {
     //public static SiteManager sites;
 
     public static boolean netTimerMobileServiceIsRunning = false;
-    public static NetTimerBistable bistable;
+    public static BistableCommand bistable;
     public static final String MINUTES = TimeUnit.MINUTES.toString();
     public static final String HOURS = TimeUnit.HOURS.toString();
     public static final String SECONDS = TimeUnit.SECONDS.toString();
@@ -280,6 +275,7 @@ public class Strings {
 
     public static final String TRANSFER_FRAGMENT_MEMENTO_KEY = "TRANSFER_FRAGMENT_MEMENTO_KEY";
     public static final String HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY = "HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT";
+    public static final String LAST_WEB_PAGE_SENT_KEY = "LAST_WEB_PAGE_SENT";
     public static final String HAPTIC_FEEDBACK_ONLY_KEY = "HAPTIC_FEEDBACK_ONLY";
     public static final String DELIMITER = "Delimiter";
     public static final String SUCCESS_MESSAGE = "Go, Going, Gone!";

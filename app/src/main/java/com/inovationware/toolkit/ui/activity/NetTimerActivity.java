@@ -19,7 +19,7 @@ import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.repository.Repo;
 import com.inovationware.toolkit.ui.adapter.NetTimerObjectRecyclerViewAdapter;
-import com.inovationware.toolkit.nettimer.dto.NetTimerObject;
+import com.inovationware.toolkit.nettimer.model.NetTimerObject;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 

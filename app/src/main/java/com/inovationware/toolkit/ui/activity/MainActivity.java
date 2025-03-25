@@ -1,13 +1,9 @@
 package com.inovationware.toolkit.ui.activity;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +12,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -34,14 +28,14 @@ import com.inovationware.toolkit.databinding.ActivityMainBinding;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
-import com.inovationware.toolkit.global.library.app.NetworkChecker;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
-import com.inovationware.toolkit.tracking.service.LocationService;
+import com.inovationware.toolkit.system.service.ServiceManager;
+import com.inovationware.toolkit.location.service.LocationService;
 import com.inovationware.toolkit.notification.service.PushNotificationService;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.tracking.service.impl.LocationServiceImpl;
+import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.tts.service.TTSService;
 import com.inovationware.toolkit.ui.authority.MainAuthority;
 
@@ -64,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private ApkClient apkClient;
     private Context context;
     private LocationService service;
+    private ServiceManager services;
 
 
     private LocationService loc;
@@ -95,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         user = SignInManager.getInstance();
         apkClient = ApkClient.getInstance();
         service = LocationServiceImpl.getInstance(context);
+        services = ServiceManager.getInstance();
     }
 
     private void initializeVariables() {
@@ -146,13 +142,7 @@ public class MainActivity extends AppCompatActivity {
             NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING = true;
         }
 
-        if (Strings.networkServiceShouldRun){
-            if (!Strings.networkServiceIsRunning){
-                Intent serviceIntent = new Intent(this, NetworkChecker.class);
-                ContextCompat.startForegroundService(this, serviceIntent);
-                Strings.networkServiceIsRunning = true;
-            }
-        }
+        services.startServices(context);
     }
 
     private void otherStartupProcedures() {

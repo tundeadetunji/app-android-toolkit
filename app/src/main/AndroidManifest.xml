@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <uses-permission
         android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
         android:minSdkVersion="30" />
@@ -150,11 +151,14 @@
             </intent-filter>
         </service>
 
-        <service android:name=".global.library.app.NetworkChecker"
+        <service android:name=".system.foreground.NetworkChecker"
+            android:foregroundServiceType="dataSync" />
+
+        <service android:name=".system.foreground.WebPageRequestNetworkService"
             android:foregroundServiceType="dataSync" />
 
         <receiver
-            android:name=".system.service.OsBootReceiver"
+            android:name=".system.broadcast.OsBootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

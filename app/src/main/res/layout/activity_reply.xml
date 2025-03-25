@@ -28,12 +28,23 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <!-- Title, secondary and supporting text -->
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Share"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:textAppearance="?attr/textAppearanceHeadline6" />-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/DataTransferSendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="2"
+                app:iconGravity="textStart"
+                app:icon="@drawable/baseline_wifi_24"
+                android:text="share" />
 
             <EditText
                 android:id="@+id/DataTransferSharedTextView"
@@ -67,16 +78,6 @@
                     app:icon="@drawable/baseline_content_copy_24"
                     android:text="" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/DataTransferSendButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="2"
-                    app:iconGravity="textStart"
-                    app:icon="@drawable/baseline_wifi_24"
-                    android:text="" />
 
             </LinearLayout>
 
@@ -98,12 +99,61 @@
             app:layout_constraintTop_toBottomOf="@id/DataTransferLayout">
 
             <!-- Title, secondary and supporting text -->
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Engage"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:textAppearance="?attr/textAppearanceHeadline6" />-->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/engageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                app:iconGravity="textStart"
+                app:icon="@drawable/ic_app"
+                android:text="engage" />
+
+            <LinearLayout
+                android:id="@+id/engageNowLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="0dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/receiveDropDownLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="12"
+                    app:endIconMode="dropdown_menu"
+                    app:startIconDrawable="@drawable/baseline_bolt_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/engageOperationDropDown"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="#000000" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/operationLayout"
@@ -129,55 +179,6 @@
                     android:textColor="#000000" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:id="@+id/engageNowLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="0dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/receiveDropDownLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="12"
-                    app:endIconMode="dropdown_menu"
-                    app:startIconDrawable="@drawable/ic_app"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/engageOperationDropDown"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:inputType="none"
-                        android:maxLines="1"
-                        android:text=""
-                        android:textColor="#000000" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/engageButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    app:iconGravity="textStart"
-                    app:icon="@drawable/ic_check"
-                    android:text="" />
-
-            </LinearLayout>
 
             <ImageView
                 android:id="@+id/engageImageView"
@@ -206,37 +207,24 @@
             app:layout_constraintTop_toBottomOf="@id/engageLayout">
 
             <!-- Title, secondary and supporting text -->
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="Interact"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:textAppearance="?attr/textAppearanceHeadline6" />-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/interactOperationLayout"
-                android:layout_width="match_parent"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/interactNowButton"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_gravity="start"
+                android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                app:endIconMode="dropdown_menu"
-                app:startIconDrawable="@drawable/ic_laptop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <AutoCompleteTextView
-                    android:id="@+id/interactMachineDropDown"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:maxLines="1"
-                    android:inputType="none"
-                    android:text=""
-                    android:textColor="#000000" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1"
+                app:iconGravity="textStart"
+                app:icon="@drawable/ic_check"
+                android:text="interact" />
 
             <LinearLayout
                 android:id="@+id/interactNowLayout"
@@ -272,18 +260,6 @@
                         android:text=""
                         android:textColor="#000000" />
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/interactNowButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_weight="1"
-                    app:iconGravity="textStart"
-                    app:icon="@drawable/ic_check"
-                    android:text="" />
 
 
             </LinearLayout>
@@ -349,6 +325,31 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/interactOperationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="16dp"
+                app:endIconMode="dropdown_menu"
+                app:startIconDrawable="@drawable/ic_laptop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/interactMachineDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:inputType="none"
+                    android:text=""
+                    android:textColor="#000000" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

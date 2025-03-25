@@ -36,8 +36,9 @@ import com.inovationware.toolkit.databinding.FragmentLocalTaskBinding;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.nettimer.domain.NetTimerBistable;
-import com.inovationware.toolkit.nettimer.domain.NetTimerNotifierObject;
+import com.inovationware.toolkit.bistable.verb.BistableCommand;
+import com.inovationware.toolkit.bistable.verb.BistableNotifier;
+import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.ui.activity.MainActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -46,13 +47,10 @@ public class LocalTaskFragment extends Fragment {
     private FragmentLocalTaskBinding binding;
     private View view;
     private SharedPreferencesManager store;
+    private Context context;
 
     ArrayAdapter<String> timeUnitDropdownAdapter, installedAppsDropDownAdapter;
 
-    AutoCompleteTextView regularTimeUnitDropDown, reverseTimeUnitDropDown, regularDropDown, reverseDropDown;
-    TextView regularIntervalTextView, reverseIntervalTextView;
-
-    Button startButton, stopButton;
     private ApkClient strategy;
     private Feedback feedback;
 
@@ -62,134 +60,134 @@ public class LocalTaskFragment extends Fragment {
         binding = FragmentLocalTaskBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
-        feedback = new Feedback(view.getContext());
-        store = SharedPreferencesManager.getInstance();
-        strategy = ApkClient.getInstance();
-        timeUnitDropdownAdapter = configureTimeUnitDropDownAdapter(view.getContext());
-        installedAppsDropDownAdapter = Code.configureInstalledAppsDropDownAdapter(view.getContext());
-
-        regularDropDown = binding.regularDropDown;
-
-        regularTimeUnitDropDown = binding.regularTimeUnitDropDown;
-
-        reverseDropDown = binding.reverseDropDown;
-
-        reverseTimeUnitDropDown = binding.reverseTimeUnitDropDown;
-
-        regularIntervalTextView = binding.regularIntervalTextView;
-        regularIntervalTextView.setText(String.valueOf(5));
-
-        reverseIntervalTextView = binding.reverseIntervalTextView;
-        reverseIntervalTextView.setText(String.valueOf(5));
-
-        stopButton = binding.stopButton;
-        stopButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (netTimerMobileServiceIsRunning) {
-                    if (bistable != null) {
-                        bistable.cancel();
-                        bistable.repeat = false;
-                        bistable = null;
-                    }
-                    netTimerMobileServiceIsRunning = false;
-                }
-                finishThis();
-            }
-        });
-
-        startButton = binding.startButton;
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!thereIsMinimumRequiredInfo()) {
-                    feedback.toast("Some required fields are missing.");
-                    return;
-                }
-                NetTimerNotifierObject regular = NetTimerNotifierObject.builder()
-                        .details(strategy.getUri(binding.regularDropDown.getText().toString()))
-                        .interval(toInterval(regularIntervalTextView.getText().toString()))
-                        .timeUnit(toTimeUnit(regularTimeUnitDropDown.getText().toString()))
-                        .readAloudThisManyTimes(3)
-                        .ttsService(ttsServiceProvider.getService())
-                        .context(view.getContext())
-                        .build();
-
-                NetTimerNotifierObject reverse = reverseIsSet() ?
-                        NetTimerNotifierObject.builder()
-                        .details(strategy.getUri(binding.reverseDropDown.getText().toString()))
-                        .interval(toInterval(reverseIntervalTextView.getText().toString()))
-                        .timeUnit(toTimeUnit(reverseTimeUnitDropDown.getText().toString()))
-                        .readAloudThisManyTimes(3)
-                        .ttsService(ttsServiceProvider.getService())
-                        .context(view.getContext())
-                        .build() :
-                        NetTimerNotifierObject.builder()
-                        .details(strategy.getUri(binding.regularDropDown.getText().toString()))
-                        .interval(toInterval(regularIntervalTextView.getText().toString()))
-                        .timeUnit(toTimeUnit(regularTimeUnitDropDown.getText().toString()))
-                        .readAloudThisManyTimes(3)
-                        .ttsService(ttsServiceProvider.getService())
-                        .context(view.getContext())
-                        .build();
-
-                bistable = new NetTimerBistable(regular, reverse, binding.repeatCheckBox.isChecked());
-                bistable.start();
-                netTimerMobileServiceIsRunning = true;
-                saveSet(!reverseIsSet());
-
-                finishThis();
-            }
-        });
-
-        binding.editRegularButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.regularDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
-                binding.regularDropDown.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(binding.regularDropDown, InputMethodManager.SHOW_IMPLICIT);
-            }
-        });
-
-        binding.editReverseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                binding.reverseDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
-                binding.reverseDropDown.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(binding.reverseDropDown, InputMethodManager.SHOW_IMPLICIT);
-            }
-        });
-
-        loadLastSet();
-
+        setupReferences();
+        setupListeners();
+        setupUi();
 
         return view;
     }
 
 
-    private void finishThis() {
-        startActivity(new Intent(view.getContext(), MainActivity.class));
+    private void setupReferences() {
+        context = view.getContext();
+        feedback = new Feedback(view.getContext());
+        store = SharedPreferencesManager.getInstance();
+        strategy = ApkClient.getInstance();
+        timeUnitDropdownAdapter = configureTimeUnitDropDownAdapter(view.getContext());
+        installedAppsDropDownAdapter = Code.configureInstalledAppsDropDownAdapter(view.getContext());
+    }
+    private void setupListeners(){
+        binding.startButton.setOnClickListener(startButtonHandler);
+        binding.stopButton.setOnClickListener(stopButtonHandler);
+        binding.editRegularButton.setOnClickListener(editRegularButtonHandler);
+        binding.editReverseButton.setOnClickListener(editReverseButtonHandler);
     }
 
+    private void setupUi() {
+        binding.regularIntervalTextView.setText(String.valueOf(5));
+        binding.reverseIntervalTextView.setText(String.valueOf(5));
+        loadLastSet();
+    }
+    //begin listeners
+    private final View.OnClickListener startButtonHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!thereIsMinimumRequiredInfo()) {
+                feedback.toast("Some required fields are missing.");
+                return;
+            }
+            BistableNotifier regular = BistableNotifier.builder()
+                    .details(strategy.getUri(binding.regularDropDown.getText().toString()))
+                    .interval(toInterval(binding.regularIntervalTextView.getText().toString()))
+                    .timeUnit(toTimeUnit(binding.regularTimeUnitDropDown.getText().toString()))
+                    .readAloudThisManyTimes(3)
+                    .ttsService(ttsServiceProvider.getService())
+                    .context(view.getContext())
+                    .build();
 
-    void loadLastSet() {
+            BistableNotifier reverse = reverseIsSet() ?
+                    BistableNotifier.builder()
+                            .details(strategy.getUri(binding.reverseDropDown.getText().toString()))
+                            .interval(toInterval(binding.reverseIntervalTextView.getText().toString()))
+                            .timeUnit(toTimeUnit(binding.reverseTimeUnitDropDown.getText().toString()))
+                            .readAloudThisManyTimes(3)
+                            .ttsService(ttsServiceProvider.getService())
+                            .context(view.getContext())
+                            .build() :
+                    BistableNotifier.builder()
+                            .details(strategy.getUri(binding.regularDropDown.getText().toString()))
+                            .interval(toInterval(binding.regularIntervalTextView.getText().toString()))
+                            .timeUnit(toTimeUnit(binding.regularTimeUnitDropDown.getText().toString()))
+                            .readAloudThisManyTimes(3)
+                            .ttsService(ttsServiceProvider.getService())
+                            .context(view.getContext())
+                            .build();
+
+            bistable = new BistableCommand(regular, reverse, binding.repeatCheckBox.isChecked());
+            bistable.start();
+            netTimerMobileServiceIsRunning = true;
+            saveSet(!reverseIsSet());
+
+            finishThis();
+        }
+    };
+
+    private final View.OnClickListener stopButtonHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            if (netTimerMobileServiceIsRunning) {
+                if (bistable != null) {
+                    bistable.cancel();
+                    bistable.repeat = false;
+                    bistable = null;
+                }
+                netTimerMobileServiceIsRunning = false;
+            }
+            finishThis();
+
+        }
+    };
+
+    private final View.OnClickListener editRegularButtonHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            binding.regularDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
+            binding.regularDropDown.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(binding.regularDropDown, InputMethodManager.SHOW_IMPLICIT);
+        }
+    };
+
+    private final View.OnClickListener editReverseButtonHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            binding.reverseDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
+            binding.reverseDropDown.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(binding.reverseDropDown, InputMethodManager.SHOW_IMPLICIT);
+        }
+    };
+
+    private void finishThis() {
+        Support.getOutOfThere(view.getContext());
+    }
+
+    private void loadLastSet() {
 
         binding.regularDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR));
         binding.regularDropDown.setAdapter(installedAppsDropDownAdapter);
 
-        regularIntervalTextView.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY, "5"));
-        regularTimeUnitDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY, MINUTES_CAPITALIZED));
-        regularTimeUnitDropDown.setAdapter(timeUnitDropdownAdapter);
+        binding.regularIntervalTextView.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY, "5"));
+        binding.regularTimeUnitDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY, MINUTES_CAPITALIZED));
+        binding.regularTimeUnitDropDown.setAdapter(timeUnitDropdownAdapter);
 
         //binding.reverseDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE));
         binding.reverseDropDown.setAdapter(installedAppsDropDownAdapter);
 
-        reverseIntervalTextView.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY, "5"));
-        reverseTimeUnitDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY, MINUTES_CAPITALIZED));
-        reverseTimeUnitDropDown.setAdapter(timeUnitDropdownAdapter);
+        binding.reverseIntervalTextView.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY, "5"));
+        binding.reverseTimeUnitDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY, MINUTES_CAPITALIZED));
+        binding.reverseTimeUnitDropDown.setAdapter(timeUnitDropdownAdapter);
 
         binding.repeatCheckBox.setChecked(store.getChecked(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REPEAT_KEY, true));
 
@@ -200,11 +198,11 @@ public class LocalTaskFragment extends Fragment {
         store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR, binding.regularDropDown.getText().toString());
         store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE, binding.reverseDropDown.getText().toString());
 
-        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY, regularIntervalTextView.getText().toString());
-        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY, reverseIntervalTextView.getText().toString());
+        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY, binding.regularIntervalTextView.getText().toString());
+        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY, binding.reverseIntervalTextView.getText().toString());
 
-        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY, regularTimeUnitDropDown.getText().toString());
-        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY, reverseTimeUnitDropDown.getText().toString());
+        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY, binding.regularTimeUnitDropDown.getText().toString());
+        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY, binding.reverseTimeUnitDropDown.getText().toString());
     }
 
     private boolean thereIsMinimumRequiredInfo() {
@@ -213,8 +211,8 @@ public class LocalTaskFragment extends Fragment {
 
     private boolean regularIsSet() {
         return !isNothing(binding.regularDropDown.getText().toString()) &&
-                !isNothing(regularIntervalTextView.getText().toString()) &&
-                !isNothing(regularTimeUnitDropDown.getText().toString());
+                !isNothing(binding.regularIntervalTextView.getText().toString()) &&
+                !isNothing(binding.regularTimeUnitDropDown.getText().toString());
     }
 
     private boolean reverseIsSet() {
@@ -236,7 +234,6 @@ public class LocalTaskFragment extends Fragment {
 
     private final int READ_ALOUD_REPEAT_COUNT_MIN = 1;
     private final int READ_ALOUD_REPEAT_COUNT_MAX = 5;
-
     private final long INTERVAL_MIN = 1;
 
     @Override
