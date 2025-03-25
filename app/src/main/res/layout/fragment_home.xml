@@ -300,7 +300,7 @@
                             android:layout_marginEnd="8dp"
                             android:layout_weight="2"
                             app:iconGravity="textStart"
-                            app:icon="@drawable/baseline_event_repeat_24"
+                            app:icon="@drawable/baseline_published_with_changes_24"
                             android:text="" />
 
                         <com.google.android.material.button.MaterialButton
