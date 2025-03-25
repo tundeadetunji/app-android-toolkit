@@ -67,7 +67,6 @@ public class LocalTaskFragment extends Fragment {
         return view;
     }
 
-
     private void setupReferences() {
         context = view.getContext();
         feedback = new Feedback(view.getContext());
