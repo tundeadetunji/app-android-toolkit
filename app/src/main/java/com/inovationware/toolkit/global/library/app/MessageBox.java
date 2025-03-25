@@ -9,9 +9,11 @@ import lombok.Setter;
 public abstract class MessageBox {
 
     private String title = "";
-    public void SetTitle(String title){
+
+    public void SetTitle(String title) {
         this.title = title;
     }
+
     @Setter
     private String message = "Proceed?";
     @Setter
@@ -20,14 +22,33 @@ public abstract class MessageBox {
     private String negativeButtonText = "No";
     private boolean negativeButton = true;
 
+    public MessageBox(String message, String positiveButtonText, String negativeButtonText) {
+        this.message = message;
+        this.positiveButtonText = positiveButtonText;
+        this.negativeButtonText = negativeButtonText;
+        this.negativeButton = true;
+    }
+
+    public MessageBox(String message, String positiveButtonText, String negativeButtonText, boolean showNegativeButton) {
+        this.message = message;
+        this.positiveButtonText = positiveButtonText;
+        this.negativeButtonText = negativeButtonText;
+        this.negativeButton = showNegativeButton;
+    }
+
+    public MessageBox(){
+
+    }
 
     public abstract void positiveButtonAction();
+
     public abstract void negativeButtonAction();
 
     public void show(Context context) {
         buildDialog(context).create().show();
     }
-    public void showNegativeButton(boolean value){
+
+    public void showNegativeButton(boolean value) {
         negativeButton = value;
     }
 

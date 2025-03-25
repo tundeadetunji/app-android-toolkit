@@ -30,7 +30,7 @@ import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
-import com.inovationware.toolkit.system.service.ServiceManager;
+import com.inovationware.toolkit.system.service.ToolkitServiceManager;
 import com.inovationware.toolkit.location.service.LocationService;
 import com.inovationware.toolkit.notification.service.PushNotificationService;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private ApkClient apkClient;
     private Context context;
     private LocationService service;
-    private ServiceManager services;
+    private ToolkitServiceManager services;
 
 
     private LocationService loc;
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         user = SignInManager.getInstance();
         apkClient = ApkClient.getInstance();
         service = LocationServiceImpl.getInstance(context);
-        services = ServiceManager.getInstance();
+        services = ToolkitServiceManager.getInstance();
     }
 
     private void initializeVariables() {

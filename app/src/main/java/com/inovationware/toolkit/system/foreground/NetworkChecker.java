@@ -30,7 +30,9 @@ import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.system.foreground.utility.ForegroundServiceUtility;
 import com.inovationware.toolkit.ui.activity.AdvancedSettingsActivity;
+import com.inovationware.toolkit.ui.activity.StopServiceActivity;
 
 import lombok.SneakyThrows;
 import retrofit2.Call;
@@ -40,8 +42,8 @@ import retrofit2.Response;
 public class NetworkChecker extends Service {
     private static final int NOTIFICATION_ID = 900;
     private static final long INTERVAL = 5000;
-    private final String CHANNEL_ID = "NETWORK_CHECKER_CHANNEL_ID";
-    private final String CHANNEL_NAME = "NETWORK_CHECKER_CHANNEL";
+    private final String CHANNEL_ID = "Requests";
+    private final String CHANNEL_NAME = "Requests Channel";
     private Handler mainHandler;
     private Runnable mainHandlerRunnable;
     private Handler webPageHandler;
@@ -196,32 +198,20 @@ public class NetworkChecker extends Service {
     }
 
     private Notification createNotification() {
-        Intent stopServiceIntent = new Intent(this, AdvancedSettingsActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, stopServiceIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
-
-        // Create a notification for the foreground service
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setContentTitle("Network Service")
-                .setContentText("Tap to stop network services from Data Transfer...")
-                .setSmallIcon(R.mipmap.ic_launcher_round)
-                .setContentIntent(pendingIntent) // Set the intent that fires when the user taps the notification
-                .setPriority(NotificationCompat.PRIORITY_LOW);
-
-        return builder.build();
+        return ForegroundServiceUtility.createNotification(
+                this,
+                StopServiceActivity.class,
+                "Requests",
+                "Tap to stop receiving requests from base automatically...",
+                CHANNEL_ID
+        );
     }
 
     private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel serviceChannel = new NotificationChannel(
-                    CHANNEL_ID,
-                    CHANNEL_NAME,
-                    NotificationManager.IMPORTANCE_DEFAULT
-            );
-
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            if (manager != null) {
-                manager.createNotificationChannel(serviceChannel);
-            }
-        }
+        ForegroundServiceUtility.createNotificationChannel(
+                this,
+                CHANNEL_ID,
+                CHANNEL_NAME
+        );
     }
 }

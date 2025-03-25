@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.InputType;
@@ -27,11 +28,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.inovationware.generalmodule.Feedback;
+import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.databinding.FragmentLocalTaskBinding;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
@@ -39,15 +38,19 @@ import com.inovationware.toolkit.global.library.utility.Code;
 import com.inovationware.toolkit.bistable.verb.BistableCommand;
 import com.inovationware.toolkit.bistable.verb.BistableNotifier;
 import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.ui.activity.MainActivity;
+import com.inovationware.toolkit.system.foreground.LocalTaskService;
 
 import java.util.concurrent.TimeUnit;
 
 public class LocalTaskFragment extends Fragment {
+    private final int READ_ALOUD_REPEAT_COUNT_MIN = 1;
+    private final int READ_ALOUD_REPEAT_COUNT_MAX = 5;
+    private final long INTERVAL_MIN = 1;
     private FragmentLocalTaskBinding binding;
     private View view;
     private SharedPreferencesManager store;
     private Context context;
+    private BistableManager manager;
 
     ArrayAdapter<String> timeUnitDropdownAdapter, installedAppsDropDownAdapter;
 
@@ -67,6 +70,7 @@ public class LocalTaskFragment extends Fragment {
         return view;
     }
 
+    //begin setup
     private void setupReferences() {
         context = view.getContext();
         feedback = new Feedback(view.getContext());
@@ -74,6 +78,7 @@ public class LocalTaskFragment extends Fragment {
         strategy = ApkClient.getInstance();
         timeUnitDropdownAdapter = configureTimeUnitDropDownAdapter(view.getContext());
         installedAppsDropDownAdapter = Code.configureInstalledAppsDropDownAdapter(view.getContext());
+        manager = new BistableManager();
     }
     private void setupListeners(){
         binding.startButton.setOnClickListener(startButtonHandler);
@@ -83,10 +88,14 @@ public class LocalTaskFragment extends Fragment {
     }
 
     private void setupUi() {
+        // Todo check if this starts everytime or has to move to init
         binding.regularIntervalTextView.setText(String.valueOf(5));
         binding.reverseIntervalTextView.setText(String.valueOf(5));
         loadLastSet();
+        setButtons(netTimerMobileServiceIsRunning);
     }
+    //end setup
+
     //begin listeners
     private final View.OnClickListener startButtonHandler = new View.OnClickListener() {
         @Override
@@ -95,6 +104,9 @@ public class LocalTaskFragment extends Fragment {
                 feedback.toast("Some required fields are missing.");
                 return;
             }
+
+            manager.stop();
+
             BistableNotifier regular = BistableNotifier.builder()
                     .details(strategy.getUri(binding.regularDropDown.getText().toString()))
                     .interval(toInterval(binding.regularIntervalTextView.getText().toString()))
@@ -123,28 +135,28 @@ public class LocalTaskFragment extends Fragment {
                             .build();
 
             bistable = new BistableCommand(regular, reverse, binding.repeatCheckBox.isChecked());
-            bistable.start();
-            netTimerMobileServiceIsRunning = true;
             saveSet(!reverseIsSet());
-
-            finishThis();
+            startForegroundService();
+            // bistable.start();
+            // netTimerMobileServiceIsRunning = true;
+            // finishThis();
         }
     };
+
+    private void startForegroundService(){
+        ContextCompat.startForegroundService(context, new Intent(context, LocalTaskService.class));
+        netTimerMobileServiceIsRunning = true;
+        setButtons(true);
+        finishThis(true);
+    }
 
     private final View.OnClickListener stopButtonHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
-            if (netTimerMobileServiceIsRunning) {
-                if (bistable != null) {
-                    bistable.cancel();
-                    bistable.repeat = false;
-                    bistable = null;
-                }
-                netTimerMobileServiceIsRunning = false;
-            }
-            finishThis();
-
+            manager.stop();
+            manager.stopForegroundService(context);
+            setButtons(false);
+            finishThis(false);
         }
     };
 
@@ -168,7 +180,10 @@ public class LocalTaskFragment extends Fragment {
         }
     };
 
-    private void finishThis() {
+    //end listeners
+
+    //begin support
+    private void finishThis(boolean isStarting) {
         Support.getOutOfThere(view.getContext());
     }
 
@@ -230,14 +245,21 @@ public class LocalTaskFragment extends Fragment {
         return value.equalsIgnoreCase(MINUTES_CAPITALIZED) ? TimeUnit.MINUTES : value.equalsIgnoreCase(HOURS_CAPITALIZED) ? TimeUnit.HOURS : TimeUnit.SECONDS;
     }
 
+    private void setButtons(boolean isStartingOrStarted){
+        binding.editRegularButton.setEnabled(!isStartingOrStarted);
+        binding.editReverseButton.setEnabled(!isStartingOrStarted);
+        binding.startButton.setEnabled(!isStartingOrStarted);
+        binding.stopButton.setEnabled(isStartingOrStarted);
+    }
 
-    private final int READ_ALOUD_REPEAT_COUNT_MIN = 1;
-    private final int READ_ALOUD_REPEAT_COUNT_MAX = 5;
-    private final long INTERVAL_MIN = 1;
+    //end support
 
+    //begin overrides
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
+    //end overrides
+
 }

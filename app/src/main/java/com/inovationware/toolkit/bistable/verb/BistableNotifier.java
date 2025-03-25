@@ -8,6 +8,8 @@ import android.speech.tts.TextToSpeech;
 
 import java.util.concurrent.TimeUnit;
 
+import lombok.Getter;
+
 public class BistableNotifier implements Runnable {
     private Context context;
     private String details;

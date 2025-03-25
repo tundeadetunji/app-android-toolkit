@@ -18,13 +18,11 @@ import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.system.foreground.NetworkChecker;
 import com.inovationware.toolkit.global.library.app.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SiteManager;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.repository.Repo;
-import com.inovationware.toolkit.system.service.ServiceManager;
 
 import lombok.SneakyThrows;
 import retrofit2.Call;
@@ -58,7 +56,6 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
     private Factory factory;
 
     private Feedback feedback;
-    private ServiceManager services;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +76,6 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
         sites = SiteManager.getInstance(getApplicationContext());
         feedback = new Feedback(getApplicationContext());
         factory = Factory.getInstance();
-        services = ServiceManager.getInstance();
 
     }
 
@@ -102,7 +98,6 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
         binding.resetSearchSitesButton.setOnClickListener(resetSearchSitesButtonHandler);
         binding.resetNotesButton.setOnClickListener(resetNotesButtonHandler);
         binding.saveLinksButton.setOnClickListener(saveLinksButtonHandler);
-        binding.stopNetworkServiceButton.setOnClickListener(stopNetworkServiceButtonHandler);
 
         /*resetLocalTasksKeysButton = findViewById(R.id.resetLocalTasksKeysButton);
         resetLocalTasksKeysButton.setOnClickListener(new View.OnClickListener() {
@@ -162,28 +157,6 @@ public class AdvancedSettingsActivity extends AppCompatActivity {
         setEncryptionDetails();
         setGithubDetails();
     }
-
-    private final View.OnClickListener stopNetworkServiceButtonHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            MessageBox template = new MessageBox() {
-                @Override
-                public void positiveButtonAction() {
-                    services.stopServices(AdvancedSettingsActivity.this);
-                    getOutOfThere(AdvancedSettingsActivity.this);
-                }
-
-                @Override
-                public void negativeButtonAction() {
-
-                }
-            };
-            template.setMessage("Really stop constantly listening for relevant information?");
-            template.setPositiveButtonText(Strings.sure);
-            template.setNegativeButtonText(Strings.never_mind);
-            template.show(AdvancedSettingsActivity.this);
-        }
-    };
 
     private final View.OnClickListener saveLinksButtonHandler = new View.OnClickListener() {
         @Override

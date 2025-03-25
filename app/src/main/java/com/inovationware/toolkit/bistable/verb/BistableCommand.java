@@ -1,5 +1,13 @@
 package com.inovationware.toolkit.bistable.verb;
 
+import static com.inovationware.toolkit.global.domain.Strings.bistable;
+import static com.inovationware.toolkit.global.domain.Strings.netTimerMobileServiceIsRunning;
+import static com.inovationware.toolkit.global.domain.Strings.ttsServiceProvider;
+
+import android.content.Context;
+
+import com.inovationware.toolkit.bistable.service.BistableManager;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +33,6 @@ public class BistableCommand {
         this.reverse.setBistable(this);
 
     }
-
     public void start(){
         startRegular();
     }
@@ -44,6 +51,7 @@ public class BistableCommand {
         this.repeat = false;
         cancelRegular();
         cancelReverse();
+        netTimerMobileServiceIsRunning = false;
     }
 
     public void cancelRegular() {
