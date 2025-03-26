@@ -31,7 +31,12 @@ public class Strings {
     public static final String WELCOME = "Welcome";
     public static final String yes = "Yes";
     public static final String Method_Not_Supported_Yet = "This method is not supported yet.";
-    public static final String sure = "Yes";
+    public static final String sure = "Sure";
+    public static final String exactly = "Exactly!";
+    public static final String no = "No";
+    public static final String ok = "OK";
+    public static final String gotIt = "Got It";
+    public static final String cancel = "Cancel";
     public static final String never_mind = "Never mind";
 
     public static final String PostHeaderFilename = "PostFileName";
