@@ -23,6 +23,7 @@ import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SiteManager;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import lombok.SneakyThrows;
 import retrofit2.Call;
@@ -48,7 +49,7 @@ import static com.inovationware.toolkit.global.library.utility.Support.determine
 import static com.inovationware.toolkit.global.library.utility.Support.getOutOfThere;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
-public class AdvancedSettingsActivity extends AppCompatActivity {
+public class AdvancedSettingsActivity extends BaseActivity {
     private ActivityAdvancedSettingsBinding binding;
     private SharedPreferencesManager store;
     private GroupManager machines;

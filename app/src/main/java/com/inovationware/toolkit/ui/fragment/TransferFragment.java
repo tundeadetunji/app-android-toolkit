@@ -39,7 +39,7 @@ import com.inovationware.toolkit.global.repository.Repo;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.memo.service.MemoService;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
-import com.inovationware.toolkit.ui.authority.TransferAuthority;
+import com.inovationware.toolkit.ui.support.TransferAuthority;
 import com.inovationware.toolkit.ui.memento.UiMemento;
 
 import java.io.IOException;

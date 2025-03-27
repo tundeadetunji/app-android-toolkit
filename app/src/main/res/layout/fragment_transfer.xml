@@ -276,7 +276,7 @@
                         android:layout_marginEnd="0dp"
                         android:layout_marginRight="0dp"
                         android:layout_weight="1"
-                        android:textColor="@color/pinky_primary_200"
+                        android:textColor="?attr/colorPrimary"
                         android:text="Open in browser on receive" />
 
                     <CheckBox
@@ -289,7 +289,7 @@
                         android:layout_marginEnd="0dp"
                         android:layout_marginRight="0dp"
                         android:layout_weight="1"
-                        android:textColor="@color/pinky_primary_200"
+                        android:textColor="?attr/colorPrimary"
                         android:text="Receive update every 5 seconds" />
 
 
@@ -332,7 +332,7 @@
                         android:layout_marginEnd="0dp"
                         android:layout_marginRight="0dp"
                         android:layout_weight="1"
-                        android:textColor="@color/pinky_primary_200"
+                        android:textColor="?attr/colorPrimary"
                         android:text="Copy to clipboard on receive" />
 
                     <CheckBox
@@ -345,7 +345,7 @@
                         android:layout_marginEnd="0dp"
                         android:layout_marginRight="0dp"
                         android:layout_weight="1"
-                        android:textColor="@color/pinky_primary_200"
+                        android:textColor="?attr/colorPrimary"
                         android:text="Read out loud on \nreceive" />
 
 
@@ -381,6 +381,7 @@
             android:layout_marginTop="16dp"
             android:layout_gravity="center"
             android:text="Nothing received yet"
+            android:textColor="?attr/colorPrimary"
             android:textSize="18sp"
             app:layout_constraintTop_toBottomOf="@+id/transferOptionsCard" />
 

@@ -40,10 +40,11 @@ import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.library.utility.Ui;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 
-public class GitHubActivity extends AppCompatActivity {
+public class GitHubActivity extends BaseActivity {
     private ActivityGitHubBinding binding;
     private Resolver resolver;
     private SharedPreferencesManager store;

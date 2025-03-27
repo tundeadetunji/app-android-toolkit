@@ -44,6 +44,7 @@ import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.memo.service.MemoService;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -51,7 +52,7 @@ import java.time.format.DateTimeFormatter;
 
 import lombok.SneakyThrows;
 
-public class ConverterActivity extends AppCompatActivity {
+public class ConverterActivity extends BaseActivity {
     private ActivityConverterBinding binding;
     private ConverterService service;
     private DeviceClient device;

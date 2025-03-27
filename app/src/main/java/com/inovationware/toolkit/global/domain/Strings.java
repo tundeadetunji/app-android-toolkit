@@ -58,6 +58,14 @@ public class Strings {
     public static final String SHARED_PREFERENCES_BASE_URL_KEY = "BASE_URL";
     public static final String SHARED_PREFERENCES_ID_KEY = "ID";
     public static final String SHARED_PREFERENCES_MACHINES_KEY = "MACHINES";
+    public static final String SHARED_PREFERENCES_THEME_KEY = "THEME";
+    public static final String PINKY = "Pinky";
+    public static final String DARKER = "Darker";
+    public static final String NATURAL = "Natural";
+    public static final String TAN = "Tan";
+    public static final String CHOSEN = "Chosen";
+    public static final String WARM = "Warm";
+    public static final String FLUORITE = "Fluorite";
     public static final String SHARED_PREFERENCES_SITES_KEY = "SITES";
     public static final String SHARED_PREFERENCES_DEFAULT_DEVICE = "DEFAULT_MACHINE";
     public static final String SHARED_PREFERENCES_TARGET_MODE = "TARGET_MODE";

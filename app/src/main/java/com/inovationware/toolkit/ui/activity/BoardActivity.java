@@ -37,6 +37,7 @@ import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.ui.adapter.BoardRecyclerViewAdapter;
 import com.inovationware.toolkit.ui.adapter.LinkRecyclerViewAdapter;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -46,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BoardActivity extends AppCompatActivity {
+public class BoardActivity extends BaseActivity {
     private MeetingServiceImpl service;
     private ActivityBoardBinding binding;
     private Context context;

@@ -45,10 +45,11 @@ import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
 import com.inovationware.toolkit.ui.adapter.VocabularyRecyclerViewAdapter;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 
-public class CodeActivity extends AppCompatActivity {
+public class CodeActivity extends BaseActivity {
     private ActivityCodeBinding binding;
     private View view;
     private Factory factory = Factory.getInstance();

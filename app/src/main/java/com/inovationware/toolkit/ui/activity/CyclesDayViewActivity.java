@@ -50,13 +50,14 @@ import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
 import com.inovationware.toolkit.scheduler.model.Schedule;
 import com.inovationware.toolkit.scheduler.service.impl.GCalendarIntentService;
 import com.inovationware.toolkit.scheduler.strategy.impl.GCalendarIntentStrategy;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class CyclesDayViewActivity extends AppCompatActivity {
+public class CyclesDayViewActivity extends BaseActivity {
 
     private ActivityCyclesDayViewBinding binding;
     private Ui ui;

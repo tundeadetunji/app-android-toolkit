@@ -35,7 +35,10 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/CustomTheme">
+        android:theme="@style/Pinky">
+        <activity
+            android:name=".ui.contract.BaseActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activity.StopServiceActivity"
             android:exported="false"

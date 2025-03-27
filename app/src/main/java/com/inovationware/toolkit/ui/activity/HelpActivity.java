@@ -8,8 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.inovationware.toolkit.databinding.ActivityHelpBinding;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
-public class HelpActivity extends AppCompatActivity {
+public class HelpActivity extends BaseActivity {
     private ActivityHelpBinding binding;
     private Context context;
     private WebView webView;

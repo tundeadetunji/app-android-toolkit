@@ -33,6 +33,7 @@
             android:text="Headline"
             android:textSize="18sp"
             android:textStyle="bold"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/imageMore"
             app:layout_constraintStart_toEndOf="@+id/imagePic"
             app:layout_constraintTop_toTopOf="parent" />

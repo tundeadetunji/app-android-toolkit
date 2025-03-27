@@ -25,6 +25,7 @@ import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.utility.Code;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
@@ -37,7 +38,7 @@ import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SENDER;
 import static com.inovationware.toolkit.global.library.utility.Support.*;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends BaseActivity {
     private ActivitySettingsBinding binding;
     private Factory factory;
     private GroupManager machines;

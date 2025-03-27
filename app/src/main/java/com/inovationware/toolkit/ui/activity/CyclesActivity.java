@@ -67,13 +67,14 @@ import com.inovationware.toolkit.profile.strategy.ProfileManager;
 import com.inovationware.toolkit.scheduler.model.Schedule;
 import com.inovationware.toolkit.scheduler.service.impl.GCalendarIntentService;
 import com.inovationware.toolkit.scheduler.strategy.impl.GCalendarIntentStrategy;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CyclesActivity extends AppCompatActivity implements DetailViewSource, ProfileViewSource, LanguageViewSource {
+public class CyclesActivity extends BaseActivity implements DetailViewSource, ProfileViewSource, LanguageViewSource {
 
     private ActivityCyclesBinding binding;
     private Ui ui;

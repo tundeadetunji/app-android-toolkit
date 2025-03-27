@@ -29,6 +29,7 @@ import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.global.repository.Repo;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -56,7 +57,7 @@ import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
-public class NetTimerResponseActivity extends AppCompatActivity {
+public class NetTimerResponseActivity extends BaseActivity {
     private GroupManager machines;
     private SharedPreferencesManager store;
 

@@ -14,17 +14,33 @@
     <color name="pinky_secondary_200">#42173b</color>
     <color name="pinky_secondary_700">#611454</color>
 
-    <color name="darker_primary_200">#d170c1</color>
-    <color name="darker_primary_500">#aa0e90</color>
-    <color name="darker_primary_700">#81016c</color>
-    <color name="darker_secondary_200">#42173b</color>
-    <color name="darker_secondary_700">#611454</color>
+    <color name="darker_primary_200">#B0B0B0</color>  <!-- Light Gray -->
+    <color name="darker_primary_500">#7D7D7D</color>  <!-- Medium Gray -->
+    <color name="darker_primary_700">#4A4A4A</color>  <!-- Dark Gray -->
+    <color name="darker_secondary_200">#2C2C2C</color> <!-- Darker Gray -->
+    <color name="darker_secondary_700">#1A1A1A</color> <!-- Very Dark Gray -->
 
-    <color name="natural_primary_200">#d170c1</color>
-    <color name="natural_primary_500">#aa0e90</color>
-    <color name="natural_primary_700">#81016c</color>
-    <color name="natural_secondary_200">#42173b</color>
-    <color name="natural_secondary_700">#611454</color>
+    <color name="natural_primary_200">#A8D5BA</color>  <!-- Light Green -->
+    <color name="natural_primary_500">#4B8B3B</color>  <!-- Medium Green -->
+    <color name="natural_primary_700">#2E5D2B</color>  <!-- Dark Green -->
+    <color name="natural_secondary_200">#3B5A3A</color> <!-- Dark Olive Green -->
+    <color name="natural_secondary_700">#1F3A1F</color> <!-- Very Dark Green -->
 
+    <color name="brown_primary_200">#D7B49B</color>  <!-- Light Brown -->
+    <color name="brown_primary_500">#8B5A2B</color>  <!-- Medium Brown -->
+    <color name="brown_primary_700">#5B3A29</color>  <!-- Dark Brown -->
+    <color name="brown_secondary_200">#4E3B31</color> <!-- Darker Brown -->
+    <color name="brown_secondary_700">#3B2A24</color> <!-- Very Dark Brown -->
 
+    <color name="orange_primary_200">#FFB74D</color>  <!-- Light Orange -->
+    <color name="orange_primary_500">#FF9800</color>  <!-- Medium Orange -->
+    <color name="orange_primary_700">#E65100</color>  <!-- Dark Orange -->
+    <color name="orange_secondary_200">#FF6F20</color> <!-- Darker Orange -->
+    <color name="orange_secondary_700">#BF360C</color> <!-- Very Dark Orange -->
+
+    <color name="purple_primary_200">#D1C4E9</color>  <!-- Light Purple -->
+    <color name="purple_primary_500">#673AB7</color>  <!-- Medium Purple -->
+    <color name="purple_primary_700">#512DA8</color>  <!-- Dark Purple -->
+    <color name="purple_secondary_200">#9575CD</color> <!-- Lighter Purple -->
+    <color name="purple_secondary_700">#311B92</color> <!-- Very Dark Purple -->
 </resources>

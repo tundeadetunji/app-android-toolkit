@@ -18,8 +18,9 @@ import com.google.android.gms.tasks.Task;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityLoginBinding;
 import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private ActivityLoginBinding binding;
 
     private static final int RC_SIGN_IN = 0;

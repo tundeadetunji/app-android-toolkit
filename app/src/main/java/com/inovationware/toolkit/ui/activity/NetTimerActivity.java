@@ -22,6 +22,7 @@ import com.inovationware.toolkit.ui.adapter.NetTimerObjectRecyclerViewAdapter;
 import com.inovationware.toolkit.nettimer.model.NetTimerObject;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,7 +34,7 @@ import static com.inovationware.toolkit.global.domain.Strings.net_timer_objects;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
-public class NetTimerActivity extends AppCompatActivity {
+public class NetTimerActivity extends BaseActivity {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;

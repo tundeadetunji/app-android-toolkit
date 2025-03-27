@@ -104,6 +104,14 @@ public class SharedPreferencesManager {
         baseUrlTextView.setText("");
     }
 
+    public String getTheme(Context context){
+        return getString(context, Strings.SHARED_PREFERENCES_THEME_KEY, Strings.PINKY);
+    }
+
+    public void setTheme(Context context, String value){
+        setString(context, Strings.SHARED_PREFERENCES_THEME_KEY, value);
+    }
+
     public boolean shouldAppendUuidToOutput(Context context){
         return getChecked(context, SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING, true);
     }

@@ -20,12 +20,13 @@ import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.profile.model.Profile;
 import com.inovationware.toolkit.profile.strategy.ProfileManager;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ProfilerActivity extends AppCompatActivity {
+public class ProfilerActivity extends BaseActivity {
 
     private ActivityProfilerBinding binding;
     private ProfileManager profiler;

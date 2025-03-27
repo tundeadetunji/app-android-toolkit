@@ -12,8 +12,9 @@ import android.widget.TextView;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityAboutBinding;
 import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends BaseActivity {
 
     TextView captionTextView;
     Button openProfileButton;

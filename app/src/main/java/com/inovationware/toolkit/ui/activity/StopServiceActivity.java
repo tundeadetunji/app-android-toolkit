@@ -21,8 +21,9 @@ import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.system.service.ToolkitServiceManager;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
-public class StopServiceActivity extends AppCompatActivity {
+public class StopServiceActivity extends BaseActivity {
 
     ActivityStopServiceBinding binding;
     private Context context;

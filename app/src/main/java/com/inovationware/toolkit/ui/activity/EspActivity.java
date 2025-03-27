@@ -48,11 +48,12 @@ import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 import java.util.List;
 
-public class EspActivity extends AppCompatActivity {
+public class EspActivity extends BaseActivity {
     private ActivityEspBinding binding;
     private Ui ui;
     private Context context;

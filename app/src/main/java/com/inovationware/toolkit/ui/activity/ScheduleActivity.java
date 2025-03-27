@@ -28,6 +28,7 @@ import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.schedule.model.Schedule;
 import com.inovationware.toolkit.schedule.model.ScheduleViewSource;
 import com.inovationware.toolkit.schedule.utility.ScheduleUtility;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,7 +37,7 @@ import java.util.Set;
 
 import lombok.SneakyThrows;
 
-public class ScheduleActivity extends AppCompatActivity implements ScheduleViewSource {
+public class ScheduleActivity extends BaseActivity implements ScheduleViewSource {
 
     private ActivityScheduleBinding binding;
     private Set<String> programs;

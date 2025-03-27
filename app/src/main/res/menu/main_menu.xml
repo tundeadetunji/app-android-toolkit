@@ -2,70 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:id="@+id/regular">
-        <item
-            android:id="@+id/pcMainMenuItem"
-            android:icon="@drawable/ic_laptop"
-            android:title="PC"
-            android:visible="false"
-            app:showAsAction="never" />
-
-        <item
-            android:id="@+id/tasksMainMenuItem"
-            android:icon="@drawable/ic_add_task"
-            android:title="Tasks"
-            android:visible="false"
-            app:showAsAction="never" />
-
+    <group android:id="@+id/board">
         <item
             android:id="@+id/boardMainMenuItem"
             android:icon="@drawable/baseline_comment_bank_24"
-            android:title="Meeting"
+            android:title="Meeting..."
             android:visible="false"
             app:showAsAction="never" />
     </group>
-
-    <group android:id="@+id/sync">
-
-        <item
-            android:id="@+id/cyclesMainMenuItem"
-            android:icon="@drawable/baseline_event_repeat_24"
-            android:title="Cycles"
-            android:visible="false"
-            app:showAsAction="never" />
-
-        <item
-            android:id="@+id/schedulesMainMenuItem"
-            android:icon="@drawable/baseline_event_repeat_24"
-            android:title="Scheduler"
-            android:visible="false"
-            app:showAsAction="never" />
-
-    </group>
-
-    <group android:id="@+id/code">
-        <item
-            android:id="@+id/codeMainMenuItem"
-            android:icon="@drawable/baseline_code_24"
-            android:title="Code"
-            android:visible="false"
-            app:showAsAction="never" />
-        <item
-            android:id="@+id/configMainMenuItem"
-            android:icon="@drawable/baseline_memory_24"
-            android:title="ESP Config"
-            android:visible="false"
-            app:showAsAction="never" />
-    </group>
-
     <group android:id="@+id/settings">
+        <item
+            android:id="@+id/themeMainMenuItem"
+            android:icon="@drawable/baseline_palette_24"
+            android:title="Theme"
+            app:showAsAction="never" />
 
         <item
             android:id="@+id/settingsMainMenuItem"
             android:icon="@drawable/ic_settings"
             android:title="Settings"
             app:showAsAction="never" />
-
     </group>
     <group android:id="@+id/stub">
 
@@ -81,6 +37,7 @@
             android:title="About"
             app:showAsAction="never" />
     </group>
+
     <group android:id="@+id/account">
         <item
             android:id="@+id/logoutMainMenuItem"

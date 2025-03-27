@@ -21,7 +21,6 @@ import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityReplyBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
 import com.inovationware.toolkit.datatransfer.service.rest.RestDataTransferService;
 import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStrategy;
 import com.inovationware.toolkit.global.domain.Transfer;
@@ -39,7 +38,8 @@ import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.global.repository.Repo;
 import com.inovationware.toolkit.interaction.model.InteractionToken;
-import com.inovationware.toolkit.ui.authority.EngageAuthority;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.support.EngageAuthority;
 
 import lombok.SneakyThrows;
 import retrofit2.Call;
@@ -64,11 +64,10 @@ import static com.inovationware.toolkit.global.library.utility.Support.announce;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
-import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
 import java.io.IOException;
 
-public class ReplyActivity extends AppCompatActivity {
+public class ReplyActivity extends BaseActivity {
     private GroupManager machines;
     private SharedPreferencesManager store;
     private DeviceClient device;

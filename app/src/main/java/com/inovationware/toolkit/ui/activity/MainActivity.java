@@ -1,9 +1,12 @@
 package com.inovationware.toolkit.ui.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,7 +31,9 @@ import com.inovationware.toolkit.databinding.ActivityMainBinding;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
+import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.SignInManager;
+import com.inovationware.toolkit.global.library.app.ThemeManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.system.service.ToolkitServiceManager;
 import com.inovationware.toolkit.location.service.LocationService;
@@ -37,14 +42,27 @@ import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.tts.service.TTSService;
-import com.inovationware.toolkit.ui.authority.MainAuthority;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.support.MainAuthority;
 
+import static com.inovationware.toolkit.global.domain.Strings.CHOSEN;
+import static com.inovationware.toolkit.global.domain.Strings.TAN;
+import static com.inovationware.toolkit.global.domain.Strings.DARKER;
+import static com.inovationware.toolkit.global.domain.Strings.NATURAL;
 import static com.inovationware.toolkit.global.domain.Strings.NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING;
+import static com.inovationware.toolkit.global.domain.Strings.WARM;
+import static com.inovationware.toolkit.global.domain.Strings.PINKY;
+import static com.inovationware.toolkit.global.domain.Strings.FLUORITE;
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY;
 import static com.inovationware.toolkit.global.domain.Strings.apps;
+import static com.inovationware.toolkit.global.domain.Strings.no;
 import static com.inovationware.toolkit.global.domain.Strings.ttsServiceProvider;
+import static com.inovationware.toolkit.global.domain.Strings.yes;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends BaseActivity {
     private MainAuthority authority;
     private BottomNavigationView bottomNavigationView;
     private NavController fragment;
@@ -70,16 +88,16 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setupUi();
-        initializeReferences();
-        initializeVariables();
+        setupConfigurations();
+        setupAccess();
+        setupReferences();
         setupListeners();
         startServices();
         otherStartupProcedures();
 
     }
 
-    private void initializeReferences() {
+    private void setupAccess() {
         context = MainActivity.this;
         authority = MainAuthority.getInstance();
         store = SharedPreferencesManager.getInstance();
@@ -93,14 +111,15 @@ public class MainActivity extends AppCompatActivity {
         services = ToolkitServiceManager.getInstance();
     }
 
-    private void initializeVariables() {
+    private void setupReferences() {
         store.setString(MainActivity.this, SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, "");
         apps = null;
         Strings.cachedMemos = null;
         Strings.getListOfInstalledApps(apkClient, getPackageManager(), true);
+
     }
 
-    private void setupUi() {
+    private void setupConfigurations() {
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         fragment = Navigation.findNavController(this, R.id.fragment);
@@ -111,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, fragment, appBarConfiguration);
 
-        customizeBottomNavigationView(bottomNavigationView);
+        //customizeBottomNavigationView(bottomNavigationView);
     }
 
     private void setupListeners() {
@@ -168,32 +187,27 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.settingsMainMenuItem) {
             authority.openSettingsActivity(context, SignInManager.getInstance());
             return true;
-        } else if (item.getItemId() == R.id.pcMainMenuItem) {
-            startActivity(new Intent(MainActivity.this, ReplyActivity.class));
-            return true;
         } else if (item.getItemId() == R.id.helpMainMenuItem) {
             startActivity(new Intent(MainActivity.this, HelpActivity.class));
-            return true;
-        } else if (item.getItemId() == R.id.tasksMainMenuItem) {
-            openTasksActivity(SignInManager.getInstance());
             return true;
         } else if (item.getItemId() == R.id.aboutMainMenuItem) {
             startActivity(new Intent(MainActivity.this, AboutActivity.class));
             return true;
-        } else if (item.getItemId() == R.id.codeMainMenuItem) {
-            startActivity(new Intent(MainActivity.this, CodeActivity.class));
+        } else if (item.getItemId() == R.id.themeMainMenuItem) {
+            showThemeMenu();
             return true;
         } else if (item.getItemId() == R.id.logoutMainMenuItem) {
-            performLogout();
-            return true;
-        } else if (item.getItemId() == R.id.cyclesMainMenuItem) {
-            startActivity(new Intent(MainActivity.this, CyclesActivity.class));
-            return true;
-        } else if (item.getItemId() == R.id.schedulesMainMenuItem) {
-            startActivity(new Intent(MainActivity.this, ScheduleActivity.class));
-            return true;
-        } else if (item.getItemId() == R.id.configMainMenuItem) {
-            startActivity(new Intent(MainActivity.this, EspActivity.class));
+            new MessageBox("Really log out?", yes,no) {
+                @Override
+                public void positiveButtonAction() {
+                    performLogout();
+                }
+
+                @Override
+                public void negativeButtonAction() {
+
+                }
+            }.show(context);
             return true;
         } else if (item.getItemId() == R.id.boardMainMenuItem) {
             if (!user.isLoggedIn(MainActivity.this)) {
@@ -205,6 +219,47 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showThemeMenu() {
+        final String[] themes = new String[]{DARKER, FLUORITE, NATURAL, PINKY, TAN, WARM};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick a theme...");
+
+        // Set the radio button options
+        int checkedItem = 0; // Default checked item index
+        for (int i = 0; i < themes.length; i++) {
+            if (themes[i].equals(store.getTheme(context))) {
+                checkedItem = i; // Find the index of the selected item
+                break;
+            }
+        }
+
+        builder.setSingleChoiceItems(themes, checkedItem, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                store.setTheme(context, themes[which]);
+            }
+        });
+
+        // Add a positive button to confirm the selection
+        builder.setPositiveButton(CHOSEN, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss(); // Dismiss the dialog
+                //bottomNavigationView.setBackgroundColor(Color.parseColor("#21422a"));
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    getWindow().setStatusBarColor(new ThemeManager().getStatusBarColor(store.getTheme(context)));
+                }*/
+                //bottomNavigationView.setBackgroundColor(getResources().getColor(new ThemeManager().getStatusBarColor(store.getTheme(context))));
+                recreate();
+                //bottomNavigationView.setBackgroundColor(getResources().getColor(new ThemeManager().getStatusBarColor(store.getTheme(context))));
+            }
+        });
+
+        // Create and show the dialog
+        builder.create().show();
+
     }
 
     private void openTasksActivity(SignInManager signInManager) {
@@ -280,39 +335,6 @@ public class MainActivity extends AppCompatActivity {
     }
 */
 
-    private void customizeBottomNavigationView(BottomNavigationView bottomNavigationView) {
-
-        /*int nightModeFlags =
-                getApplicationContext().getResources().getConfiguration().uiMode &
-                        Configuration.UI_MODE_NIGHT_MASK;*/
-
-        switch (getApplicationContext().getResources().getConfiguration().uiMode &
-                Configuration.UI_MODE_NIGHT_MASK) {
-            /*
-                        case Configuration.UI_MODE_NIGHT_YES:
-                            bottomNavigationView.setBackgroundColor(Color.parseColor("#21422a"));
-                            break;
-            */
-
-            //day
-            case Configuration.UI_MODE_NIGHT_NO:
-                //bottomNavigationView.setBackgroundColor(Color.parseColor("#ffffff"));
-                bottomNavigationView.setBackgroundColor(Color.parseColor("#81016c"));
-                break;
-
-            /*
-                        case Configuration.UI_MODE_NIGHT_UNDEFINED:
-                            bottomNavigationView.setBackgroundColor(Color.parseColor("#21422a"));
-                            break;
-            */
-
-            //night
-            default:
-                //bottomNavigationView.setBackgroundColor(Color.parseColor("#aa0e90"));
-                bottomNavigationView.setBackgroundColor(Color.parseColor("#81016c"));
-                break;
-        }
-    }
 
 /*
     private void startSystemAlertWindowPermission() {

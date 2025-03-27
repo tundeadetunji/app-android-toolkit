@@ -38,6 +38,7 @@ import com.inovationware.toolkit.databinding.ActivityManageBoardBinding;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -51,7 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ManageBoardActivity extends AppCompatActivity {
+public class ManageBoardActivity extends BaseActivity {
     private ActivityManageBoardBinding binding;
     private Context context;
     private MeetingServiceImpl service;
