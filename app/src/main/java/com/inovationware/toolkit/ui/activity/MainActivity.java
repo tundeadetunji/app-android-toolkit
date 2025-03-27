@@ -4,9 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +11,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.core.view.MenuCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -33,7 +29,6 @@ import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.SignInManager;
-import com.inovationware.toolkit.global.library.app.ThemeManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.system.service.ToolkitServiceManager;
 import com.inovationware.toolkit.location.service.LocationService;
@@ -58,9 +53,6 @@ import static com.inovationware.toolkit.global.domain.Strings.apps;
 import static com.inovationware.toolkit.global.domain.Strings.no;
 import static com.inovationware.toolkit.global.domain.Strings.ttsServiceProvider;
 import static com.inovationware.toolkit.global.domain.Strings.yes;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends BaseActivity {
     private MainAuthority authority;
@@ -94,7 +86,6 @@ public class MainActivity extends BaseActivity {
         setupListeners();
         startServices();
         otherStartupProcedures();
-
     }
 
     private void setupAccess() {

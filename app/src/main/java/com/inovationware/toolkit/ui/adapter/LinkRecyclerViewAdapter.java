@@ -21,9 +21,9 @@ import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 
 import java.util.List;
 

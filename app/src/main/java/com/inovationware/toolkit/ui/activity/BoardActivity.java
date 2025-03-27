@@ -2,8 +2,6 @@ package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.apps;
 import static com.inovationware.toolkit.global.library.utility.Code.stringToList;
 import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
@@ -18,16 +16,15 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.meeting.model.Contribution;
 import com.inovationware.toolkit.meeting.service.impl.MeetingServiceImpl;
 import com.inovationware.toolkit.databinding.ActivityBoardBinding;
@@ -36,7 +33,6 @@ import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.ui.adapter.BoardRecyclerViewAdapter;
-import com.inovationware.toolkit.ui.adapter.LinkRecyclerViewAdapter;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.time.LocalDateTime;

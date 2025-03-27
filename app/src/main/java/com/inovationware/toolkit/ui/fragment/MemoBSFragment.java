@@ -8,7 +8,6 @@ import static com.inovationware.toolkit.global.library.utility.Support.determine
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,10 +22,10 @@ import com.inovationware.toolkit.databinding.FragmentMemoBSBinding;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.ui.adapter.MemoRecyclerViewAdapter;
 

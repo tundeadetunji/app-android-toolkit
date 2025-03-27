@@ -29,10 +29,13 @@ import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
+import com.inovationware.toolkit.global.library.utility.Code;
+import com.inovationware.toolkit.global.library.utility.Support;
+import com.inovationware.toolkit.global.repository.ResourcesManager;
 import com.inovationware.toolkit.location.service.LocationService;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
@@ -136,7 +139,11 @@ public class HomeFragment extends Fragment {
         setInitialText(binding.toolkitInfoTextView);
         setWelcomeText(binding.toolkitInfoTextView);
 
+        binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage());
+
         setupNotes(view);
+
+
     }
 
     private final View.OnClickListener PCButtonClick = new View.OnClickListener() {

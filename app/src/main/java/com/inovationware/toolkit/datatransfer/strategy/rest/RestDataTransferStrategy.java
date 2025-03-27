@@ -10,24 +10,18 @@ import com.inovationware.toolkit.datatransfer.dto.request.SendMeetingContributio
 import com.inovationware.toolkit.datatransfer.dto.request.SendNoteRequest;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.datatransfer.strategy.DataTransferStrategy;
-import com.inovationware.toolkit.global.domain.Strings;
-import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.auxiliary.ReceiveTextUtility;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.utility.Code;
 import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 
-import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 
 import androidx.annotation.RequiresApi;

@@ -14,7 +14,7 @@
         <item
             android:id="@+id/themeMainMenuItem"
             android:icon="@drawable/baseline_palette_24"
-            android:title="Theme"
+            android:title="Colors"
             app:showAsAction="never" />
 
         <item

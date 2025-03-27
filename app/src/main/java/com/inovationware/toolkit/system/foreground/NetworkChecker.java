@@ -6,9 +6,6 @@ import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Support.visit;
 
 import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -18,20 +15,17 @@ import android.os.Handler;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 
 import com.inovationware.generalmodule.Feedback;
-import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.system.foreground.utility.ForegroundServiceUtility;
-import com.inovationware.toolkit.ui.activity.AdvancedSettingsActivity;
 import com.inovationware.toolkit.ui.activity.StopServiceActivity;
 
 import lombok.SneakyThrows;

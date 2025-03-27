@@ -1,6 +1,5 @@
 package com.inovationware.toolkit.ui.fragment;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,9 +16,8 @@ import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentLinkBinding;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.Retrofit;
-import com.inovationware.toolkit.global.repository.Repo;
-import com.inovationware.toolkit.ui.activity.SettingsActivity;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.ui.adapter.LinkRecyclerViewAdapter;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;

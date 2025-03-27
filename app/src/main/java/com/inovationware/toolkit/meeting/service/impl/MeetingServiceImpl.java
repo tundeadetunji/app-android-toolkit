@@ -17,15 +17,12 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.inovationware.generalmodule.Feedback;
-import com.inovationware.toolkit.global.library.app.Retrofit;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.library.utility.DeviceClient;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.meeting.authority.BoardAuthority;
 import com.inovationware.toolkit.meeting.model.Meeting;
 import com.inovationware.toolkit.meeting.model.Contribution;
 import com.inovationware.toolkit.meeting.service.MeetingService;
-import com.inovationware.toolkit.datatransfer.dto.request.ReadTextRequest;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;

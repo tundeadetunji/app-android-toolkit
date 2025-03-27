@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,8 +15,8 @@ import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.Retrofit;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.ui.adapter.NetTimerObjectRecyclerViewAdapter;
 import com.inovationware.toolkit.nettimer.model.NetTimerObject;
 import com.inovationware.toolkit.global.library.app.GroupManager;

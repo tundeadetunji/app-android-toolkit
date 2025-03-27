@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
 import com.inovationware.generalmodule.Feedback;
@@ -18,11 +17,11 @@ import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.Strings;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SiteManager;
 import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import lombok.SneakyThrows;
@@ -46,7 +45,6 @@ import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES
 import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_TODO_KEY;
 import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_DEVICE;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.getOutOfThere;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
 public class AdvancedSettingsActivity extends BaseActivity {

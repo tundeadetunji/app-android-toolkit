@@ -200,7 +200,7 @@
                     android:layout_width="159dp"
                     android:layout_height="178dp"
                     android:layout_gravity="center"
-                    android:src="@drawable/dapino_hi" />
+                    android:src="@drawable/boss_baby_1" />
 
                 <!--buttons racks-->
                 <LinearLayout

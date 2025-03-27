@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
@@ -30,13 +29,13 @@ import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.EngagementService;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.InputDialog;
-import com.inovationware.toolkit.global.library.app.Retrofit;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.Json;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StorageClient;
-import com.inovationware.toolkit.global.repository.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.interaction.model.InteractionToken;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 import com.inovationware.toolkit.ui.support.EngageAuthority;

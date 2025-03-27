@@ -21,7 +21,7 @@ import com.inovationware.toolkit.ui.activity.MainActivity;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-
+import java.util.Random;
 public class Support {
     public static boolean canTransferData(Context context, SharedPreferencesManager store, GroupManager machines){
         return thereIsInternet(context) && initialParamsAreSet(context, store, machines);
@@ -113,6 +113,19 @@ public class Support {
         DATE_TIME,
         TIME_DATE,
         DATE_TIME_FOR_FILE
+    }
+
+    public static int anyOf(int inclusiveMin, int exclusiveMax){
+        // Check if the range is valid
+        if (inclusiveMin >= exclusiveMax) {
+            throw new IllegalArgumentException("inclusiveMin must be less than exclusiveMax");
+        }
+
+        // Create a Random object
+        Random random = new Random();
+
+        // Generate a random number within the specified range
+        return random.nextInt(exclusiveMax - inclusiveMin) + inclusiveMin;
     }
 
     private static Map<FormatForDateAndTime, String> formatForDateAndTimeStringMap =
