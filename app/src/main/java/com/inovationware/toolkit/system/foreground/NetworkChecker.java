@@ -145,7 +145,11 @@ public class NetworkChecker extends Service {
                             if (!lastSentWebPage.equalsIgnoreCase(decrypted)) {
                                 lastSentWebPage = decrypted;
                                 SharedPreferencesManager.getInstance().setLastSentWebPage(context, decrypted);
-                                visit(context, decrypted, true);
+                                try{
+                                    visit(context, decrypted, true);
+                                }catch (Exception ignored){
+
+                                }
                             }
                         }
                     }
