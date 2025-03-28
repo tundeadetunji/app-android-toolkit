@@ -25,34 +25,37 @@ public class ResourcesManager {
     private void setupReferences() {
 
         welcomeImages = new ArrayList<>();
+        welcomeImages.add(R.drawable.aurora_1);
         welcomeImages.add(R.drawable.batman_1);
         welcomeImages.add(R.drawable.boss_baby_1);
         welcomeImages.add(R.drawable.boss_baby_2);
         welcomeImages.add(R.drawable.bugs_bunny_1);
+        welcomeImages.add(R.drawable.farquaad_1);
+        welcomeImages.add(R.drawable.jack_jack_1);
+        welcomeImages.add(R.drawable.hercules_1);
         welcomeImages.add(R.drawable.buzz_1);
         welcomeImages.add(R.drawable.dapino_hi);
         welcomeImages.add(R.drawable.donald_duck_1);
         welcomeImages.add(R.drawable.donald_duck_2);
         welcomeImages.add(R.drawable.donald_duck_3);
         welcomeImages.add(R.drawable.fairy_1);
-        welcomeImages.add(R.drawable.farquaad_1);
         welcomeImages.add(R.drawable.fred_1);
         welcomeImages.add(R.drawable.goofy_1);
-        welcomeImages.add(R.drawable.hercules_1);
         welcomeImages.add(R.drawable.hook_1);
         welcomeImages.add(R.drawable.hook_2);
-        welcomeImages.add(R.drawable.jack_jack_1);
+        welcomeImages.add(R.drawable.jack_jack_2);
         welcomeImages.add(R.drawable.jasmine_1);
         welcomeImages.add(R.drawable.mickey_mouse_1);
+        welcomeImages.add(R.drawable.popeye_1);
         welcomeImages.add(R.drawable.popeye_2);
         welcomeImages.add(R.drawable.potato_1);
         welcomeImages.add(R.drawable.random_1);
-        welcomeImages.add(R.drawable.winnie_1);
+        welcomeImages.add(R.drawable.minion_hello);
         welcomeImages.add(R.drawable.woody_1);
     }
 
     public int getWelcomeImage(){
-        return welcomeImages.get(Support.anyOf(0, welcomeImages.size()-1));
+        return welcomeImages.get(Support.anyOf(0, welcomeImages.size()));
     }
 
 }
