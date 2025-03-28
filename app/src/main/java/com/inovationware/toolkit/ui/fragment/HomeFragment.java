@@ -139,7 +139,8 @@ public class HomeFragment extends Fragment {
         setInitialText(binding.toolkitInfoTextView);
         setWelcomeText(binding.toolkitInfoTextView);
 
-        binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage());
+        //binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage());
+        binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage(store.getTheme(context)));
 
         setupNotes(view);
 

@@ -40,11 +40,14 @@ import com.inovationware.toolkit.tts.service.TTSService;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 import com.inovationware.toolkit.ui.support.MainAuthority;
 
+import static com.inovationware.toolkit.global.domain.Strings.AGRELLITE;
+import static com.inovationware.toolkit.global.domain.Strings.BLUISH;
 import static com.inovationware.toolkit.global.domain.Strings.CHOSEN;
 import static com.inovationware.toolkit.global.domain.Strings.TAN;
 import static com.inovationware.toolkit.global.domain.Strings.DARKER;
 import static com.inovationware.toolkit.global.domain.Strings.NATURAL;
 import static com.inovationware.toolkit.global.domain.Strings.NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING;
+import static com.inovationware.toolkit.global.domain.Strings.THROWBACK;
 import static com.inovationware.toolkit.global.domain.Strings.WARM;
 import static com.inovationware.toolkit.global.domain.Strings.PINKY;
 import static com.inovationware.toolkit.global.domain.Strings.FLUORITE;
@@ -213,11 +216,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showThemeMenu() {
-        final String[] themes = new String[]{DARKER, FLUORITE, NATURAL, PINKY, TAN, WARM};
+        final String[] themes = new String[]{AGRELLITE, BLUISH, DARKER, FLUORITE, NATURAL, PINKY, TAN, THROWBACK, WARM};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Pick a theme...");
 
-        // Set the radio button options
         int checkedItem = 0; // Default checked item index
         for (int i = 0; i < themes.length; i++) {
             if (themes[i].equals(store.getTheme(context))) {
@@ -233,24 +235,15 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        // Add a positive button to confirm the selection
         builder.setPositiveButton(CHOSEN, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss(); // Dismiss the dialog
-                //bottomNavigationView.setBackgroundColor(Color.parseColor("#21422a"));
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    getWindow().setStatusBarColor(new ThemeManager().getStatusBarColor(store.getTheme(context)));
-                }*/
-                //bottomNavigationView.setBackgroundColor(getResources().getColor(new ThemeManager().getStatusBarColor(store.getTheme(context))));
+                dialog.dismiss();
                 recreate();
-                //bottomNavigationView.setBackgroundColor(getResources().getColor(new ThemeManager().getStatusBarColor(store.getTheme(context))));
             }
         });
 
-        // Create and show the dialog
         builder.create().show();
-
     }
 
     private void openTasksActivity(SignInManager signInManager) {

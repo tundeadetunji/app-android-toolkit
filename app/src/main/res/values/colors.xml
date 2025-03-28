@@ -43,4 +43,42 @@
     <color name="purple_primary_700">#512DA8</color>  <!-- Dark Purple -->
     <color name="purple_secondary_200">#9575CD</color> <!-- Lighter Purple -->
     <color name="purple_secondary_700">#311B92</color> <!-- Very Dark Purple -->
+
+
+    <!--<color name="magenta_primary">#D5006D</color>  &lt;!&ndash; Medium Red-Magenta &ndash;&gt;
+    <color name="magenta_variant">#A5004D</color>  &lt;!&ndash; Darker Red-Magenta &ndash;&gt;
+    <color name="magenta_on_primary">#FFB2D1</color>  &lt;!&ndash; Light Red-Magenta &ndash;&gt;
+    <color name="magenta_secondary">#9C27B0</color>  &lt;!&ndash; Darker Magenta &ndash;&gt;
+    <color name="magenta_secondary_variant">#7B1FA2</color>  &lt;!&ndash; Darker Variant &ndash;&gt;
+    <color name="magenta_on_secondary">#F1A7D1</color>  &lt;!&ndash; Light Red-Magenta &ndash;&gt;-->
+
+
+    <color name="magenta_primary">#D5006D</color>  <!-- Medium Red-Magenta -->
+    <color name="magenta_variant">#A5004D</color>  <!-- Darker Red-Magenta -->
+    <color name="magenta_on_primary">#FFB2D1</color>  <!-- Light Red-Magenta -->
+    <color name="magenta_secondary">#C62828</color>  <!-- Dark Red (Closer to The Incredibles Red) -->
+    <color name="magenta_secondary_variant">#B71C1C</color>  <!-- Darker Variant of Red -->
+    <color name="magenta_on_secondary">#FFFFFF</color>  <!-- White for text/icons on secondary -->
+
+    <color name="bluish_primary">#1976D2</color>  <!-- Medium Blue -->
+    <color name="bluish_variant">#0D47A1</color>  <!-- Darker Blue -->
+    <color name="bluish_on_primary">#E3F2FD</color>  <!-- Light Blue for text/icons on primary -->
+    <color name="bluish_secondary">#42A5F5</color>  <!-- Lighter Blue -->
+    <color name="bluish_secondary_variant">#1E88E5</color>  <!-- Darker Variant -->
+    <color name="bluish_on_secondary">#FFFFFF</color>  <!-- White for text/icons on secondary -->
+
+
+
+    <color name="throwback_secondary">#5315D6</color>  <!-- Deeper Purple (Secondary) -->
+    <color name="throwback_secondary_variant">#390A9A</color>  <!-- Darker Variant of Purple -->
+
+    <color name="del_secondary">#FF4A148C</color>
+    <color name="del_secondary_variant">#FF1A004D</color>
+
+    <!--
+    <color name="throwback_secondary">#FF4A148C</color>  &lt;!&ndash; Deeper Purple (Secondary) &ndash;&gt;
+    <color name="throwback_secondary_variant">#FF1A004D</color>  &lt;!&ndash; Darker Variant of Purple &ndash;&gt;
+-->
+
+
 </resources>

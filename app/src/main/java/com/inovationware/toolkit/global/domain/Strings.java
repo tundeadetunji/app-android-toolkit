@@ -63,6 +63,9 @@ public class Strings {
     public static final String DARKER = "Darker";
     public static final String NATURAL = "Natural";
     public static final String TAN = "Tan";
+    public static final String BLUISH = "Bluish";
+    public static final String AGRELLITE = "Agrellite";
+    public static final String THROWBACK = "Throwback";
     public static final String CHOSEN = "Chosen";
     public static final String WARM = "Warm";
     public static final String FLUORITE = "Fluorite";
