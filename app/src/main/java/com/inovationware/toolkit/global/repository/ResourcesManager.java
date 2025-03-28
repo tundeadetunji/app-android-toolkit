@@ -84,7 +84,6 @@ public class ResourcesManager {
         brownImages.add(R.drawable.woody_1);
 
         classicImages = new ArrayList<>();
-        classicImages.add(R.drawable.batman_1);
         classicImages.add(R.drawable.donald_duck_3);
         classicImages.add(R.drawable.fairy_1);
         classicImages.add(R.drawable.random_1);
