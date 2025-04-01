@@ -1,13 +1,13 @@
 package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_CREATE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_INFORM;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_UPDATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_CREATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_INFORM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_UPDATE;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
 import com.inovationware.toolkit.R;
@@ -29,7 +28,7 @@ import com.inovationware.toolkit.converter.service.ConverterService;
 import com.inovationware.toolkit.converter.service.impl.ConverterServiceImpl;
 import com.inovationware.toolkit.databinding.ActivityConverterBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
@@ -170,7 +169,7 @@ public class ConverterActivity extends BaseActivity {
                             security.encrypt(ConverterActivity.this,
                                     store,
                                     Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device)),
-                            Strings.EMPTY_STRING
+                            DomainObjects.EMPTY_STRING
                     ),
                     DEFAULT_ERROR_MESSAGE_SUFFIX,
                     DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -212,7 +211,7 @@ public class ConverterActivity extends BaseActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 device.toClipboard(Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device), ConverterActivity.this);
             }
-            device.tell(Strings.copiedToClipboardMessage(Strings.CONVERSION), ConverterActivity.this);
+            device.tell(DomainObjects.copiedToClipboardMessage(DomainObjects.CONVERSION), ConverterActivity.this);
         }
     };
 
@@ -228,7 +227,7 @@ public class ConverterActivity extends BaseActivity {
                     Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device),
                     filename,
                     filename + " created in Internal Storage.",
-                    Strings.WRITE_FILE_FAILED
+                    DomainObjects.WRITE_FILE_FAILED
             );
 
         }
@@ -283,7 +282,7 @@ public class ConverterActivity extends BaseActivity {
                         security.encrypt(ConverterActivity.this,
                                 store,
                                 text),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);

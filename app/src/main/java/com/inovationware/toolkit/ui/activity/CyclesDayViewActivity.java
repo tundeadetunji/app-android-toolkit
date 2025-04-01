@@ -1,11 +1,11 @@
 package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_INFORM;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_INFORM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
 import com.inovationware.toolkit.R;
@@ -32,7 +31,7 @@ import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.datatransfer.service.rest.RestDataTransferService;
 import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStrategy;
 import com.inovationware.toolkit.global.domain.Section;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
@@ -42,7 +41,6 @@ import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.utility.Code;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StorageClient;
-import com.inovationware.toolkit.global.library.utility.StringFunctions;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.memo.entity.Memo;
@@ -141,7 +139,7 @@ public class CyclesDayViewActivity extends BaseActivity {
                             POST_PURPOSE_REGULAR,
                             determineMeta(context, SharedPreferencesManager.getInstance()),
                             EncryptionManager.getInstance().encrypt(context, SharedPreferencesManager.getInstance(), createPrintout()),
-                            Strings.EMPTY_STRING
+                            DomainObjects.EMPTY_STRING
                     ),
                     DEFAULT_ERROR_MESSAGE_SUFFIX,
                     DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -153,7 +151,7 @@ public class CyclesDayViewActivity extends BaseActivity {
         public void onClick(View v) {
             if (binding.preview.getText().toString().isEmpty()) return;
             factory.device.toClipboard(createSummary(), context);
-            factory.device.tell(Strings.copiedToClipboardMessage("Information"), context);
+            factory.device.tell(DomainObjects.copiedToClipboardMessage("Information"), context);
         }
     };
 
@@ -226,7 +224,7 @@ public class CyclesDayViewActivity extends BaseActivity {
                             POST_PURPOSE_INFORM,
                             determineMeta(context, store),
                             security.encrypt(context, store, binding.preview.getText().toString()),
-                            Strings.EMPTY_STRING
+                            DomainObjects.EMPTY_STRING
                     ),
                     DEFAULT_ERROR_MESSAGE_SUFFIX,
                     DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -374,7 +372,7 @@ public class CyclesDayViewActivity extends BaseActivity {
     private String createPrintout() {
         return new StringBuilder()
                 .append(binding.headline.getText().toString())
-                .append(Strings.NEW_LINE)
+                .append(DomainObjects.NEW_LINE)
                 .append(service.createTitle())
                 .append(Support.createTimestamp(Support.FormatForDateAndTime.TIME_DATE))
                 .append(!binding.timezone.getText().toString().isEmpty() ? "UTC" + binding.timezone.getText().toString() : "")
@@ -400,7 +398,7 @@ public class CyclesDayViewActivity extends BaseActivity {
             startActivity(new Intent(CyclesDayViewActivity.this, CyclesActivity.class));
             return true;
         } else if (item.getItemId() == R.id.urlMenuItem) {
-            Support.visit(context, Strings.TIME_ZONE_INFO_URL);
+            Support.visit(context, DomainObjects.TIME_ZONE_INFO_URL);
             return true;
         } else {
             return super.onOptionsItemSelected(item);

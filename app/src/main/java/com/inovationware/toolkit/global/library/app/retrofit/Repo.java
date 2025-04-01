@@ -2,7 +2,7 @@ package com.inovationware.toolkit.global.library.app.retrofit;
 
 import android.content.Context;
 
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -20,7 +20,7 @@ public class Repo {
     }
     public final Retrofit create(Context context, SharedPreferencesManager store){
         return new retrofit2.Retrofit.Builder()
-                .baseUrl(Strings.BASE_URL(context, store))
+                .baseUrl(DomainObjects.BASE_URL(context, store))
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build()
                 .create(Retrofit.class);

@@ -30,8 +30,8 @@ public class Transfer {
         meetingEnableMeeting,
         meetingDeleteMeeting,
         readHaptic,
-        clearHaptic
-
+        clearHaptic,
+        readLocationRequest
     }
 
     public enum Tag{

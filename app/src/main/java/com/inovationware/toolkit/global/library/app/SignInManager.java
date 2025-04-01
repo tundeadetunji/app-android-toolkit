@@ -8,7 +8,7 @@ import android.content.Intent;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.ui.activity.LoginActivity;
 
 import lombok.Getter;
@@ -43,7 +43,7 @@ public class SignInManager {
 
     public void beginLoginProcess(Context context, String value) {
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra(Strings.DTO_CLASS_STRING, value);
+        intent.putExtra(DomainObjects.DTO_CLASS_STRING, value);
         startActivity(context, intent, null);
     }
 

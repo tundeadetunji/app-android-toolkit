@@ -8,11 +8,11 @@ import com.inovationware.toolkit.R;
 
 import java.util.Arrays;
 
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
 import static com.inovationware.toolkit.global.library.utility.Code.clean;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LAST_SEARCH_TERM_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LAST_VISITED_SITE_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SITES_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LAST_SEARCH_TERM_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LAST_VISITED_SITE_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SITES_KEY;
 
 public final class SiteManager {
 

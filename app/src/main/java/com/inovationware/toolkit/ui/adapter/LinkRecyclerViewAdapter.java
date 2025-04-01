@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -32,10 +32,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_APP;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_APP;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
@@ -98,7 +98,7 @@ public class LinkRecyclerViewAdapter extends RecyclerView.Adapter<LinkRecyclerVi
                 POST_PURPOSE_APP,
                 determineMeta(context, store),
                 path.trim(),
-                Strings.EMPTY_STRING);
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override

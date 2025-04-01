@@ -194,7 +194,7 @@
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <!--dapino-girl-->
+                <!--guideImageView-->
                 <ImageView
                     android:id="@+id/guideImageView"
                     android:layout_width="159dp"

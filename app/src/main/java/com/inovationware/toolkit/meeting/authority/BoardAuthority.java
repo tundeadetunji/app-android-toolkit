@@ -4,8 +4,7 @@ import android.content.Context;
 
 import com.inovationware.toolkit.datatransfer.dto.request.ReadTextRequest;
 import com.inovationware.toolkit.datatransfer.dto.request.SendMeetingContributionRequest;
-import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
@@ -60,13 +59,13 @@ public class BoardAuthority {
 
     public SendMeetingContributionRequest createSendContributionRequest(Context context, SharedPreferencesManager store, GroupManager machines, Transfer.Intent intent, String info, String tag, String meetingId) {
         return SendMeetingContributionRequest.create(
-                Strings.BASE_URL(context, store),
+                DomainObjects.BASE_URL(context, store),
                 store.getUsername(context),
                 store.getID(context),
                 intent,
                 store.getSender(context),
                 machines.getDefaultDevice(context),
-                Strings.POST_PURPOSE_LOGGER,
+                DomainObjects.POST_PURPOSE_LOGGER,
                 Support.determineMeta(context, store),
                 info,
                 tag,
@@ -76,7 +75,7 @@ public class BoardAuthority {
 
     public ReadTextRequest createReadRequest(Context context, SharedPreferencesManager store, Transfer.Intent intent, String tag) {
         return ReadTextRequest.create(
-                Strings.BASE_URL(context, store),
+                DomainObjects.BASE_URL(context, store),
                 store.getUsername(context),
                 store.getID(context),
                 intent,

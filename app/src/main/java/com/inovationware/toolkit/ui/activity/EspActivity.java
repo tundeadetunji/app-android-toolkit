@@ -1,12 +1,12 @@
 package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_CREATE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_UPDATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_CREATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_UPDATE;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
@@ -14,10 +14,8 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.inovationware.toolkit.databinding.ActivityEspBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
@@ -36,7 +34,7 @@ import com.inovationware.toolkit.esp.model.value.Filter;
 import com.inovationware.toolkit.esp.model.value.Logger;
 import com.inovationware.toolkit.esp.model.value.Sensor;
 import com.inovationware.toolkit.esp.model.value.Wifi;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
@@ -129,7 +127,7 @@ public class EspActivity extends BaseActivity {
             String filename = binding.baseName.getText().toString() + ".yaml";
 
             StorageClient.getInstance(context).writeText(createConfiguration().toString(), filename,
-                    filename + " created in Internal Storage.", Strings.WRITE_FILE_FAILED);
+                    filename + " created in Internal Storage.", DomainObjects.WRITE_FILE_FAILED);
 
         }
     };
@@ -173,7 +171,7 @@ public class EspActivity extends BaseActivity {
             if (!thereIsInput()) return;
 
             factory.device.toClipboard(createConfiguration().toString(), context);
-            factory.device.tell(Strings.copiedToClipboardMessage("Configuration"), context);
+            factory.device.tell(DomainObjects.copiedToClipboardMessage("Configuration"), context);
 
         }
     };
@@ -248,7 +246,7 @@ public class EspActivity extends BaseActivity {
                         purpose,
                         determineMeta(context, store),
                         text,
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);

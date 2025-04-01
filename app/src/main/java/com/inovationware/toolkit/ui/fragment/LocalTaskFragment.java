@@ -1,17 +1,16 @@
 package com.inovationware.toolkit.ui.fragment;
 
-import static com.inovationware.toolkit.global.domain.Strings.HOURS_CAPITALIZED;
-import static com.inovationware.toolkit.global.domain.Strings.MINUTES_CAPITALIZED;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LOCAL_TASK_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LOCAL_TASK_REPEAT_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LOCAL_TASK_REVERSE;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.bistable;
-import static com.inovationware.toolkit.global.domain.Strings.netTimerMobileServiceIsRunning;
-import static com.inovationware.toolkit.global.domain.Strings.ttsServiceProvider;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HOURS_CAPITALIZED;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MINUTES_CAPITALIZED;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REPEAT_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.bistableManager;
+import static com.inovationware.toolkit.global.domain.DomainObjects.ttsServiceProvider;
 import static com.inovationware.toolkit.global.library.utility.Code.configureTimeUnitDropDownAdapter;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
 
@@ -30,7 +29,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 
 import com.inovationware.generalmodule.Feedback;
-import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.databinding.FragmentLocalTaskBinding;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
@@ -50,7 +48,6 @@ public class LocalTaskFragment extends Fragment {
     private View view;
     private SharedPreferencesManager store;
     private Context context;
-    private BistableManager manager;
 
     ArrayAdapter<String> timeUnitDropdownAdapter, installedAppsDropDownAdapter;
 
@@ -78,7 +75,6 @@ public class LocalTaskFragment extends Fragment {
         strategy = ApkClient.getInstance();
         timeUnitDropdownAdapter = configureTimeUnitDropDownAdapter(view.getContext());
         installedAppsDropDownAdapter = Code.configureInstalledAppsDropDownAdapter(view.getContext());
-        manager = new BistableManager();
     }
     private void setupListeners(){
         binding.startButton.setOnClickListener(startButtonHandler);
@@ -92,7 +88,7 @@ public class LocalTaskFragment extends Fragment {
         binding.regularIntervalTextView.setText(String.valueOf(5));
         binding.reverseIntervalTextView.setText(String.valueOf(5));
         loadLastSet();
-        setButtons(netTimerMobileServiceIsRunning);
+        setButtons(bistableManager.isNetTimerMobileServiceIsRunning());
     }
     //end setup
 
@@ -105,7 +101,7 @@ public class LocalTaskFragment extends Fragment {
                 return;
             }
 
-            manager.stop();
+            bistableManager.stop();
 
             BistableNotifier regular = BistableNotifier.builder()
                     .details(strategy.getUri(binding.regularDropDown.getText().toString()))
@@ -134,7 +130,9 @@ public class LocalTaskFragment extends Fragment {
                             .context(view.getContext())
                             .build();
 
-            bistable = new BistableCommand(regular, reverse, binding.repeatCheckBox.isChecked());
+
+            bistableManager.setBistable(new BistableCommand(regular, reverse, binding.repeatCheckBox.isChecked()));
+            //bistable = new BistableCommand(regular, reverse, binding.repeatCheckBox.isChecked());
             saveSet(!reverseIsSet());
             startForegroundService();
             // bistable.start();
@@ -145,7 +143,7 @@ public class LocalTaskFragment extends Fragment {
 
     private void startForegroundService(){
         ContextCompat.startForegroundService(context, new Intent(context, LocalTaskService.class));
-        netTimerMobileServiceIsRunning = true;
+        bistableManager.setNetTimerMobileServiceIsRunning(true);
         setButtons(true);
         finishThis(true);
     }
@@ -153,8 +151,8 @@ public class LocalTaskFragment extends Fragment {
     private final View.OnClickListener stopButtonHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            manager.stop();
-            manager.stopForegroundService(context);
+            bistableManager.stop();
+            bistableManager.stopForegroundService(context);
             setButtons(false);
             finishThis(false);
         }

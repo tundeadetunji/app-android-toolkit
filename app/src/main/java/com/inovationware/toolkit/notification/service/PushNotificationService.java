@@ -7,7 +7,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.inovationware.toolkit.global.library.app.Shared;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_FIREBASE_TOKEN_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_FIREBASE_TOKEN_KEY;
 
 public class PushNotificationService extends FirebaseMessagingService {
 //    private Context context;

@@ -24,7 +24,7 @@ import com.inovationware.toolkit.datatransfer.service.rest.RestDataTransferServi
 import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStrategy;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.EngagementService;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -47,18 +47,17 @@ import retrofit2.Response;
 
 import static com.inovationware.generalmodule.Device.clipboardSetText;
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_ENGAGE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_LAST_30;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_PING;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_WHAT_IS_ON;
-import static com.inovationware.toolkit.global.domain.Strings.WORKSTATION;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HIBERNATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_ENGAGE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LAST_30;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_WHAT_IS_ON;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_DEVICE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TARGET_MODE_TO_DEVICE;
 import static com.inovationware.toolkit.global.library.utility.Support.announce;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
@@ -126,7 +125,7 @@ public class ReplyActivity extends BaseActivity {
     }
 
     private void setupUi() {
-        store.setDropDown(ReplyActivity.this, binding.engageOperationDropDown, engagementService.listing().toArray(new String[0]), WORKSTATION);
+        store.setDropDown(ReplyActivity.this, binding.engageOperationDropDown, engagementService.listing().toArray(new String[0]), HIBERNATE);
         machines.setDropDown(ReplyActivity.this, binding.engageMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
         machines.setDropDown(ReplyActivity.this, binding.interactMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
         dataTransferSharedTextView = findViewById(R.id.DataTransferSharedTextView);
@@ -142,7 +141,6 @@ public class ReplyActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             if (binding.interactOpDropDown.getText().toString().isEmpty()) return;
-
 
             if (!initialParamsAreSet(ReplyActivity.this, store, machines) || !thereIsInternet(ReplyActivity.this))
                 return;
@@ -178,8 +176,8 @@ public class ReplyActivity extends BaseActivity {
                 return;
             }
 
-            //Last_30Ex
-            /*if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Last_30.name().replace("_", " "))) {
+            /*Last_30Ex
+            if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Last_30.name().replace("_", " "))) {
                 factory.image.service.loadPlaceholder(context, binding.engageImageView);
                 binding.engageButton.setEnabled(false);
                 requestLast30(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
@@ -187,16 +185,16 @@ public class ReplyActivity extends BaseActivity {
                 return;
             }*/
 
-            //Last_30
+           /* Last_30
             if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.Last_30) {
-                /*binding.engageButton.setEnabled(false);
+                binding.engageButton.setEnabled(false);
                 factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
                 requestLast30(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
                 //engagementHandler.post(readLast30);
-                return;*/
-            }
+                return;
+            }*/
 
-            //Who_Was
+            /*Who_Was
             if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Who_Was.name().replace("_", " "))) {
                 hideEngageControl();
                 binding.engageButton.setEnabled(false);
@@ -207,10 +205,9 @@ public class ReplyActivity extends BaseActivity {
                 binding.engageButton.setEnabled(true);
                 showEngageControl();
                 return;
-            }
+            }*/
 
-            //Ping
-            if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Ping.name().replace("_", " "))) {
+            /*if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Ping.name().replace("_", " "))) {
                 hideEngageControl();
                 requestPing(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
                 binding.engageButton.setEnabled(false);
@@ -218,8 +215,7 @@ public class ReplyActivity extends BaseActivity {
                 showEngageControl();
                 engagementHandler.postDelayed(readPingHandler, 20000);
                 return;
-            }
-
+            }*/
 
             //What_Is_On
             if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.What_Is_On) {
@@ -228,27 +224,34 @@ public class ReplyActivity extends BaseActivity {
                 binding.engageButton.setEnabled(false);
                 factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
                 showEngageControl();
-                engagementHandler.postDelayed(readWhatIsOn, 30000);
+                engagementHandler.postDelayed(readWhatIsOnRunnable, 30000);
                 return;
             }
 
-            //Who_Is
+            /*if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.Dim_Screen){
+                doSendForDataTransfer(POST_PURPOSE_DIM_SCREEN, determineMeta(context, store));
+                return;
+            }*/
+
+            //Every other
             if (canSend()) {
                 hideEngageControl();
                 requestEngage(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
-                if (EngagementService.Engagement.isNotApp(binding.engageOperationDropDown.getText().toString())) {
+                if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isRequest){
                     //ToDo
                     //getTimestamp();
                     binding.engageButton.setEnabled(false);
                     factory.image.service.loadGifImage(ReplyActivity.this, binding.engageImageView, R.drawable.placeholder);
                     showEngageControl();
-                    engagementHandler.postDelayed(readWhoIs, 30000);
+                    engagementHandler.postDelayed(readWhoIsRunnable, 30000);
+                }else if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isPing){
+                    engagementHandler.postDelayed(readPingRunnable, 30000);
                 }
             }
         }
     };
 
-    private final Runnable readPingHandler = new Runnable() {
+    private final Runnable readPingRunnable = new Runnable() {
         @Override
         public void run() {
 
@@ -259,7 +262,7 @@ public class ReplyActivity extends BaseActivity {
                     store.getUsername(context),
                     store.getID(context),
                     String.valueOf(Transfer.Intent.readPing),
-                    Strings.EMPTY_STRING
+                    DomainObjects.EMPTY_STRING
             );
             navigate.enqueue(new Callback<String>() {
                 @SneakyThrows
@@ -272,6 +275,7 @@ public class ReplyActivity extends BaseActivity {
                     if (response.isSuccessful()) {
 
                         if (response.body() == null) return;
+                        //Todo check if this is working
                         factory.feedback.service.giveFeedback(context, store, response.body(), true, Toast.LENGTH_LONG);
                     } else {
                         if (SharedPreferencesManager.getInstance().shouldDisplayErrorMessage(context)) {
@@ -341,7 +345,7 @@ public class ReplyActivity extends BaseActivity {
                 POST_PURPOSE_WHAT_IS_ON,
                 TARGET_MODE_TO_DEVICE,
                 info,
-                Strings.EMPTY_STRING);
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override
@@ -368,7 +372,7 @@ public class ReplyActivity extends BaseActivity {
         });
     }
 
-    void requestPing(String info, String target) {
+    /*void requestPing(String info, String target) {
         if (!thereIsInternet(getApplicationContext())) return;
 
         Retrofit retrofitImpl = Repo.getInstance().create(context, store);
@@ -383,7 +387,7 @@ public class ReplyActivity extends BaseActivity {
                 POST_PURPOSE_PING,
                 TARGET_MODE_TO_DEVICE,
                 info,
-                Strings.EMPTY_STRING);
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override
@@ -409,9 +413,9 @@ public class ReplyActivity extends BaseActivity {
                 feedback.toast(DEFAULT_FAILURE_MESSAGE_SUFFIX);
             }
         });
-    }
+    }*/
 
-    void requestEngage(String info, String target) {
+    void requestEngage(String engagementOperation, String target) {
         if (!thereIsInternet(getApplicationContext())) return;
 
         Retrofit retrofitImpl = Repo.getInstance().create(context, store);
@@ -424,9 +428,9 @@ public class ReplyActivity extends BaseActivity {
                 store.getSender(ReplyActivity.this),
                 target,
                 POST_PURPOSE_ENGAGE,
-                TARGET_MODE_TO_DEVICE,
-                info,
-                Strings.EMPTY_STRING);
+                engagementService.from(EngagementService.Engagement.fromCanonicalString(engagementOperation)).toString(), //TARGET_MODE_TO_DEVICE,
+                engagementOperation,
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override
@@ -468,7 +472,7 @@ public class ReplyActivity extends BaseActivity {
                 POST_PURPOSE_LAST_30,
                 TARGET_MODE_TO_DEVICE,
                 info,
-                Strings.EMPTY_STRING);
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override
@@ -512,7 +516,7 @@ public class ReplyActivity extends BaseActivity {
                 purpose,
                 meta,
                 content(dataTransferSharedTextView),
-                Strings.EMPTY_STRING);
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override
@@ -540,7 +544,7 @@ public class ReplyActivity extends BaseActivity {
         });
     }
 
-    private final Runnable readWhatIsOn = new Runnable() {
+    private final Runnable readWhatIsOnRunnable = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void run() {
@@ -549,7 +553,7 @@ public class ReplyActivity extends BaseActivity {
         }
     };
 
-    private final Runnable readWhoIs = new Runnable() {
+    private final Runnable readWhoIsRunnable = new Runnable() {
         @RequiresApi(api = Build.VERSION_CODES.M)
         @Override
         public void run() {
@@ -611,7 +615,7 @@ public class ReplyActivity extends BaseActivity {
 
 
     private String getLast30Url() {
-        return Strings.BASE_URL(context, store) + "/api/regular.ashx?id=" + store.getID(ReplyActivity.this) + "&intent=" + Transfer.Intent.readLast30 + "&username=" + store.getUsername(ReplyActivity.this);
+        return DomainObjects.BASE_URL(context, store) + "/api/regular.ashx?id=" + store.getID(ReplyActivity.this) + "&intent=" + Transfer.Intent.readLast30 + "&username=" + store.getUsername(ReplyActivity.this);
     }
 
     private final InputDialog getTargetFilename() {
@@ -648,10 +652,10 @@ public class ReplyActivity extends BaseActivity {
                         Transfer.Intent.writeText,
                         SharedPreferencesManager.getInstance().getSender(ReplyActivity.this),
                         determineTarget(ReplyActivity.this, SharedPreferencesManager.getInstance(), GroupManager.getInstance()),
-                        Strings.POST_PURPOSE_INTERACTION,
+                        DomainObjects.POST_PURPOSE_INTERACTION,
                         determineMeta(ReplyActivity.this, SharedPreferencesManager.getInstance()),
                         EncryptionManager.getInstance().encrypt(ReplyActivity.this, SharedPreferencesManager.getInstance(), text),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX

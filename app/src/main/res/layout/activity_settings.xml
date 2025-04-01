@@ -501,7 +501,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_weight="1"
-                android:textColor="@color/pinky_primary_200"
+                android:textColor="?attr/colorPrimary"
                 android:text="Append Device's ID when sending, sharing, copying or saving (does not apply to regular text)" />
 
             <CheckBox
@@ -514,7 +514,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_weight="1"
-                android:textColor="@color/pinky_primary_200"
+                android:textColor="?attr/colorPrimary"
                 android:text="Append Timezone when sending, sharing, copying or saving (does not apply to regular text)" />
 
             <!-- Buttons -->
@@ -591,6 +591,7 @@
                     android:layout_margin="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
+                    android:textColor="?attr/colorPrimary"
                     android:text="Display error messages" />
             </LinearLayout>
 
@@ -671,6 +672,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_weight="1"
+                    android:textColor="?attr/colorPrimary"
                     android:text="Vibrate only, when device receives acknowledgement" />
 
                 <CheckBox
@@ -681,6 +683,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginLeft="72dp"
                     android:layout_weight="1"
+                    android:textColor="?attr/colorPrimary"
                     android:text="Vibrate only, for every feedback" />
             </LinearLayout>
 

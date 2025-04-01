@@ -72,20 +72,35 @@ public class LocationData {
     @Override
     public String toString() {
         String nearbyPlacesString = nearbyPlaces != null && nearbyPlaces.size() > 0
-                ? String.join(", ", nearbyPlaces.subList(0, Math.min(3, nearbyPlaces.size())))
-                : "No nearby places available";
+                ? "Nearby places includes..." + String.join(";\n ", nearbyPlaces.subList(0, Math.min(3, nearbyPlaces.size())))
+                : "Could not locate nearby places.";
 
         double speedInKnots = speed * 1.94384; // Convert m/s to knots
 
-        String altitudeInfo = hasAltitude ? String.format("Altitude [%.2f] meters,", altitude) : "Altitude information not available,";
-        String speedInfo = hasSpeed ? String.format("going at [%.2f] m/s (%.2f km/hr, %.2f knots),", speed, speed * 3.6, speedInKnots) : "Speed information not available,";
-        String bearingInfo = hasBearing ? String.format("heading [%.2f degrees]", bearing) : "Bearing information not available";
-        String accuracyInfo = hasAccuracy ? String.format("accurate to approximately [%.2f] meters,", accuracy) : "Accuracy information not available,";
+        String altitudeInfo = hasAltitude ? String.format("Altitude is %.2f meters.", altitude) : "Altitude information not available.";
+        String speedInfo = hasSpeed ? String.format("Speed is %.2f m/s (%.2f km/hr, %.2f knots).", speed, speed * 3.6, speedInKnots) : "Speed information not available.";
+        String bearingInfo = hasBearing ? String.format("Bearing is %.2f degrees.", bearing) : "Bearing information not available.";
+        String accuracyInfo = hasAccuracy ? String.format("Accurate to approximately %.2f meters.", accuracy) : "Accuracy information not available.";
 
-        return String.format("[%s], as at [%s], is at [%s] which is on Long [%.6f], Lat [%.6f], %s, " +
+        StringBuilder builder = new StringBuilder();
+        builder.append(subject)
+                .append(", as at ").append(timestamp)
+                .append(",\nis at ").append(physicalAddress)
+                .append("\nwhich is on Long ").append(String.format("%.6f", longitude))
+                .append(", Lat ").append(String.format("%.6f", latitude)).append(".")
+                .append("\n" + altitudeInfo)
+                .append("\n" + speedInfo)
+                .append("\n" + accuracyInfo)
+                .append("\n" + bearingInfo)
+                .append("\n" + nearbyPlacesString)
+                .append("\nInformation is provided by " + provider);
+
+        return builder.toString();
+
+        /*return String.format("[%s], as at [%s], is at [%s] which is on Long [%.6f], Lat [%.6f], %s, " +
                         "%s %s %s. " +
                         "Nearby places include: [%s]. Provider: [%s].",
-                subject, timestamp, physicalAddress, longitude, latitude, altitudeInfo, speedInfo, accuracyInfo, bearingInfo, nearbyPlacesString, provider);
+                subject, timestamp, physicalAddress, longitude, latitude, altitudeInfo, speedInfo, accuracyInfo, bearingInfo, nearbyPlacesString, provider);*/
     }
 
     public interface AddressFinderClient {

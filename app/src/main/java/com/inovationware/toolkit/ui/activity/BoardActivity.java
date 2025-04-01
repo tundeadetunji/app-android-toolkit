@@ -1,7 +1,7 @@
 package com.inovationware.toolkit.ui.activity;
 
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
 import static com.inovationware.toolkit.global.library.utility.Code.stringToList;
 import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
@@ -20,7 +20,7 @@ import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.utility.Code;
@@ -80,7 +80,7 @@ public class BoardActivity extends BaseActivity {
                 service.contribute(context,
                         Contribution.create(
                                 binding.meetingIdTextView.getText().toString(),
-                                service.getDisplayName(context) + Strings.NEW_LINE + "(" + service.getUsername(context) + ")",
+                                service.getDisplayName(context) + DomainObjects.NEW_LINE + "(" + service.getUsername(context) + ")",
                                 LocalDateTime.now(),
                                 Code.getTimezone(),
                                 binding.contribution.getText().toString()

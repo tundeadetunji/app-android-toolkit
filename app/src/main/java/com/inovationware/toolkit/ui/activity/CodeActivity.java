@@ -1,12 +1,12 @@
 package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_CREATE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_UPDATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_CREATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_UPDATE;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -33,7 +32,7 @@ import com.inovationware.toolkit.databinding.ActivityCodeBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.InputDialog;
@@ -97,7 +96,7 @@ public class CodeActivity extends BaseActivity {
         machines = GroupManager.getInstance();
         device = DeviceClient.getInstance();
 
-        factory.ui.bindProperty(view.getContext(), view.findViewById(R.id.programmingLanguageDropDown), service.getLanguages(), R.layout.default_drop_down, Strings.EMPTY_STRING);
+        factory.ui.bindProperty(view.getContext(), view.findViewById(R.id.programmingLanguageDropDown), service.getLanguages(), R.layout.default_drop_down, DomainObjects.EMPTY_STRING);
 
         setupVocabulary();
 
@@ -109,10 +108,10 @@ public class CodeActivity extends BaseActivity {
                 if (((TextView) binding.convertedCodeTextView).getText().toString().trim().isEmpty())
                     return;
 
-                String filename = ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(Strings.BEGIN_HTML_TAG) && ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(Strings.END_HTML_TAG) ?
-                        Strings.HTML_FILENAME : Strings.JAVA_FILENAME;
+                String filename = ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(DomainObjects.BEGIN_HTML_TAG) && ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(DomainObjects.END_HTML_TAG) ?
+                        DomainObjects.HTML_FILENAME : DomainObjects.JAVA_FILENAME;
                 StorageClient.getInstance(view.getContext()).writeText(getTranslation(), filename,
-                        filename + " created in Internal Storage.", Strings.WRITE_FILE_FAILED);
+                        filename + " created in Internal Storage.", DomainObjects.WRITE_FILE_FAILED);
             }
         });
 
@@ -164,7 +163,7 @@ public class CodeActivity extends BaseActivity {
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     factory.device.toClipboard(getTranslation(), CodeActivity.this);
-                    factory.device.tell(Strings.copiedToClipboardMessage(Strings.CODE), CodeActivity.this);
+                    factory.device.tell(DomainObjects.copiedToClipboardMessage(DomainObjects.CODE), CodeActivity.this);
                 }
             }
         });
@@ -267,7 +266,7 @@ public class CodeActivity extends BaseActivity {
                         purpose,
                         determineMeta(CodeActivity.this, store),
                         text,
-                        Strings.EMPTY_STRING),
+                        DomainObjects.EMPTY_STRING),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);
     }

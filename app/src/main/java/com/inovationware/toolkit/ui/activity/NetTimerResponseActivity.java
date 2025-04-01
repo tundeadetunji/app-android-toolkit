@@ -17,7 +17,7 @@ import androidx.core.view.MenuCompat;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -38,20 +38,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DETAILS;
-import static com.inovationware.toolkit.global.domain.Strings.HEADLINE;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.NET_TIMER_REPLY_DELIMITER;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_NET_TIMER_EMPHASIZE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_NET_TIMER_INFORM;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_NET_TIMER_REPLY_APPEND_ORIGINAL_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_DEVICE;
-import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_GROUP;
-import static com.inovationware.toolkit.global.domain.Strings.TIME_STRING;
-import static com.inovationware.toolkit.global.domain.Strings.ZONE_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DETAILS;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HEADLINE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.NET_TIMER_REPLY_DELIMITER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_NET_TIMER_EMPHASIZE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_NET_TIMER_INFORM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_NET_TIMER_REPLY_APPEND_ORIGINAL_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TARGET_MODE_TO_DEVICE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TARGET_MODE_TO_GROUP;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TIME_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.ZONE_STRING;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
@@ -217,7 +217,7 @@ public class NetTimerResponseActivity extends BaseActivity {
                 purpose,
                 determineTargetMode(target),
                 info,
-                Strings.EMPTY_STRING);
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override
@@ -282,7 +282,7 @@ public class NetTimerResponseActivity extends BaseActivity {
             //Todo make filename more descriptive by adding time/date of original message
             String filename = ((TextView) findViewById(R.id.objectHeadlineTextView)).getText().toString() + ".txt";
             StorageClient.getInstance(NetTimerResponseActivity.this).writeText(constructMessage(appendOriginalMessageCheckBox.isChecked()), filename,
-                    filename + " created in Internal Storage.", Strings.WRITE_FILE_FAILED);
+                    filename + " created in Internal Storage.", DomainObjects.WRITE_FILE_FAILED);
         }
     };
 

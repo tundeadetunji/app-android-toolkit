@@ -1,7 +1,7 @@
 package com.inovationware.toolkit.global.library.utility;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
@@ -28,7 +28,7 @@ public class Support {
     }
 
     public static boolean initialParamsAreSet(Context context, SharedPreferencesManager store, GroupManager machines) {
-        return !store.getString(context, Strings.SHARED_PREFERENCES_ID_KEY, EMPTY_STRING).isEmpty() &&
+        return !store.getString(context, DomainObjects.SHARED_PREFERENCES_ID_KEY, EMPTY_STRING).isEmpty() &&
                 !machines.getDefaultDevice(context).isEmpty() &&
                 !store.getUsername(context).isEmpty() &&
                 !store.getBaseUrl(context).isEmpty() &&
@@ -41,7 +41,7 @@ public class Support {
     }
 
     public static String determineTarget(Context context,SharedPreferencesManager store, GroupManager machines) {
-        return store.getTargetMode(context).equalsIgnoreCase(Strings.TARGET_MODE_TO_DEVICE) ? machines.getDefaultDevice(context) : store.getID(context);
+        return store.getTargetMode(context).equalsIgnoreCase(DomainObjects.TARGET_MODE_TO_DEVICE) ? machines.getDefaultDevice(context) : store.getID(context);
     }
 
     public static boolean responseStringIsValid(String content) {
@@ -130,14 +130,14 @@ public class Support {
 
     private static Map<FormatForDateAndTime, String> formatForDateAndTimeStringMap =
             Map.of(
-                    FormatForDateAndTime.DATE, Strings.FORMAT_FOR_DATE,
-                    FormatForDateAndTime.TIME, Strings.FORMAT_FOR_TIME,
-                    FormatForDateAndTime.DATE_TIME, Strings.FORMAT_FOR_DATE_TIME,
-                    FormatForDateAndTime.TIME_DATE, Strings.FORMAT_FOR_TIME_DATE,
-                    FormatForDateAndTime.DATE_TIME_FOR_FILE, Strings.FORMAT_FOR_DATE_TIME_FOR_FILE
+                    FormatForDateAndTime.DATE, DomainObjects.FORMAT_FOR_DATE,
+                    FormatForDateAndTime.TIME, DomainObjects.FORMAT_FOR_TIME,
+                    FormatForDateAndTime.DATE_TIME, DomainObjects.FORMAT_FOR_DATE_TIME,
+                    FormatForDateAndTime.TIME_DATE, DomainObjects.FORMAT_FOR_TIME_DATE,
+                    FormatForDateAndTime.DATE_TIME_FOR_FILE, DomainObjects.FORMAT_FOR_DATE_TIME_FOR_FILE
             );
 
     public static String createUrl(Context context, Transfer.Intent intent, SharedPreferencesManager store){
-        return Strings.BASE_URL(context, store) + "/api/regular.ashx?id=" + store.getID(context) + "&intent=" + intent + "&username=" + store.getUsername(context);
+        return DomainObjects.BASE_URL(context, store) + "/api/regular.ashx?id=" + store.getID(context) + "&intent=" + intent + "&username=" + store.getUsername(context);
     }
 }

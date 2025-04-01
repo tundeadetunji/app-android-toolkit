@@ -1,9 +1,9 @@
 package com.inovationware.toolkit.ui.fragment;
 
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_APP;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_APP;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentMemoBSBinding;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
@@ -134,7 +134,7 @@ public class MemoBSFragment extends BottomSheetDialogFragment {
                     determineTarget(view.getContext(), store, machines),
                     POST_PURPOSE_APP,
                     determineMeta(view.getContext(), store),
-                    Strings.EMPTY_STRING,
+                    DomainObjects.EMPTY_STRING,
                     memo.getNoteId());
             navigate.enqueue(new Callback<String>() {
                 @Override

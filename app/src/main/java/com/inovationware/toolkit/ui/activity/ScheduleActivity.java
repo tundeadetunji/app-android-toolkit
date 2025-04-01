@@ -1,9 +1,9 @@
 package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
@@ -14,11 +14,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.inovationware.toolkit.databinding.ActivityScheduleBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
@@ -105,10 +104,10 @@ public class ScheduleActivity extends BaseActivity implements ScheduleViewSource
                             Transfer.Intent.writeText,
                             store.getSender(ScheduleActivity.this),
                             determineTarget(ScheduleActivity.this, store, machines),
-                            Strings.POST_PURPOSE_CREATE_SCHEDULE,
+                            DomainObjects.POST_PURPOSE_CREATE_SCHEDULE,
                             determineMeta(ScheduleActivity.this, store),
                             security.encrypt(ScheduleActivity.this, store, Schedule.to(Schedule.create(ScheduleActivity.this))),
-                            Strings.EMPTY_STRING
+                            DomainObjects.EMPTY_STRING
                     ),
                     DEFAULT_ERROR_MESSAGE_SUFFIX,
                     DEFAULT_FAILURE_MESSAGE_SUFFIX);

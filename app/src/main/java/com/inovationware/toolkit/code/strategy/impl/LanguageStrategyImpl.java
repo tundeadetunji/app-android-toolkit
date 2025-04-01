@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import com.inovationware.toolkit.code.domain.Language;
 import com.inovationware.toolkit.code.strategy.LanguageStrategy;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 
 public class LanguageStrategyImpl implements LanguageStrategy {
     private final Factory factory = Factory.getInstance();
@@ -56,7 +56,7 @@ public class LanguageStrategyImpl implements LanguageStrategy {
             }
         }
 
-        throw new NoSuchElementException(Strings.TODO_NO_SUCH_ELEMENT_EXCEPTION);
+        throw new NoSuchElementException(DomainObjects.TODO_NO_SUCH_ELEMENT_EXCEPTION);
     }
 
     private String parseLine(String s, Language src, Language dest) {

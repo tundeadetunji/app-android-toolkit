@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.retrofit.Repo;
@@ -28,8 +28,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.net_timer_objects;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.net_timer_objects;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
@@ -79,7 +79,7 @@ public class NetTimerActivity extends BaseActivity {
                     store.getUsername(NetTimerActivity.this),
                     store.getID(NetTimerActivity.this),
                     String.valueOf(Transfer.Intent.readNetTimerTasks),
-                    Strings.EMPTY_STRING
+                    DomainObjects.EMPTY_STRING
             );
             navigate.enqueue(new Callback<String>() {
                 @RequiresApi(api = Build.VERSION_CODES.M)

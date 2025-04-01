@@ -3,6 +3,7 @@ package com.inovationware.toolkit.global.domain;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
+import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.memo.entity.Memo;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
 
-public class Strings {
+public class DomainObjects {
 
     public static final String START_LOCATION_UPDATES_MESSAGE = "Have a nice day!";
 
@@ -143,8 +144,9 @@ public class Strings {
     //public static MachineManager machines;
     //public static SiteManager sites;
 
-    public static boolean netTimerMobileServiceIsRunning = false;
-    public static BistableCommand bistable;
+    //public static boolean netTimerMobileServiceIsRunning = false;
+//    public static BistableCommand bistable;
+    public static BistableManager bistableManager;
     public static final String MINUTES = TimeUnit.MINUTES.toString();
     public static final String HOURS = TimeUnit.HOURS.toString();
     public static final String SECONDS = TimeUnit.SECONDS.toString();
@@ -216,6 +218,7 @@ public class Strings {
     public static final String POST_PURPOSE_REGULAR = "Regular";
     public static final String POST_PURPOSE_SINGLE_SOS = "SingleSos";
     public static final String POST_PURPOSE_PERIODIC_SOS = "PeriodicSos";
+    public static final String POST_PURPOSE_DIM_SCREEN = "DimScreen";
     public static final String POST_PURPOSE_INTERACTION = "Interaction";
     public static final String POST_PURPOSE_APP = "App";
     public static final String POST_PURPOSE_ENGAGE = "Engage";

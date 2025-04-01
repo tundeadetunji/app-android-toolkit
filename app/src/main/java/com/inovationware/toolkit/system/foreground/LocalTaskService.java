@@ -8,6 +8,7 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 
 import com.inovationware.toolkit.bistable.service.BistableManager;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.system.foreground.utility.ForegroundServiceUtility;
 import com.inovationware.toolkit.ui.activity.StopServiceActivity;
 
@@ -21,7 +22,7 @@ public class LocalTaskService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        manager = new BistableManager();
+        this.manager = DomainObjects.bistableManager;
         createNotificationChannel(); // Create the notification channel
     }
 

@@ -1,6 +1,5 @@
 package com.inovationware.toolkit.ui.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
 import android.content.Context;
@@ -10,32 +9,28 @@ import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivitySettingsBinding;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.utility.Code;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_PROMPT_TO_SYNC_NOTE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PROMPT_TO_SYNC_NOTE;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_DISPLAY_ERROR_MESSAGE;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_ID_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SENDER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_DISPLAY_ERROR_MESSAGE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_ID_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SENDER;
 import static com.inovationware.toolkit.global.library.utility.Support.*;
 
 public class SettingsActivity extends BaseActivity {
@@ -93,8 +88,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really set hotspot information?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
             }
         });
@@ -113,8 +108,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really clear hotspot information?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
             }
         });
@@ -140,8 +135,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really save this username?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
 
             }
@@ -173,8 +168,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really set sending " + content(binding.targetModeDropDown).toLowerCase() + " as default?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
             }
         });
@@ -199,8 +194,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really add this device?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
 
             }
@@ -221,8 +216,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really set " + content(binding.machinesDropDown) + " as default?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
             }
         });
@@ -233,7 +228,7 @@ public class SettingsActivity extends BaseActivity {
                     @Override
                     public void positiveButtonAction() {
                         store.setString(SettingsActivity.this, SHARED_PREFERENCES_SENDER, !isNothing(content(binding.senderTextView)) ? content(binding.senderTextView) : Settings.Secure.getString(view.getContext().getContentResolver(), Settings.Secure.ANDROID_ID));
-                        announce(SettingsActivity.this, Strings.value_saved);
+                        announce(SettingsActivity.this, DomainObjects.value_saved);
                     }
 
                     @Override
@@ -241,8 +236,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really set this alias?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
             }
         });
@@ -261,8 +256,8 @@ public class SettingsActivity extends BaseActivity {
                     }
                 };
                 template.setMessage("Really save this Id?");
-                template.setPositiveButtonText(Strings.yes);
-                template.setNegativeButtonText(Strings.never_mind);
+                template.setPositiveButtonText(DomainObjects.yes);
+                template.setNegativeButtonText(DomainObjects.never_mind);
                 template.show(SettingsActivity.this);
             }
         });

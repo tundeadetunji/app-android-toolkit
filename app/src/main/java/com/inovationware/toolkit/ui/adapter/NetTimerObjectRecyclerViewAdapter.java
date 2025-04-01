@@ -21,10 +21,10 @@ import com.inovationware.toolkit.ui.activity.NetTimerResponseActivity;
 
 import java.util.List;
 
-import static com.inovationware.toolkit.global.domain.Strings.DETAILS;
-import static com.inovationware.toolkit.global.domain.Strings.HEADLINE;
-import static com.inovationware.toolkit.global.domain.Strings.TIME_STRING;
-import static com.inovationware.toolkit.global.domain.Strings.ZONE_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DETAILS;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HEADLINE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TIME_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.ZONE_STRING;
 
 public class NetTimerObjectRecyclerViewAdapter extends RecyclerView.Adapter<NetTimerObjectRecyclerViewAdapter.ViewHolder> {
     Animation animation;

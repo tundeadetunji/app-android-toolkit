@@ -8,26 +8,26 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.Strings.HAPTIC_FEEDBACK_ONLY_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.LAST_WEB_PAGE_SENT_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_BASE_URL_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_PROMPT_TO_SYNC_NOTE;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SHOW_VOCABULARY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_USERNAME_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HAPTIC_FEEDBACK_ONLY_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HAPTIC_FEEDBACK_ON_ACKNOWLEDGEMENT_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.LAST_WEB_PAGE_SENT_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_BASE_URL_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PROMPT_TO_SYNC_NOTE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SHOW_VOCABULARY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_USERNAME_KEY;
 import static com.inovationware.toolkit.global.library.utility.Code.clean;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_DISPLAY_ERROR_MESSAGE;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_ID_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SENDER;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_TARGET_MODE;
-import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODES;
-import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_DEVICE;
-import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_GROUP;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_DISPLAY_ERROR_MESSAGE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_ID_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SENDER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_TARGET_MODE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TARGET_MODES;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TARGET_MODE_TO_DEVICE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TARGET_MODE_TO_GROUP;
 
 public class SharedPreferencesManager {
     private static SharedPreferencesManager instance;
@@ -105,11 +105,11 @@ public class SharedPreferencesManager {
     }
 
     public String getTheme(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_THEME_KEY, Strings.PINKY);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_THEME_KEY, DomainObjects.PINKY);
     }
 
     public void setTheme(Context context, String value){
-        setString(context, Strings.SHARED_PREFERENCES_THEME_KEY, value);
+        setString(context, DomainObjects.SHARED_PREFERENCES_THEME_KEY, value);
     }
 
     public boolean shouldAppendUuidToOutput(Context context){
@@ -198,51 +198,51 @@ public class SharedPreferencesManager {
     }
 
     public void setEncryptionSalt(Context context, String salt){
-        setString(context, Strings.SHARED_PREFERENCES_ENCRYPTION_SALT, salt);
+        setString(context, DomainObjects.SHARED_PREFERENCES_ENCRYPTION_SALT, salt);
     }
 
     public String getEncryptionSalt(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_ENCRYPTION_SALT);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_ENCRYPTION_SALT);
     }
 
     public void setEncryptionPassword(Context context, String password){
-        setString(context, Strings.SHARED_PREFERENCES_ENCRYPTION_PASSWORD, password);
+        setString(context, DomainObjects.SHARED_PREFERENCES_ENCRYPTION_PASSWORD, password);
     }
 
     public String getEncryptionPassword(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_ENCRYPTION_PASSWORD);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_ENCRYPTION_PASSWORD);
     }
 
     public void setGithubOwner(Context context, String owner){
-        setString(context, Strings.SHARED_PREFERENCES_GITHUB_OWNER, owner);
+        setString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_OWNER, owner);
     }
 
     public String getGithubOwner(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_GITHUB_OWNER);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_OWNER);
     }
 
     public void setGithubToken(Context context, String token){
-        setString(context, Strings.SHARED_PREFERENCES_GITHUB_TOKEN, token);
+        setString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_TOKEN, token);
     }
 
     public String getGithubToken(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_GITHUB_TOKEN);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_TOKEN);
     }
 
     public void setGithubDefaultRepository(Context context, String repository){
-        setString(context, Strings.SHARED_PREFERENCES_GITHUB_DEFAULT_REPOSITORY, repository);
+        setString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_DEFAULT_REPOSITORY, repository);
     }
 
     public String getGithubDefaultRepository(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_GITHUB_DEFAULT_REPOSITORY);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_DEFAULT_REPOSITORY);
     }
 
     public void setGithubDefaultBranch(Context context, String branch){
-        setString(context, Strings.SHARED_PREFERENCES_GITHUB_DEFAULT_BRANCH, branch);
+        setString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_DEFAULT_BRANCH, branch);
     }
 
     public String getGithubDefaultBranch(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_GITHUB_DEFAULT_BRANCH);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_GITHUB_DEFAULT_BRANCH);
     }
 
     public boolean isGithubDetailsSet(Context context){
@@ -250,11 +250,11 @@ public class SharedPreferencesManager {
     }
 
     public void setDefaultNoteTitle(Context context, String title){
-        setString(context, Strings.SHARED_PREFERENCES_DEFAULT_NOTE_TITLE_KEY, title);
+        setString(context, DomainObjects.SHARED_PREFERENCES_DEFAULT_NOTE_TITLE_KEY, title);
     }
 
     public String getDefaultNoteTitle(Context context){
-        return getString(context, Strings.SHARED_PREFERENCES_DEFAULT_NOTE_TITLE_KEY, Strings.SHARED_PREFERENCES_DEFAULT_NOTE_TITLE);
+        return getString(context, DomainObjects.SHARED_PREFERENCES_DEFAULT_NOTE_TITLE_KEY, DomainObjects.SHARED_PREFERENCES_DEFAULT_NOTE_TITLE);
     }
 
     public void setDropDown(Context context, AutoCompleteTextView dropdown, String[] newList) {

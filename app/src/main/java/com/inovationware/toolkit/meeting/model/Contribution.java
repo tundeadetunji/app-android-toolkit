@@ -6,14 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.external.Json;
 import com.inovationware.toolkit.global.library.utility.Code;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AccessLevel;
@@ -71,9 +69,9 @@ public class Contribution {
                 .append(this.contribution)
                 .append("\n\n")
                 .append(" said " + this.contributor)
-                .append(Strings.NEW_LINE)
+                .append(DomainObjects.NEW_LINE)
                 .append(" at " + this.contributedAt)
-                .append(Strings.NEW_LINE)
+                .append(DomainObjects.NEW_LINE)
                 .append(" from " + this.timezone)
                 .append("\n\n")
                 .toString();

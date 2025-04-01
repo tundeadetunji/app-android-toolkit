@@ -1,10 +1,10 @@
 package com.inovationware.toolkit.cycles.library;
 
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_CREATE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_CREATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
@@ -25,7 +25,7 @@ import com.inovationware.toolkit.cycles.service.DailyCycleService;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.datatransfer.service.rest.RestDataTransferService;
 import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStrategy;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.CheckboxTextViewDialog;
@@ -38,11 +38,9 @@ import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
-import com.inovationware.toolkit.ui.activity.CyclesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import lombok.SneakyThrows;
 
@@ -218,7 +216,7 @@ public class PrintoutAuthority {
         }
 
         if (dialog.getCheckboxes().get(create.getId()).isChecked() && !dialog.getCheckboxes().get(send.getId()).isChecked() && !dialog.getEditText().getText().toString().isEmpty()){
-            sendInformation(dialog.getEditText().getText().toString() + Strings.NEW_LINE + output, SharedPreferencesManager.getInstance(), GroupManager.getInstance(), POST_PURPOSE_CREATE);
+            sendInformation(dialog.getEditText().getText().toString() + DomainObjects.NEW_LINE + output, SharedPreferencesManager.getInstance(), GroupManager.getInstance(), POST_PURPOSE_CREATE);
         }
 
         if (dialog.getCheckboxes().get(memo.getId()).isChecked()){
@@ -250,41 +248,41 @@ public class PrintoutAuthority {
             Entity entity = yearlyService.createEntity(profilesResource);
 
             builder.append(yearlyService.title(detailsResource, languageResource));
-            builder.append(Strings.NEW_LINE);
+            builder.append(DomainObjects.NEW_LINE);
             builder.append(yearlyService.headline(detailsResource));
-            builder.append(Strings.NEW_LINE);
-            builder.append(Strings.NEW_LINE);
+            builder.append(DomainObjects.NEW_LINE);
+            builder.append(DomainObjects.NEW_LINE);
 
             builder.append(dialog.getCheckboxes().get(soul.getId()).isChecked() ?
-                    yearlyService.soul(detailsResource) + Strings.NEW_LINE + Strings.NEW_LINE :
-                    Strings.EMPTY_STRING
+                    yearlyService.soul(detailsResource) + DomainObjects.NEW_LINE + DomainObjects.NEW_LINE :
+                    DomainObjects.EMPTY_STRING
             );
 
             builder.append(dialog.getCheckboxes().get(daily.getId()).isChecked() ?
-                    createDailyCyclePrintout() + Strings.NEW_LINE + Strings.NEW_LINE : Strings.EMPTY_STRING);
+                    createDailyCyclePrintout() + DomainObjects.NEW_LINE + DomainObjects.NEW_LINE : DomainObjects.EMPTY_STRING);
 
             builder.append(
                     dialog.getCheckboxes().get(periods.getId()).isChecked() ?
-                            "Personal Cycle Periods" + Strings.NEW_LINE + yearlyService.dates(entity.getPERIOD_LISTING()) + Strings.NEW_LINE + Strings.NEW_LINE :
-                            Strings.EMPTY_STRING
+                            "Personal Cycle Periods" + DomainObjects.NEW_LINE + yearlyService.dates(entity.getPERIOD_LISTING()) + DomainObjects.NEW_LINE + DomainObjects.NEW_LINE :
+                            DomainObjects.EMPTY_STRING
             );
 
             builder.append(
                     dialog.getCheckboxes().get(personal.getId()).isChecked() ?
-                            "Personal Cycle" + Strings.NEW_LINE + entity.getPERSONAL() + Strings.NEW_LINE + Strings.NEW_LINE :
-                            Strings.EMPTY_STRING
+                            "Personal Cycle" + DomainObjects.NEW_LINE + entity.getPERSONAL() + DomainObjects.NEW_LINE + DomainObjects.NEW_LINE :
+                            DomainObjects.EMPTY_STRING
             );
 
             builder.append(
                     dialog.getCheckboxes().get(health.getId()).isChecked() ?
-                            "Health Cycle" + Strings.NEW_LINE + entity.getHEALTH() + Strings.NEW_LINE + Strings.NEW_LINE :
-                            Strings.EMPTY_STRING
+                            "Health Cycle" + DomainObjects.NEW_LINE + entity.getHEALTH() + DomainObjects.NEW_LINE + DomainObjects.NEW_LINE :
+                            DomainObjects.EMPTY_STRING
             );
 
             builder.append(
                     dialog.getCheckboxes().get(business.getId()).isChecked() ?
-                            "Business Cycle" + Strings.NEW_LINE + entity.getBUSINESS() + Strings.NEW_LINE + Strings.NEW_LINE :
-                            Strings.EMPTY_STRING
+                            "Business Cycle" + DomainObjects.NEW_LINE + entity.getBUSINESS() + DomainObjects.NEW_LINE + DomainObjects.NEW_LINE :
+                            DomainObjects.EMPTY_STRING
             );
         }
 
@@ -297,11 +295,11 @@ public class PrintoutAuthority {
         DayToken token = dailyService.findByPeriod();
         return new StringBuilder()
                 .append(token.getHeadline())
-                .append(Strings.NEW_LINE)
+                .append(DomainObjects.NEW_LINE)
                 .append(dailyService.createTitle())
-                .append(Strings.NEW_LINE)
+                .append(DomainObjects.NEW_LINE)
                 .append(Support.createTimestamp(Support.FormatForDateAndTime.TIME_DATE))
-                .append(Strings.NEW_LINE)
+                .append(DomainObjects.NEW_LINE)
                 .append(dailyService.getSystemTimezone())
                 .append(token.getDetail())
                 .toString();
@@ -332,7 +330,7 @@ public class PrintoutAuthority {
                         purpose,
                         determineMeta(context, SharedPreferencesManager.getInstance()),
                         EncryptionManager.getInstance().encrypt(context, SharedPreferencesManager.getInstance(), output),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);

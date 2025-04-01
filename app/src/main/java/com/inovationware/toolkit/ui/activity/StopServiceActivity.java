@@ -1,23 +1,15 @@
 package com.inovationware.toolkit.ui.activity;
 
-import static com.inovationware.toolkit.global.domain.Strings.netTimerMobileServiceIsRunning;
+import static com.inovationware.toolkit.global.domain.DomainObjects.bistableManager;
 import static com.inovationware.toolkit.global.library.utility.Support.getOutOfThere;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.bistable.service.BistableManager;
-import com.inovationware.toolkit.databinding.ActivityMainBinding;
 import com.inovationware.toolkit.databinding.ActivityStopServiceBinding;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.system.service.ToolkitServiceManager;
@@ -28,9 +20,8 @@ public class StopServiceActivity extends BaseActivity {
     ActivityStopServiceBinding binding;
     private Context context;
     private ToolkitServiceManager services;
-    private BistableManager manager;
-    private final String YES = Strings.exactly;
-    private final String NO = Strings.no;
+    private final String YES = DomainObjects.exactly;
+    private final String NO = DomainObjects.no;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +38,6 @@ public class StopServiceActivity extends BaseActivity {
     private void setupReferences() {
         context = StopServiceActivity.this;
         services = ToolkitServiceManager.getInstance();
-        manager = new BistableManager();
     }
 
     private void setupListeners() {
@@ -85,7 +75,7 @@ public class StopServiceActivity extends BaseActivity {
     private final View.OnClickListener stopLocalTaskServiceButtonHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!netTimerMobileServiceIsRunning) return;
+            if (!bistableManager.isNetTimerMobileServiceIsRunning()) return;
             new MessageBox("Stop reminding me about that?", YES, NO) {
                 @Override
                 public void positiveButtonAction() {
@@ -127,8 +117,8 @@ public class StopServiceActivity extends BaseActivity {
     }
 
     private void stopLocalTaskService(){
-        manager.stop();
-        manager.stopForegroundService(context);
+        bistableManager.stop();
+        bistableManager.stopForegroundService(context);
     }
 
     //end support

@@ -1,10 +1,10 @@
 package com.inovationware.toolkit.location.service.impl;
 
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_PERIODIC_SOS;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_SINGLE_SOS;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_PERIODIC_SOS;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_SINGLE_SOS;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.location.Geocoder;
 import android.location.Location;
 
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
@@ -92,7 +92,7 @@ public class LocationServiceImpl implements LocationService {
                                 purpose,
                                 Support.determineMeta(context, store),
                                 security.encrypt(context, store, data.toString()),
-                                Strings.EMPTY_STRING
+                                DomainObjects.EMPTY_STRING
                         ),
                         DEFAULT_ERROR_MESSAGE_SUFFIX,
                         DEFAULT_FAILURE_MESSAGE_SUFFIX);

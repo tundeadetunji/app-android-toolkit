@@ -1,7 +1,7 @@
 package com.inovationware.toolkit.code.verb;
 
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class Structure {
                     .build();
         }
 
-        throw new RuntimeException(Strings.TODO_ERROR_VALIDATION_MSG);
+        throw new RuntimeException(DomainObjects.TODO_ERROR_VALIDATION_MSG);
     }
 
     private List<String> combineLists(List<String> i, List<String> j){

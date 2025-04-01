@@ -1,37 +1,14 @@
 package com.inovationware.toolkit.ui.activity;
 
-import static com.inovationware.generalmodule.Device.clipboardGetText;
-import static com.inovationware.generalmodule.Device.clipboardSetText;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_LOGGER;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
-import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
-import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.inovationware.generalmodule.Feedback;
-import com.inovationware.toolkit.datatransfer.dto.request.ReadTextRequest;
-import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
-import com.inovationware.toolkit.global.domain.Strings;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.EncryptionManager;
-import com.inovationware.toolkit.global.library.external.Json;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.library.utility.DeviceClient;
-import com.inovationware.toolkit.meeting.authority.BoardAuthority;
 import com.inovationware.toolkit.meeting.model.Meeting;
 import com.inovationware.toolkit.meeting.service.impl.MeetingServiceImpl;
 import com.inovationware.toolkit.databinding.ActivityManageBoardBinding;
@@ -40,17 +17,12 @@ import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.Getter;
-import lombok.SneakyThrows;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class ManageBoardActivity extends BaseActivity {
     private ActivityManageBoardBinding binding;
@@ -102,7 +74,7 @@ public class ManageBoardActivity extends BaseActivity {
                     return;
                 }
                 attendees.add(binding.attendeeDropDown.getText().toString());
-                factory.ui.bindProperty(context, binding.attendeeDropDown, attendees.toArray(new String[0]), Strings.EMPTY_STRING);
+                factory.ui.bindProperty(context, binding.attendeeDropDown, attendees.toArray(new String[0]), DomainObjects.EMPTY_STRING);
             }
         });
 
@@ -111,7 +83,7 @@ public class ManageBoardActivity extends BaseActivity {
             public void onClick(View v) {
                 if (binding.attendeeDropDown.getText().toString().isEmpty()) return;
                 attendees.remove(binding.attendeeDropDown.getText().toString());
-                factory.ui.bindProperty(context, binding.attendeeDropDown, attendees.toArray(new String[0]), Strings.EMPTY_STRING);
+                factory.ui.bindProperty(context, binding.attendeeDropDown, attendees.toArray(new String[0]), DomainObjects.EMPTY_STRING);
             }
         });
 
@@ -146,7 +118,7 @@ public class ManageBoardActivity extends BaseActivity {
                         LocalDateTime.now(),
                         Code.getTimezone(),
                         true,
-                        attendees.stream().collect(Collectors.joining(Strings.NEW_LINE))
+                        attendees.stream().collect(Collectors.joining(DomainObjects.NEW_LINE))
                 );
 
                 service.createMeeting(context, meeting);

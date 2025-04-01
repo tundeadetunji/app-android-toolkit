@@ -25,7 +25,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.FragmentHomeBinding;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -33,8 +33,6 @@ import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.app.retrofit.Repo;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.repository.ResourcesManager;
 import com.inovationware.toolkit.location.service.LocationService;
 import com.inovationware.toolkit.memo.entity.Memo;
@@ -51,15 +49,15 @@ import com.inovationware.toolkit.ui.activity.SettingsActivity;
 import com.inovationware.toolkit.ui.adapter.MemoRecyclerViewAdapter;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_FAVORITE_URL_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_PINNED_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_READING_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_RUNNING_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SCRATCH_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_TODO_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.cachedMemos;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_FAVORITE_URL_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PINNED_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_READING_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_RUNNING_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SCRATCH_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_TODO_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
 import java.io.IOException;
@@ -133,8 +131,8 @@ public class HomeFragment extends Fragment {
         SignInManager signInManager = SignInManager.getInstance();
         binding.captionTextView.setText(
                 signInManager.thereIsPrincipal(view.getContext()) ?
-                        Strings.WELCOME + signInManager.getSignedInUser(view.getContext()).getName() :
-                        Strings.WELCOME);
+                        DomainObjects.WELCOME + signInManager.getSignedInUser(view.getContext()).getName() :
+                        DomainObjects.WELCOME);
 
         setInitialText(binding.toolkitInfoTextView);
         setWelcomeText(binding.toolkitInfoTextView);
@@ -143,8 +141,6 @@ public class HomeFragment extends Fragment {
         binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage(store.getTheme(context)));
 
         setupNotes(view);
-
-
     }
 
     private final View.OnClickListener PCButtonClick = new View.OnClickListener() {
@@ -206,7 +202,7 @@ public class HomeFragment extends Fragment {
         @Override
         public boolean onLongClick(View v) {
             service.updateLocationPeriodically();
-            Toast.makeText(context, Strings.FRIENDLY_MESSAGES.get(new Random().nextInt(Strings.FRIENDLY_MESSAGES.size() - 0) + 0), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, DomainObjects.FRIENDLY_MESSAGES.get(new Random().nextInt(DomainObjects.FRIENDLY_MESSAGES.size() - 0) + 0), Toast.LENGTH_SHORT).show();
             return true;
         }
     };
@@ -406,7 +402,7 @@ public class HomeFragment extends Fragment {
                 store.getUsername(context),
                 store.getID(context),
                 String.valueOf(Transfer.Intent.readNote),
-                Strings.POST_PURPOSE_READ_NOTE
+                DomainObjects.POST_PURPOSE_READ_NOTE
         );
 
         navigate.enqueue(new Callback<String>() {
@@ -467,7 +463,7 @@ public class HomeFragment extends Fragment {
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(view.getContext());
 
         if (acct != null) {
-            binding.captionTextView.setText(Strings.WELCOME + ", " + acct.getGivenName());
+            binding.captionTextView.setText(DomainObjects.WELCOME + ", " + acct.getGivenName());
             /*String personName = acct.getDisplayName();
             Uri personPhoto = acct.getPhotoUrl();
 
@@ -475,7 +471,7 @@ public class HomeFragment extends Fragment {
             //Glide.with(this).load(String.valueOf(personPhoto)).into(imagePicture);
             Glide.with(this).load(String.valueOf(personPhoto)).circleCrop().into(imagePicture);*/
         } else {
-            binding.captionTextView.setText(Strings.WELCOME);
+            binding.captionTextView.setText(DomainObjects.WELCOME);
             initialInfoTextView.setVisibility(initialParamsAreSet(view.getContext(), store, machines) ? View.INVISIBLE : View.VISIBLE);
         }
 

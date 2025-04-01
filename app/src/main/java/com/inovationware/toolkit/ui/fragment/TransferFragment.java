@@ -27,7 +27,7 @@ import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.InputDialog;
@@ -53,23 +53,23 @@ import retrofit2.Response;
 import static com.inovationware.generalmodule.Device.clipboardGetText;
 import static com.inovationware.generalmodule.Device.clipboardSetText;
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_CREATE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_EMPHASIZE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_INFORM;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_UPDATE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_WRITE_NOTE;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_PERIODIC_UPDATES_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_READ_OUT_LOUD_ON_RECEIVE_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SEARCH_ON_RECEIVE_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SEND_TO_CLIPBOARD_ON_RECEIVE_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SendFrom;
-import static com.inovationware.toolkit.global.domain.Strings.TEXT;
-import static com.inovationware.toolkit.global.domain.Strings.cachedMemos;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_CREATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_EMPHASIZE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_INFORM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_UPDATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_WRITE_NOTE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PERIODIC_UPDATES_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_READ_OUT_LOUD_ON_RECEIVE_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SEARCH_ON_RECEIVE_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SEND_TO_CLIPBOARD_ON_RECEIVE_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SendFrom;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TEXT;
+import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.dtoDropDownAdapter;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
@@ -100,7 +100,7 @@ public class TransferFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        memento.backupFrom(binding.getRoot().getContext(), SharedPreferencesManager.getInstance(), Strings.TRANSFER_FRAGMENT_MEMENTO_KEY, binding.detailsTextView);
+        memento.backupFrom(binding.getRoot().getContext(), SharedPreferencesManager.getInstance(), DomainObjects.TRANSFER_FRAGMENT_MEMENTO_KEY, binding.detailsTextView);
         binding = null;
     }
 
@@ -135,7 +135,7 @@ public class TransferFragment extends Fragment {
     }
 
     private void preSetupUi(){
-        memento.restoreTo(view.getContext(), store, Strings.TRANSFER_FRAGMENT_MEMENTO_KEY, binding.detailsTextView);
+        memento.restoreTo(view.getContext(), store, DomainObjects.TRANSFER_FRAGMENT_MEMENTO_KEY, binding.detailsTextView);
     }
 
     private void setupUi(){
@@ -172,7 +172,7 @@ public class TransferFragment extends Fragment {
             if (!authority.canSend(SendFrom.TextView)) return;
 
             if (binding.memoTitle.getText().toString().isEmpty()) {
-                binding.memoTitle.setText(store.getString(view.getContext(), Strings.MEMO_TOPIC_KEY));
+                binding.memoTitle.setText(store.getString(view.getContext(), DomainObjects.MEMO_TOPIC_KEY));
                 binding.detailsTextView.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(binding.detailsTextView, InputMethodManager.SHOW_IMPLICIT);
@@ -329,12 +329,12 @@ public class TransferFragment extends Fragment {
                         from == SendFrom.TextView ?
                                 security.encrypt(view.getContext(), store, shouldFormatOutput ? Code.formatOutput(view.getContext(), binding.detailsTextView.getText().toString(), store, device) : binding.detailsTextView.getText().toString()) :
                                 security.encrypt(view.getContext(), store, clipboardGetText(context)),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);
 
-        memento.clear(view.getContext(), store, Strings.TRANSFER_FRAGMENT_MEMENTO_KEY);
+        memento.clear(view.getContext(), store, DomainObjects.TRANSFER_FRAGMENT_MEMENTO_KEY);
     }
     void sendText(String text, String purpose, String meta, boolean shouldFormatOutput) {
         if (!thereIsInternet(view.getContext())) return;
@@ -352,7 +352,7 @@ public class TransferFragment extends Fragment {
                         purpose,
                         meta,
                         security.encrypt(view.getContext(), store, shouldFormatOutput ? Code.formatOutput(view.getContext(), text, store, device) : text),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -383,9 +383,9 @@ public class TransferFragment extends Fragment {
                     DEFAULT_ERROR_MESSAGE_SUFFIX,
                     DEFAULT_FAILURE_MESSAGE_SUFFIX);
         }
-        memento.clear(view.getContext(), store, Strings.TRANSFER_FRAGMENT_MEMENTO_KEY);
+        memento.clear(view.getContext(), store, DomainObjects.TRANSFER_FRAGMENT_MEMENTO_KEY);
         cachedMemos = null;
-        store.setString(view.getContext(), Strings.MEMO_TOPIC_KEY, binding.memoTitle.getText().toString());
+        store.setString(view.getContext(), DomainObjects.MEMO_TOPIC_KEY, binding.memoTitle.getText().toString());
         try {
             memoService.saveNoteToCloud(memo);
         }
@@ -416,7 +416,7 @@ public class TransferFragment extends Fragment {
                 store.getUsername(view.getContext()),
                 store.getID(view.getContext()),
                 String.valueOf(Transfer.Intent.readText),
-                Strings.EMPTY_STRING
+                DomainObjects.EMPTY_STRING
         );
         navigate.enqueue(new Callback<String>() {
             @SneakyThrows

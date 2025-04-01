@@ -1,14 +1,14 @@
 package com.inovationware.toolkit.global.repository;
 
-import static com.inovationware.toolkit.global.domain.Strings.AGRELLITE;
-import static com.inovationware.toolkit.global.domain.Strings.BLUISH;
-import static com.inovationware.toolkit.global.domain.Strings.DARKER;
-import static com.inovationware.toolkit.global.domain.Strings.FLUORITE;
-import static com.inovationware.toolkit.global.domain.Strings.NATURAL;
-import static com.inovationware.toolkit.global.domain.Strings.PINKY;
-import static com.inovationware.toolkit.global.domain.Strings.TAN;
-import static com.inovationware.toolkit.global.domain.Strings.THROWBACK;
-import static com.inovationware.toolkit.global.domain.Strings.WARM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.AGRELLITE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.BLUISH;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DARKER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.FLUORITE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.NATURAL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.PINKY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TAN;
+import static com.inovationware.toolkit.global.domain.DomainObjects.THROWBACK;
+import static com.inovationware.toolkit.global.domain.DomainObjects.WARM;
 
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.global.library.utility.Support;
@@ -63,7 +63,6 @@ public class ResourcesManager {
         purpleImages.add(R.drawable.donald_duck_2);
         purpleImages.add(R.drawable.fairy_1);
         purpleImages.add(R.drawable.goofy_1);
-        purpleImages.add(R.drawable.hook_2);
         purpleImages.add(R.drawable.potato_1);
 
         naturalImages = new ArrayList<>();

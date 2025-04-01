@@ -1,10 +1,10 @@
 package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
@@ -18,7 +18,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
 import com.inovationware.toolkit.R;
@@ -30,7 +29,7 @@ import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStra
 import com.inovationware.toolkit.github.domain.app.BooleanValue;
 import com.inovationware.toolkit.github.domain.app.GithubOperation;
 import com.inovationware.toolkit.github.utility.Resolver;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -93,20 +92,20 @@ public class GitHubActivity extends BaseActivity {
     }
 
     private void clearFields() {
-        binding.param1TextView.setText(Strings.EMPTY_STRING);
-        binding.param1TextView.setHint(Strings.EMPTY_STRING);
+        binding.param1TextView.setText(DomainObjects.EMPTY_STRING);
+        binding.param1TextView.setHint(DomainObjects.EMPTY_STRING);
 
-        binding.param2TextView.setText(Strings.EMPTY_STRING);
-        binding.param2TextView.setHint(Strings.EMPTY_STRING);
+        binding.param2TextView.setText(DomainObjects.EMPTY_STRING);
+        binding.param2TextView.setHint(DomainObjects.EMPTY_STRING);
 
-        binding.param3TextView.setText(Strings.EMPTY_STRING);
-        binding.param3TextView.setHint(Strings.EMPTY_STRING);
+        binding.param3TextView.setText(DomainObjects.EMPTY_STRING);
+        binding.param3TextView.setHint(DomainObjects.EMPTY_STRING);
 
-        binding.booleanDropDown.setText(Strings.EMPTY_STRING);
-        binding.booleanDropDown.setHint(Strings.EMPTY_STRING);
+        binding.booleanDropDown.setText(DomainObjects.EMPTY_STRING);
+        binding.booleanDropDown.setHint(DomainObjects.EMPTY_STRING);
 
-        binding.githubResultTextView.setText(Strings.EMPTY_STRING);
-        binding.githubResultTextView.setHint(Strings.EMPTY_STRING);
+        binding.githubResultTextView.setText(DomainObjects.EMPTY_STRING);
+        binding.githubResultTextView.setHint(DomainObjects.EMPTY_STRING);
     }
 
     @Override
@@ -250,7 +249,7 @@ public class GitHubActivity extends BaseActivity {
                             POST_PURPOSE_REGULAR,
                             determineMeta(GitHubActivity.this, store),
                             EncryptionManager.getInstance().encrypt(GitHubActivity.this, store, binding.githubResultTextView.getText().toString()),
-                            Strings.EMPTY_STRING
+                            DomainObjects.EMPTY_STRING
                     ),
                     DEFAULT_ERROR_MESSAGE_SUFFIX,
                     DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -278,7 +277,7 @@ public class GitHubActivity extends BaseActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 device.toClipboard(binding.githubResultTextView.getText().toString(), GitHubActivity.this);
             }
-            device.tell(Strings.copiedToClipboardMessage(null), GitHubActivity.this);
+            device.tell(DomainObjects.copiedToClipboardMessage(null), GitHubActivity.this);
         }
     };
 
@@ -292,13 +291,13 @@ public class GitHubActivity extends BaseActivity {
                     binding.githubResultTextView.getText().toString(),
                     binding.param1TextView.getText().toString(),
                     binding.param1TextView.getText().toString() + " created in Internal Storage.",
-                    Strings.WRITE_FILE_FAILED
+                    DomainObjects.WRITE_FILE_FAILED
             );
         }
     };
 
     private void handleRequiredFieldsMissing() {
-        Toast.makeText(GitHubActivity.this, Strings.REQUIRED_FIELDS_MISSING_STRING, Toast.LENGTH_SHORT).show();
+        Toast.makeText(GitHubActivity.this, DomainObjects.REQUIRED_FIELDS_MISSING_STRING, Toast.LENGTH_SHORT).show();
     }
 
     private void readReadMe(String repository, TextView outputTextView) {
@@ -405,7 +404,7 @@ public class GitHubActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            device.tell(Strings.SUCCESS_MESSAGE, GitHubActivity.this);
+                            device.tell(DomainObjects.SUCCESS_MESSAGE, GitHubActivity.this);
                         }
                     });
                 } catch (IOException ignored) {

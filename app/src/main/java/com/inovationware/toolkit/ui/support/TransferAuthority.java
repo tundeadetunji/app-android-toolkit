@@ -1,35 +1,35 @@
 package com.inovationware.toolkit.ui.support;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.AUDIO;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.EXCEL;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_ANY;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_AUDIO;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_EXCEL;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_PDF;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_PICTURE;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_POWERPOINT;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_RAR;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_VIDEO;
-import static com.inovationware.toolkit.global.domain.Strings.MIME_TYPE_WORD;
-import static com.inovationware.toolkit.global.domain.Strings.PDF;
-import static com.inovationware.toolkit.global.domain.Strings.PICTURE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_AUDIO;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_EXCEL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_PDF;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_PICTURE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_POWERPOINT;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_RAR;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_VIDEO;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_BLOB_WORD;
-import static com.inovationware.toolkit.global.domain.Strings.POWERPOINT;
-import static com.inovationware.toolkit.global.domain.Strings.RAR;
-import static com.inovationware.toolkit.global.domain.Strings.VIDEO;
-import static com.inovationware.toolkit.global.domain.Strings.WORD;
-import static com.inovationware.toolkit.global.domain.Strings.ttsServiceProvider;
+import static com.inovationware.toolkit.global.domain.DomainObjects.AUDIO;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EXCEL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_ANY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_AUDIO;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_EXCEL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_PDF;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_PICTURE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_POWERPOINT;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_RAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_VIDEO;
+import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_WORD;
+import static com.inovationware.toolkit.global.domain.DomainObjects.PDF;
+import static com.inovationware.toolkit.global.domain.DomainObjects.PICTURE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_AUDIO;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_EXCEL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_PDF;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_PICTURE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_POWERPOINT;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_RAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_VIDEO;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_WORD;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POWERPOINT;
+import static com.inovationware.toolkit.global.domain.DomainObjects.RAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.VIDEO;
+import static com.inovationware.toolkit.global.domain.DomainObjects.WORD;
+import static com.inovationware.toolkit.global.domain.DomainObjects.ttsServiceProvider;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
@@ -42,7 +42,7 @@ import android.net.Uri;
 
 import com.inovationware.toolkit.databinding.FragmentTransferBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendFileRequest;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -71,8 +71,8 @@ public class TransferAuthority {
         this.store = store;
     }
 
-    public boolean canSend(Strings.SendFrom from) {
-        if (from == Strings.SendFrom.Clipboard) {
+    public boolean canSend(DomainObjects.SendFrom from) {
+        if (from == DomainObjects.SendFrom.Clipboard) {
             ClipboardManager clipboard = (ClipboardManager) context.getSystemService(context.CLIPBOARD_SERVICE);
             return initialParamsAreSet(context, store, machines) && clipboard.hasText();
         } else {
@@ -241,7 +241,7 @@ public class TransferAuthority {
     }
 
     public String createReadFileUrl(String dto){
-        return Strings.BASE_URL(context, store) + "/api/regular.ashx?id=" + store.getID(context) + "&intent=" + Transfer.Intent.readFile + "&username=" + store.getUsername(context) + "&tag=" + getPurpose(dto);
+        return DomainObjects.BASE_URL(context, store) + "/api/regular.ashx?id=" + store.getID(context) + "&intent=" + Transfer.Intent.readFile + "&username=" + store.getUsername(context) + "&tag=" + getPurpose(dto);
     }
     public void openReceivedFile(String dto) {
         if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines)) return;

@@ -1,9 +1,9 @@
 package com.inovationware.toolkit.meeting.service.impl;
 
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_LOGGER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LOGGER;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
@@ -24,7 +24,7 @@ import com.inovationware.toolkit.meeting.model.Meeting;
 import com.inovationware.toolkit.meeting.model.Contribution;
 import com.inovationware.toolkit.meeting.service.MeetingService;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
@@ -95,7 +95,7 @@ public class MeetingServiceImpl implements MeetingService {
                         POST_PURPOSE_LOGGER,
                         determineMeta(context, store),
                         content,
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -116,7 +116,7 @@ public class MeetingServiceImpl implements MeetingService {
                         POST_PURPOSE_LOGGER,
                         determineMeta(context, store),
                         meetingId,
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -137,7 +137,7 @@ public class MeetingServiceImpl implements MeetingService {
                         POST_PURPOSE_LOGGER,
                         determineMeta(context, store),
                         meetingId,
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -153,7 +153,7 @@ public class MeetingServiceImpl implements MeetingService {
                 store.getUsername(context),
                 store.getID(context),
                 String.valueOf(Transfer.Intent.meetingGetIds),
-                Strings.EMPTY_STRING
+                DomainObjects.EMPTY_STRING
         );
         navigate.enqueue(new Callback<String>() {
             @SneakyThrows
@@ -163,7 +163,7 @@ public class MeetingServiceImpl implements MeetingService {
                 if (response.isSuccessful()) {
 
                     if (response.body() == null) return;
-                    factory.ui.bindProperty(context, dropdown, response.body().split(Strings.NEW_LINE));
+                    factory.ui.bindProperty(context, dropdown, response.body().split(DomainObjects.NEW_LINE));
 
                 } else {
                     if (SharedPreferencesManager.getInstance().shouldDisplayErrorMessage(context)) {

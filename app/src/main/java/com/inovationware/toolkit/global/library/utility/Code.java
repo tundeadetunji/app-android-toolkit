@@ -13,11 +13,10 @@ import androidx.cardview.widget.CardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.code.domain.Language;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -27,10 +26,10 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
-import static com.inovationware.toolkit.global.domain.Strings.DATA_TRANSFER_OBJECTS;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.TIME_UNITS;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DATA_TRANSFER_OBJECTS;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TIME_UNITS;
 
 public class Code {
     public static String content(TextView view){
@@ -505,7 +504,7 @@ public class Code {
     }
 
     public static ArrayAdapter<String> configureInstalledAppsDropDownAdapter(Context context){
-        return new ArrayAdapter<String>(context, R.layout.default_drop_down, Strings.installedApps);
+        return new ArrayAdapter<String>(context, R.layout.default_drop_down, DomainObjects.installedApps);
     }
 
 

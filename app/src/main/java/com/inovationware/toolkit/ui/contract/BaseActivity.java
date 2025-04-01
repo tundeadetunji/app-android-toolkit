@@ -1,14 +1,14 @@
 package com.inovationware.toolkit.ui.contract;
 
-import static com.inovationware.toolkit.global.domain.Strings.AGRELLITE;
-import static com.inovationware.toolkit.global.domain.Strings.BLUISH;
-import static com.inovationware.toolkit.global.domain.Strings.TAN;
-import static com.inovationware.toolkit.global.domain.Strings.DARKER;
-import static com.inovationware.toolkit.global.domain.Strings.NATURAL;
-import static com.inovationware.toolkit.global.domain.Strings.THROWBACK;
-import static com.inovationware.toolkit.global.domain.Strings.WARM;
-import static com.inovationware.toolkit.global.domain.Strings.PINKY;
-import static com.inovationware.toolkit.global.domain.Strings.FLUORITE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.AGRELLITE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.BLUISH;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TAN;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DARKER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.NATURAL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.THROWBACK;
+import static com.inovationware.toolkit.global.domain.DomainObjects.WARM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.PINKY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.FLUORITE;
 
 import android.os.Bundle;
 

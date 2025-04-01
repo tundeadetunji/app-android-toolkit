@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -17,7 +16,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityLoginBinding;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 public class LoginActivity extends BaseActivity {
@@ -70,7 +69,7 @@ public class LoginActivity extends BaseActivity {
 
             // Signed in successfully, show authenticated UI.
             if (getIntent().getExtras() != null){
-                String key = getIntent().getExtras().getString(Strings.DTO_CLASS_STRING);
+                String key = getIntent().getExtras().getString(DomainObjects.DTO_CLASS_STRING);
                 try {
                     startActivity(new Intent(LoginActivity.this, key.isEmpty() ? MainActivity.class : determineWhichActivity(key)));
                 } catch (Exception ignored) {

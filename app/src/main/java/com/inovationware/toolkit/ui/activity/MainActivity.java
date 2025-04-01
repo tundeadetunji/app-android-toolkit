@@ -23,9 +23,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.inovationware.toolkit.R;
+import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.databinding.ActivityMainBinding;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.SignInManager;
@@ -40,22 +41,23 @@ import com.inovationware.toolkit.tts.service.TTSService;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 import com.inovationware.toolkit.ui.support.MainAuthority;
 
-import static com.inovationware.toolkit.global.domain.Strings.AGRELLITE;
-import static com.inovationware.toolkit.global.domain.Strings.BLUISH;
-import static com.inovationware.toolkit.global.domain.Strings.CHOSEN;
-import static com.inovationware.toolkit.global.domain.Strings.TAN;
-import static com.inovationware.toolkit.global.domain.Strings.DARKER;
-import static com.inovationware.toolkit.global.domain.Strings.NATURAL;
-import static com.inovationware.toolkit.global.domain.Strings.NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING;
-import static com.inovationware.toolkit.global.domain.Strings.THROWBACK;
-import static com.inovationware.toolkit.global.domain.Strings.WARM;
-import static com.inovationware.toolkit.global.domain.Strings.PINKY;
-import static com.inovationware.toolkit.global.domain.Strings.FLUORITE;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.apps;
-import static com.inovationware.toolkit.global.domain.Strings.no;
-import static com.inovationware.toolkit.global.domain.Strings.ttsServiceProvider;
-import static com.inovationware.toolkit.global.domain.Strings.yes;
+import static com.inovationware.toolkit.global.domain.DomainObjects.AGRELLITE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.BLUISH;
+import static com.inovationware.toolkit.global.domain.DomainObjects.CHOSEN;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TAN;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DARKER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.NATURAL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.NET_TIMER_NOTIFICATION_SERVICE_IS_RUNNING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.THROWBACK;
+import static com.inovationware.toolkit.global.domain.DomainObjects.WARM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.PINKY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.FLUORITE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.apps;
+import static com.inovationware.toolkit.global.domain.DomainObjects.bistableManager;
+import static com.inovationware.toolkit.global.domain.DomainObjects.no;
+import static com.inovationware.toolkit.global.domain.DomainObjects.ttsServiceProvider;
+import static com.inovationware.toolkit.global.domain.DomainObjects.yes;
 
 public class MainActivity extends BaseActivity {
     private MainAuthority authority;
@@ -86,9 +88,14 @@ public class MainActivity extends BaseActivity {
         setupConfigurations();
         setupAccess();
         setupReferences();
+        setupDomainObjects();
         setupListeners();
         startServices();
         otherStartupProcedures();
+    }
+
+    private void setupDomainObjects() {
+        bistableManager = BistableManager.getInstance(null);
     }
 
     private void setupAccess() {
@@ -108,8 +115,8 @@ public class MainActivity extends BaseActivity {
     private void setupReferences() {
         store.setString(MainActivity.this, SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, "");
         apps = null;
-        Strings.cachedMemos = null;
-        Strings.getListOfInstalledApps(apkClient, getPackageManager(), true);
+        DomainObjects.cachedMemos = null;
+        DomainObjects.getListOfInstalledApps(apkClient, getPackageManager(), true);
 
     }
 

@@ -1,34 +1,29 @@
 package com.inovationware.toolkit.ui.activity;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_CREATE;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_INFORM;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_UPDATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_CREATE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_INFORM;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_UPDATE;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.code.domain.Language;
 import com.inovationware.toolkit.code.service.LanguageService;
@@ -46,10 +41,9 @@ import com.inovationware.toolkit.databinding.ActivityCyclesBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.datatransfer.service.rest.RestDataTransferService;
 import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStrategy;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.CheckboxTextViewDialog;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.InputDialog;
@@ -58,7 +52,6 @@ import com.inovationware.toolkit.cycles.library.CalendarLite;
 import com.inovationware.toolkit.global.library.utility.Code;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StorageClient;
-import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.memo.entity.Memo;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
@@ -71,8 +64,6 @@ import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CyclesActivity extends BaseActivity implements DetailViewSource, ProfileViewSource, LanguageViewSource {
 
@@ -133,7 +124,7 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         binding.inform.setOnClickListener(inform);
         binding.clear.setOnClickListener(clear);
 
-        ui.bindProperty(CyclesActivity.this, binding.cyclesLanguageDropDown, languageServiceLite.getLanguages(), R.layout.default_drop_down, Strings.EMPTY_STRING);
+        ui.bindProperty(CyclesActivity.this, binding.cyclesLanguageDropDown, languageServiceLite.getLanguages(), R.layout.default_drop_down, DomainObjects.EMPTY_STRING);
 
         binding.visit.setOnClickListener(visit);
         binding.save.setOnClickListener(save);
@@ -173,7 +164,7 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
                             POST_PURPOSE_INFORM,
                             determineMeta(context, store),
                             security.encrypt(context, store, binding.preview.getText().toString()),
-                            Strings.EMPTY_STRING
+                            DomainObjects.EMPTY_STRING
                     ),
                     DEFAULT_ERROR_MESSAGE_SUFFIX,
                     DEFAULT_FAILURE_MESSAGE_SUFFIX);
@@ -451,7 +442,7 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
                         purpose,
                         determineMeta(CyclesActivity.this, SharedPreferencesManager.getInstance()),
                         EncryptionManager.getInstance().encrypt(CyclesActivity.this, SharedPreferencesManager.getInstance(), text),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);

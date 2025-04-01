@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import com.inovationware.toolkit.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.meeting.model.Contribution;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public class BoardRecyclerViewAdapter extends RecyclerView.Adapter<BoardRecycler
     public void onBindViewHolder(@NonNull BoardRecyclerViewAdapter.ViewHolder holder, int i) {
         holder.contributor.setText(contributions.get(holder.getAdapterPosition()).getContributor() + " says:");
         holder.contribution.setText(contributions.get(holder.getAdapterPosition()).getContribution());
-        holder.when.setText("at " + contributions.get(holder.getAdapterPosition()).getContributedAt() + Strings.NEW_LINE + "from " + contributions.get(holder.getAdapterPosition()).getTimezone());
+        holder.when.setText("at " + contributions.get(holder.getAdapterPosition()).getContributedAt() + DomainObjects.NEW_LINE + "from " + contributions.get(holder.getAdapterPosition()).getTimezone());
     }
 
     @Override

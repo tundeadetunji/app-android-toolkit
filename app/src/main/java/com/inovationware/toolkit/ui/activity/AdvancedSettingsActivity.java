@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.core.view.MenuCompat;
 
@@ -14,7 +15,7 @@ import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityAdvancedSettingsBinding;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
@@ -22,6 +23,7 @@ import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SiteManager;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.library.app.retrofit.Repo;
+import com.inovationware.toolkit.system.service.ToolkitServiceManager;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import lombok.SneakyThrows;
@@ -30,21 +32,22 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.Strings.cachedMemos;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.POST_PURPOSE_NET_TIMER_UPDATE_TOKEN;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_FAVORITE_URL_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_PINNED_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_READING_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_RUNNING_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_SCRATCH_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_TODO_KEY;
-import static com.inovationware.toolkit.global.domain.Strings.TARGET_MODE_TO_DEVICE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_NET_TIMER_UPDATE_TOKEN;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_FAVORITE_URL_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PINNED_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_READING_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_RUNNING_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SCRATCH_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_TODO_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.TARGET_MODE_TO_DEVICE;
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
+import static com.inovationware.toolkit.global.library.utility.Support.getOutOfThere;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
 public class AdvancedSettingsActivity extends BaseActivity {
@@ -53,6 +56,8 @@ public class AdvancedSettingsActivity extends BaseActivity {
     private GroupManager machines;
     private SiteManager sites;
     private Factory factory;
+    private ToolkitServiceManager services;
+    private Context context;
 
     private Feedback feedback;
 
@@ -70,12 +75,13 @@ public class AdvancedSettingsActivity extends BaseActivity {
 
 
     private void setupVariables(){
+        context = AdvancedSettingsActivity.this;
         store = SharedPreferencesManager.getInstance();
         machines = GroupManager.getInstance();
         sites = SiteManager.getInstance(getApplicationContext());
         feedback = new Feedback(getApplicationContext());
         factory = Factory.getInstance();
-
+        services = ToolkitServiceManager.getInstance();
     }
 
     private void setupUi(){
@@ -97,6 +103,7 @@ public class AdvancedSettingsActivity extends BaseActivity {
         binding.resetSearchSitesButton.setOnClickListener(resetSearchSitesButtonHandler);
         binding.resetNotesButton.setOnClickListener(resetNotesButtonHandler);
         binding.saveLinksButton.setOnClickListener(saveLinksButtonHandler);
+        binding.startNetworkServiceButton.setOnClickListener(startNetworkServiceButtonHandler);
 
         /*resetLocalTasksKeysButton = findViewById(R.id.resetLocalTasksKeysButton);
         resetLocalTasksKeysButton.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +164,17 @@ public class AdvancedSettingsActivity extends BaseActivity {
         setGithubDetails();
     }
 
+    private final View.OnClickListener startNetworkServiceButtonHandler = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            services.networkServiceShouldRun = true;
+            services.networkServiceIsRunning = true;
+            services.startServices(AdvancedSettingsActivity.this);
+            Toast.makeText(AdvancedSettingsActivity.this, "Auto-handling requests from base is resumed.", Toast.LENGTH_SHORT).show();
+            getOutOfThere(AdvancedSettingsActivity.this);
+        }
+    };
+
     private final View.OnClickListener saveLinksButtonHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -177,8 +195,8 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 }
             };
             template.setMessage("Really reset links?");
-            template.setPositiveButtonText(Strings.sure);
-            template.setNegativeButtonText(Strings.never_mind);
+            template.setPositiveButtonText(DomainObjects.sure);
+            template.setNegativeButtonText(DomainObjects.never_mind);
             template.show(AdvancedSettingsActivity.this);
         }
     };
@@ -227,8 +245,8 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 }
             };
             template.setMessage("Really save details?");
-            template.setPositiveButtonText(Strings.yes);
-            template.setNegativeButtonText(Strings.never_mind);
+            template.setPositiveButtonText(DomainObjects.yes);
+            template.setNegativeButtonText(DomainObjects.never_mind);
             template.show(AdvancedSettingsActivity.this);
         }
     };
@@ -257,8 +275,8 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 }
             };
             template.setMessage("Really save salt and password?\n\nThese values must match that of your target devices!");
-            template.setPositiveButtonText(Strings.yes);
-            template.setNegativeButtonText(Strings.never_mind);
+            template.setPositiveButtonText(DomainObjects.yes);
+            template.setNegativeButtonText(DomainObjects.never_mind);
             template.show(AdvancedSettingsActivity.this);
         }
     };
@@ -280,8 +298,8 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 }
             };
             template.setMessage("Really reset sites?");
-            template.setPositiveButtonText(Strings.sure);
-            template.setNegativeButtonText(Strings.never_mind);
+            template.setPositiveButtonText(DomainObjects.sure);
+            template.setNegativeButtonText(DomainObjects.never_mind);
             template.show(AdvancedSettingsActivity.this);
         }
     };
@@ -300,8 +318,8 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 }
             };
             template.setMessage("Really clear memos?");
-            template.setPositiveButtonText(Strings.sure);
-            template.setNegativeButtonText(Strings.never_mind);
+            template.setPositiveButtonText(DomainObjects.sure);
+            template.setNegativeButtonText(DomainObjects.never_mind);
             template.show(AdvancedSettingsActivity.this);
         }
     };
@@ -318,10 +336,10 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 String.valueOf(Transfer.Intent.clearNote),
                 store.getSender(context),
                 machines.getDefaultDevice(context),
-                Strings.POST_PURPOSE_LOGGER,
+                DomainObjects.POST_PURPOSE_LOGGER,
                 determineMeta(context, store),
                 EMPTY_STRING,
-                Strings.EMPTY_STRING
+                DomainObjects.EMPTY_STRING
         );
 
         navigate.enqueue(new Callback<String>() {
@@ -387,7 +405,7 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 POST_PURPOSE_NET_TIMER_UPDATE_TOKEN,
                 TARGET_MODE_TO_DEVICE,
                 info,
-                Strings.EMPTY_STRING);
+                DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {
             @Override

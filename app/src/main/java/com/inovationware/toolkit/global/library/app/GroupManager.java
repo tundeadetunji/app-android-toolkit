@@ -9,11 +9,11 @@ import com.inovationware.toolkit.R;
 
 import java.util.Arrays;
 
-import static com.inovationware.toolkit.global.domain.Strings.EMPTY_STRING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
 import static com.inovationware.toolkit.global.library.utility.Code.clean;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_DEFAULT_DEVICE;
-import static com.inovationware.toolkit.global.domain.Strings.SHARED_PREFERENCES_MACHINES_KEY;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_DEFAULT_DEVICE;
+import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_MACHINES_KEY;
 
 public class GroupManager {
 

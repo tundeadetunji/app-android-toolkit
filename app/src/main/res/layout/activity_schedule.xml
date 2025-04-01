@@ -227,7 +227,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:text="Mon" />
 
         <CheckBox
@@ -240,7 +240,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:text="Tue" />
 
         <CheckBox
@@ -253,7 +253,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:text="Wed" />
 
         <CheckBox
@@ -266,7 +266,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:text="Thu" />
 
         <CheckBox
@@ -279,7 +279,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:text="Fri" />
     </LinearLayout>
 
@@ -305,7 +305,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:text="Sat" />
 
         <CheckBox
@@ -318,7 +318,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:text="Sun" />
 
         <CheckBox
@@ -331,7 +331,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:visibility="invisible"
             android:text="Sun" />
 
@@ -345,7 +345,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:visibility="invisible"
             android:text="Sun" />
 
@@ -359,7 +359,7 @@ android:fillViewport="false">
             android:layout_marginEnd="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="1"
-            android:textColor="@color/pinky_primary_200"
+            android:textColor="?attr/colorPrimary"
             android:visibility="invisible"
             android:text="Sun" />
 
@@ -375,6 +375,7 @@ android:fillViewport="false">
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         android:layout_weight="1"
+        android:textColor="?attr/colorPrimary"
         android:text="Consider it done if not started after" />
 
     <com.google.android.material.textfield.TextInputLayout

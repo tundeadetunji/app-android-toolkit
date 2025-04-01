@@ -729,7 +729,45 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/startNetworkServiceLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginBottom="8dp"
+            android:text="Requests from base"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/saveLinksButton" />
 
+
+        <LinearLayout
+            android:id="@+id/networkServiceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/resetCaptionTextView">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/startNetworkServiceButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                app:iconGravity="textStart"
+                android:text="Auto-handle requests"
+                app:icon="@drawable/baseline_wifi_24" />
+        </LinearLayout>
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

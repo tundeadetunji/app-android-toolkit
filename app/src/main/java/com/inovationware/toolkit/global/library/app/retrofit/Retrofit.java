@@ -1,6 +1,6 @@
 package com.inovationware.toolkit.global.library.app.retrofit;
 
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -94,8 +94,8 @@ public interface Retrofit {
                           @Query("id") String id,
                           @Query("intent") String intent,
                           @Part MultipartBody.Part file,
-                          @Field(Strings.PostHeaderFilename) String filename,
-                          @Field(Strings.PostHeaderTimestamp) String timestamp,
+                          @Field(DomainObjects.PostHeaderFilename) String filename,
+                          @Field(DomainObjects.PostHeaderTimestamp) String timestamp,
                           @Field("Purpose") String purpose);
 
     @GET()

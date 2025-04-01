@@ -1,7 +1,7 @@
 package com.inovationware.toolkit.system.foreground;
 
-import static com.inovationware.toolkit.global.domain.Strings.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.Strings.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Support.visit;
 
@@ -18,13 +18,14 @@ import androidx.annotation.RequiresApi;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.retrofit.Repo;
+import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.system.foreground.utility.ForegroundServiceUtility;
 import com.inovationware.toolkit.ui.activity.StopServiceActivity;
 
@@ -39,9 +40,11 @@ public class NetworkChecker extends Service {
     private final String CHANNEL_ID = "Requests";
     private final String CHANNEL_NAME = "Requests Channel";
     private Handler mainHandler;
-    private Runnable mainHandlerRunnable;
+    private Runnable hapticRequestRunnable;
     private Handler webPageHandler;
-    private Runnable webPageHandlerRunnable;
+    private Runnable webPageRequestRunnable;
+    private Runnable locationRequestRunnable;
+    private Handler locationRequestHandler;
     private Retrofit retrofitImpl;
     private String lastSentWebPage;
 
@@ -57,7 +60,7 @@ public class NetworkChecker extends Service {
     }
 
     private void setupListeners() {
-        mainHandlerRunnable = new Runnable() {
+        hapticRequestRunnable = new Runnable() {
             @Override
             public void run() {
                 Context context = getApplicationContext();
@@ -69,7 +72,7 @@ public class NetworkChecker extends Service {
                         store.getUsername(context),
                         store.getID(context),
                         String.valueOf(Transfer.Intent.readHaptic),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 );
                 navigate.enqueue(new Callback<String>() {
                     @SneakyThrows
@@ -79,7 +82,7 @@ public class NetworkChecker extends Service {
                         if (response.isSuccessful()) {
 
                             if (response.body() == null) return;
-                            if (response.body().equalsIgnoreCase(Strings.NULL)) return;
+                            if (response.body().equalsIgnoreCase(DomainObjects.NULL)) return;
 
                             Factory.getInstance().feedback.service.giveFeedback(
                                     context,
@@ -97,12 +100,49 @@ public class NetworkChecker extends Service {
                     }
                 });
 
-                mainHandler.postDelayed(mainHandlerRunnable, INTERVAL);
+                mainHandler.postDelayed(hapticRequestRunnable, INTERVAL);
+
+            }
+        };
+        locationRequestRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Context context = getApplicationContext();
+                SharedPreferencesManager store = SharedPreferencesManager.getInstance();
+                retrofitImpl = Repo.getInstance().create(context, store);
+
+                Call<String> navigate = retrofitImpl.readText(
+                        HTTP_TRANSFER_URL(context, store),
+                        store.getUsername(context),
+                        store.getID(context),
+                        String.valueOf(Transfer.Intent.readLocationRequest),
+                        DomainObjects.EMPTY_STRING
+                );
+                navigate.enqueue(new Callback<String>() {
+                    @SneakyThrows
+                    @RequiresApi(api = Build.VERSION_CODES.M)
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        if (response.isSuccessful()) {
+
+                            if (response.body() == null) return;
+                            if (response.body().equalsIgnoreCase(DomainObjects.NULL)) return;
+
+                            LocationServiceImpl.getInstance(context).updateLocationPeriodically();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                    }
+                });
+
+                mainHandler.postDelayed(hapticRequestRunnable, INTERVAL);
 
             }
         };
 
-        webPageHandlerRunnable = new Runnable() {
+        webPageRequestRunnable = new Runnable() {
             @Override
             public void run() {
 
@@ -115,7 +155,7 @@ public class NetworkChecker extends Service {
                         store.getUsername(context),
                         store.getID(context),
                         String.valueOf(Transfer.Intent.readText),
-                        Strings.EMPTY_STRING
+                        DomainObjects.EMPTY_STRING
                 );
                 navigate.enqueue(new Callback<String>() {
                     @SneakyThrows
@@ -156,7 +196,7 @@ public class NetworkChecker extends Service {
                     }
                 });
 
-                webPageHandler.postDelayed(webPageHandlerRunnable, INTERVAL);
+                webPageHandler.postDelayed(webPageRequestRunnable, INTERVAL);
 
             }
         };
@@ -166,6 +206,7 @@ public class NetworkChecker extends Service {
     private void setupReferences() {
         mainHandler = new Handler();
         webPageHandler = new Handler();
+        locationRequestHandler = new Handler();
         lastSentWebPage = SharedPreferencesManager.getInstance().getLastSentWebPage(getApplicationContext());
     }
 
@@ -177,16 +218,18 @@ public class NetworkChecker extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(NOTIFICATION_ID, createNotification());
-        mainHandler.post(mainHandlerRunnable); // Start the periodic task
-        webPageHandler.post(webPageHandlerRunnable);
+        mainHandler.post(hapticRequestRunnable); // Start the periodic task
+        webPageHandler.post(webPageRequestRunnable);
+        locationRequestHandler.post(locationRequestRunnable);
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mainHandler.removeCallbacks(mainHandlerRunnable); // Stop the periodic task
-        webPageHandler.removeCallbacks(webPageHandlerRunnable);
+        mainHandler.removeCallbacks(hapticRequestRunnable); // Stop the periodic task
+        webPageHandler.removeCallbacks(webPageRequestRunnable);
+        locationRequestHandler.removeCallbacks(locationRequestRunnable);
     }
 
     @Nullable

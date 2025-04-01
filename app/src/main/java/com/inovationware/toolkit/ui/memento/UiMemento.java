@@ -3,7 +3,7 @@ package com.inovationware.toolkit.ui.memento;
 import android.content.Context;
 import android.widget.TextView;
 
-import com.inovationware.toolkit.global.domain.Strings;
+import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 
 public class UiMemento {
@@ -18,7 +18,7 @@ public class UiMemento {
     }
 
     public void clear (Context context, SharedPreferencesManager store, String key){
-        store.setString(context, key, Strings.EMPTY_STRING);
+        store.setString(context, key, DomainObjects.EMPTY_STRING);
     }
 
     public void backup (Context context, SharedPreferencesManager store, String key, String state){
