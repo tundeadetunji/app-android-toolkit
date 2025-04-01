@@ -242,12 +242,17 @@ public class ReplyActivity extends BaseActivity {
                 factory.image.service.loadGifImage(ReplyActivity.this, binding.engageImageView, R.drawable.placeholder);
                 showEngageControl();
                 if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isRequest){
-                    //ToDo
+                    //ToDo incorporate others in EngagementResponseType
                     //getTimestamp();
                     engagementHandler.postDelayed(readWhoIsRunnable, 30000);
+                    return;
                 }else if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isPing){
                     requestPing(DomainObjects.IGNORE, determineTarget(context, store, machines));
+                    return;
                 }
+                hideEngageControl();
+                binding.engageButton.setEnabled(true);
+
             }
         }
     };
