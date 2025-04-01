@@ -126,9 +126,13 @@ public class NetworkChecker extends Service {
                         if (response.isSuccessful()) {
 
                             if (response.body() == null) return;
-                            if (response.body().equalsIgnoreCase(DomainObjects.NULL)) return;
+                            //if (response.body().equalsIgnoreCase(DomainObjects.NULL)) return;
 
-                            LocationServiceImpl.getInstance(context).updateLocationPeriodically();
+                            if (response.body().equalsIgnoreCase(DomainObjects.IGNORE)){
+                                LocationServiceImpl.getInstance(context).updateLocationPeriodically();
+                            }else{
+                                LocationServiceImpl.getInstance(context).stopLocationUpdates();
+                            }
                         }
                     }
 
@@ -137,7 +141,7 @@ public class NetworkChecker extends Service {
                     }
                 });
 
-                mainHandler.postDelayed(hapticRequestRunnable, INTERVAL);
+                locationRequestHandler.postDelayed(locationRequestRunnable, INTERVAL);
 
             }
         };

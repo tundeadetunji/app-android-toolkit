@@ -31,7 +31,7 @@ public class Transfer {
         meetingDeleteMeeting,
         readHaptic,
         clearHaptic,
-        readLocationRequest
+        readLocationRequest,
     }
 
     public enum Tag{

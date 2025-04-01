@@ -28,6 +28,7 @@ public class DomainObjects {
 
     public static final String EMPTY_STRING = "";
     public static final String NULL = "Null";
+    public static final String IGNORE = "Ignore";
     public static final String value_saved = "Value has been saved";
     public static final String WELCOME = "Welcome";
     public static final String yes = "Yes";

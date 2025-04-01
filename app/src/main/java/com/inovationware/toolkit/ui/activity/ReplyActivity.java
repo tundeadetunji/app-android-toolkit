@@ -51,6 +51,7 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.HIBERNATE;
 import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_ENGAGE;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LAST_30;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_PING;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_WHAT_IS_ON;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
@@ -237,15 +238,15 @@ public class ReplyActivity extends BaseActivity {
             if (canSend()) {
                 hideEngageControl();
                 requestEngage(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
+                binding.engageButton.setEnabled(false);
+                factory.image.service.loadGifImage(ReplyActivity.this, binding.engageImageView, R.drawable.placeholder);
+                showEngageControl();
                 if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isRequest){
                     //ToDo
                     //getTimestamp();
-                    binding.engageButton.setEnabled(false);
-                    factory.image.service.loadGifImage(ReplyActivity.this, binding.engageImageView, R.drawable.placeholder);
-                    showEngageControl();
                     engagementHandler.postDelayed(readWhoIsRunnable, 30000);
                 }else if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isPing){
-                    engagementHandler.postDelayed(readPingRunnable, 30000);
+                    requestPing(DomainObjects.IGNORE, determineTarget(context, store, machines));
                 }
             }
         }
@@ -273,6 +274,8 @@ public class ReplyActivity extends BaseActivity {
                     binding.engageButton.setEnabled(true);
 
                     if (response.isSuccessful()) {
+
+                        binding.engageButton.setEnabled(true);
 
                         if (response.body() == null) return;
                         //Todo check if this is working
@@ -372,7 +375,7 @@ public class ReplyActivity extends BaseActivity {
         });
     }
 
-    /*void requestPing(String info, String target) {
+    void requestPing(String info, String target) {
         if (!thereIsInternet(getApplicationContext())) return;
 
         Retrofit retrofitImpl = Repo.getInstance().create(context, store);
@@ -393,15 +396,9 @@ public class ReplyActivity extends BaseActivity {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    if (response.body() != null)
-                        if (!response.body().isEmpty())
-                            //factory.feedback.service.giveFeedback(context, store,response.body(), false, Toast.LENGTH_LONG);
-                            new Feedback(ReplyActivity.this).toast(response.body());
-                } else {
-                    if (!store.shouldDisplayErrorMessage(ReplyActivity.this)) {
-                        return;
-                    }
-                    feedback.toast(DEFAULT_ERROR_MESSAGE_SUFFIX);
+                    if (response.body() == null) return;
+
+                    engagementHandler.postDelayed(readPingRunnable, 30000);
                 }
             }
 
@@ -413,7 +410,7 @@ public class ReplyActivity extends BaseActivity {
                 feedback.toast(DEFAULT_FAILURE_MESSAGE_SUFFIX);
             }
         });
-    }*/
+    }
 
     void requestEngage(String engagementOperation, String target) {
         if (!thereIsInternet(getApplicationContext())) return;

@@ -75,10 +75,6 @@ public class MainActivity extends BaseActivity {
     private LocationService service;
     private ToolkitServiceManager services;
 
-
-    private LocationService loc;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

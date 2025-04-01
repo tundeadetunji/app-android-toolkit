@@ -168,8 +168,7 @@ public class AdvancedSettingsActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             services.networkServiceShouldRun = true;
-            services.networkServiceIsRunning = true;
-            services.startServices(AdvancedSettingsActivity.this);
+            services.startServices(getApplicationContext());
             Toast.makeText(AdvancedSettingsActivity.this, "Auto-handling requests from base is resumed.", Toast.LENGTH_SHORT).show();
             getOutOfThere(AdvancedSettingsActivity.this);
         }

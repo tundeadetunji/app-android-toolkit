@@ -3,9 +3,14 @@ package com.inovationware.toolkit.location.model;
 import android.content.Context;
 import android.location.Location;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.TimeZone;
 
 public class LocationData {
     private double longitude;
@@ -81,10 +86,11 @@ public class LocationData {
         String speedInfo = hasSpeed ? String.format("Speed is %.2f m/s (%.2f km/hr, %.2f knots).", speed, speed * 3.6, speedInKnots) : "Speed information not available.";
         String bearingInfo = hasBearing ? String.format("Bearing is %.2f degrees.", bearing) : "Bearing information not available.";
         String accuracyInfo = hasAccuracy ? String.format("Accurate to approximately %.2f meters.", accuracy) : "Accuracy information not available.";
+        String timestampInfo = convertEpochToLocalDateTime(timestamp);
 
         StringBuilder builder = new StringBuilder();
         builder.append(subject)
-                .append(", as at ").append(timestamp)
+                .append(", as at ").append(timestampInfo)
                 .append(",\nis at ").append(physicalAddress)
                 .append("\nwhich is on Long ").append(String.format("%.6f", longitude))
                 .append(", Lat ").append(String.format("%.6f", latitude)).append(".")
@@ -93,7 +99,7 @@ public class LocationData {
                 .append("\n" + accuracyInfo)
                 .append("\n" + bearingInfo)
                 .append("\n" + nearbyPlacesString)
-                .append("\nInformation is provided by " + provider);
+                .append("\nInformation is provided by " + provider + ".");
 
         return builder.toString();
 
@@ -107,4 +113,9 @@ public class LocationData {
         String covertLocationToAddress();
         List<String> getNearbyPlaces();
     }
-}
+    public static String convertEpochToLocalDateTime(long epochMilli) {
+        Date date = new Date(epochMilli);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy, hh:mm a");
+        dateFormat.setTimeZone(TimeZone.getDefault());
+        return dateFormat.format(date);
+    }}
