@@ -18,7 +18,7 @@ import com.inovationware.toolkit.global.library.app.GroupManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.memo.entity.Memo;
+import com.inovationware.toolkit.memo.model.Memo;
 import com.inovationware.toolkit.ui.fragment.MemoBSFragment;
 
 import java.util.List;

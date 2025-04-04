@@ -36,7 +36,7 @@ import com.inovationware.toolkit.global.library.utility.Code;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.memo.entity.Memo;
+import com.inovationware.toolkit.memo.model.Memo;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
 
 import java.util.ArrayList;

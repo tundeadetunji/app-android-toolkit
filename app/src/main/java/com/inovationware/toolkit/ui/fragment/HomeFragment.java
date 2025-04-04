@@ -35,7 +35,7 @@ import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.global.repository.ResourcesManager;
 import com.inovationware.toolkit.location.service.LocationService;
-import com.inovationware.toolkit.memo.entity.Memo;
+import com.inovationware.toolkit.memo.model.Memo;
 import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.ui.activity.BoardActivity;
 import com.inovationware.toolkit.ui.activity.CodeActivity;
@@ -61,6 +61,7 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -412,6 +413,7 @@ public class HomeFragment extends Fragment {
                     List<Memo> memos;
                     try {
                         memos = Memo.listing(response);
+                        Collections.sort(memos, new Memo.MemoComparator());
                         cachedMemos = memos;
                     } catch (IOException ignored) {
                         return;

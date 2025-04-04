@@ -6,11 +6,10 @@ import android.content.pm.PackageManager;
 import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
-import com.inovationware.toolkit.memo.entity.Memo;
+import com.inovationware.toolkit.memo.model.Memo;
 import com.inovationware.toolkit.nettimer.model.NetTimerObject;
 import com.inovationware.toolkit.tts.service.TTSService;
 import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.bistable.verb.BistableCommand;
 
 import java.util.ArrayList;
 import java.util.List;

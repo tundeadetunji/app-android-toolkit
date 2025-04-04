@@ -1,6 +1,6 @@
 package com.inovationware.toolkit.memo.service;
 
-import com.inovationware.toolkit.memo.entity.Memo;
+import com.inovationware.toolkit.memo.model.Memo;
 
 import java.io.IOException;
 

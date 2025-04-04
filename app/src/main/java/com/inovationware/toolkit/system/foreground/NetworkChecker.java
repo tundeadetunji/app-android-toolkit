@@ -128,9 +128,9 @@ public class NetworkChecker extends Service {
                             if (response.body() == null) return;
                             //if (response.body().equalsIgnoreCase(DomainObjects.NULL)) return;
 
-                            if (response.body().equalsIgnoreCase(DomainObjects.IGNORE)){
+                            if (response.body().equalsIgnoreCase(DomainObjects.IGNORE)) {
                                 LocationServiceImpl.getInstance(context).updateLocationPeriodically();
-                            }else{
+                            } else {
                                 LocationServiceImpl.getInstance(context).stopLocationUpdates();
                             }
                         }
@@ -178,14 +178,18 @@ public class NetworkChecker extends Service {
 
                             if (received.getInfo().trim().isEmpty()) return;
 
+                            if (!received.getTarget().equalsIgnoreCase(store.getUsername(context)) ||
+                                    received.getSender().equalsIgnoreCase(store.getSender(context)))
+                                return;
+
                             String decrypted = EncryptionManager.getInstance().decrypt(context, store, received.getInfo());
 
                             if (!lastSentWebPage.equalsIgnoreCase(decrypted)) {
                                 lastSentWebPage = decrypted;
                                 SharedPreferencesManager.getInstance().setLastSentWebPage(context, decrypted);
-                                try{
+                                try {
                                     visit(context, decrypted, true);
-                                }catch (Exception ignored){
+                                } catch (Exception ignored) {
 
                                 }
                             }
