@@ -60,9 +60,27 @@ public class MemoRecyclerViewAdapter extends RecyclerView.Adapter<MemoRecyclerVi
             }
         });
 
-        holder.titleTextField.setText(memos.get(holder.getAdapterPosition()).getNoteTitle());
-        holder.dateTextField.setText(memos.get(holder.getAdapterPosition()).getNoteDate());
-        holder.memoOptionsButton.setOnClickListener(new View.OnClickListener() {
+        holder.timeTextField.setText(
+                "created on " + memos.get(holder.getAdapterPosition()).getNoteDate() + "\nat " +
+                memos.get(holder.getAdapterPosition()).getNoteTime()
+        );
+        holder.dateTextField.setText("in " + memos.get(holder.getAdapterPosition()).getNoteTitle());
+
+        holder.memoTextField.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                MemoBSFragment bsFragment = new MemoBSFragment();
+                bsFragment.setMemo(memos.get(holder.getAdapterPosition()));
+                bsFragment.setDevice(DeviceClient.getInstance());
+                bsFragment.setStore(store);
+                bsFragment.setMachines(machines);
+                bsFragment.setMemoRecyclerViewAdapter(memoRecyclerViewAdapter);
+                bsFragment.show(fragmentManager, MemoBSFragment.TAG);
+                return true;
+            }
+        });
+
+        /*holder.memoOptionsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MemoBSFragment bsFragment = new MemoBSFragment();
@@ -70,14 +88,10 @@ public class MemoRecyclerViewAdapter extends RecyclerView.Adapter<MemoRecyclerVi
                 bsFragment.setDevice(DeviceClient.getInstance());
                 bsFragment.setStore(store);
                 bsFragment.setMachines(machines);
-                /*bsFragment.setRecyclerView(recyclerView);
-                bsFragment.setMemos(memos);
-                bsFragment.setCallerFragmentManager(fragmentManager);
-                bsFragment.setCallerView(callerView);*/
                 bsFragment.setMemoRecyclerViewAdapter(memoRecyclerViewAdapter);
                 bsFragment.show(fragmentManager, MemoBSFragment.TAG);
             }
-        });
+        });*/
     }
 
     @Override
@@ -90,16 +104,16 @@ public class MemoRecyclerViewAdapter extends RecyclerView.Adapter<MemoRecyclerVi
         ImageView memoOptionsButton;
         TextView memoTextField;
         TextView dateTextField;
-        TextView titleTextField;
+        TextView timeTextField;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             memoOptionsButton = itemView.findViewById(R.id.memoOptionsImageView);
             memoTextField = itemView.findViewById(R.id.memoTextView);
             dateTextField = itemView.findViewById(R.id.dateTextView);
-            dateTextField.setVisibility(View.GONE);
-            titleTextField = itemView.findViewById(R.id.contributedAtTextView);
-            titleTextField.setVisibility(View.GONE);
+            //dateTextField.setVisibility(View.GONE);
+            timeTextField = itemView.findViewById(R.id.contributedAtTextView);
+            //timeTextField.setVisibility(View.GONE);
             itemView.findViewById(R.id.memoRowRootLayout).setAnimation(AnimationUtils.loadAnimation(context, R.anim.recycler_view_animation));
         }
     }

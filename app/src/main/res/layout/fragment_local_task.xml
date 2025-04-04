@@ -47,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@+id/regularCaptionTextView">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/regularLayout"
+                android:id="@+id/regularDropDownLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -55,11 +55,11 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:hint=""
-                app:startIconDrawable="@drawable/baseline_task_alt_24"
+                app:startIconDrawable="@drawable/baseline_bolt_24"
                 app:endIconMode="dropdown_menu">
 
                 <AutoCompleteTextView
-                    android:id="@+id/regularDropDown"
+                    android:id="@+id/regularAppDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -71,18 +71,40 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/editRegularButton"
+                android:id="@+id/regularAppButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
-                app:icon="@drawable/ic_edit"
+                app:icon="@drawable/ic_check"
                 app:iconGravity="textStart"
                 android:text="" />
 
 
         </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regularTextViewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="begin with a verb, e.g. start blogging"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:scrollHorizontally="true"
+                android:id="@+id/regularTextView"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
         <LinearLayout
@@ -146,7 +168,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="36dp"
             android:layout_marginEnd="8dp"
             android:ellipsize="none"
             android:scrollHorizontally="false"
@@ -173,7 +195,7 @@
             app:layout_constraintTop_toBottomOf="@+id/reverseCaptionTextView">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/reverseLayout"
+                android:id="@+id/reverseDropDownLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -181,11 +203,11 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:hint=""
-                app:startIconDrawable="@drawable/baseline_task_alt_24"
+                app:startIconDrawable="@drawable/baseline_bolt_24"
                 app:endIconMode="dropdown_menu">
 
                 <AutoCompleteTextView
-                    android:id="@+id/reverseDropDown"
+                    android:id="@+id/reverseAppDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -197,18 +219,40 @@
 
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/editReverseButton"
+                android:id="@+id/reverseAppButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
-                app:icon="@drawable/ic_edit"
+                app:icon="@drawable/ic_check"
                 app:iconGravity="textStart"
                 android:text="" />
 
 
         </LinearLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/reverseTextViewLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="begin with a verb, e.g. fix it"
+            app:boxBackgroundMode="outline"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:scrollHorizontally="true"
+                android:id="@+id/reverseTextView"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:id="@+id/reverseParamsLayout"
@@ -272,7 +316,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="36dp"
             android:layout_marginEnd="8dp"
             android:ellipsize="none"
             android:scrollHorizontally="false"

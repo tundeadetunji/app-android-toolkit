@@ -79,12 +79,11 @@ public class LocalTaskFragment extends Fragment {
     private void setupListeners(){
         binding.startButton.setOnClickListener(startButtonHandler);
         binding.stopButton.setOnClickListener(stopButtonHandler);
-        binding.editRegularButton.setOnClickListener(editRegularButtonHandler);
-        binding.editReverseButton.setOnClickListener(editReverseButtonHandler);
+        binding.regularAppButton.setOnClickListener(regularAppButtonHandler);
+        binding.reverseAppButton.setOnClickListener(reverseAppButtonHandler);
     }
 
     private void setupUi() {
-        // Todo check if this starts everytime or has to move to init
         binding.regularIntervalTextView.setText(String.valueOf(5));
         binding.reverseIntervalTextView.setText(String.valueOf(5));
         loadLastSet();
@@ -104,7 +103,7 @@ public class LocalTaskFragment extends Fragment {
             bistableManager.stop();
 
             BistableNotifier regular = BistableNotifier.builder()
-                    .details(strategy.getUri(binding.regularDropDown.getText().toString()))
+                    .details(binding.regularTextView.getText().toString())
                     .interval(toInterval(binding.regularIntervalTextView.getText().toString()))
                     .timeUnit(toTimeUnit(binding.regularTimeUnitDropDown.getText().toString()))
                     .readAloudThisManyTimes(3)
@@ -114,7 +113,7 @@ public class LocalTaskFragment extends Fragment {
 
             BistableNotifier reverse = reverseIsSet() ?
                     BistableNotifier.builder()
-                            .details(strategy.getUri(binding.reverseDropDown.getText().toString()))
+                            .details(binding.reverseTextView.getText().toString())
                             .interval(toInterval(binding.reverseIntervalTextView.getText().toString()))
                             .timeUnit(toTimeUnit(binding.reverseTimeUnitDropDown.getText().toString()))
                             .readAloudThisManyTimes(3)
@@ -122,7 +121,7 @@ public class LocalTaskFragment extends Fragment {
                             .context(view.getContext())
                             .build() :
                     BistableNotifier.builder()
-                            .details(strategy.getUri(binding.regularDropDown.getText().toString()))
+                            .details(binding.regularTextView.getText().toString())
                             .interval(toInterval(binding.regularIntervalTextView.getText().toString()))
                             .timeUnit(toTimeUnit(binding.regularTimeUnitDropDown.getText().toString()))
                             .readAloudThisManyTimes(3)
@@ -158,23 +157,28 @@ public class LocalTaskFragment extends Fragment {
         }
     };
 
-    private final View.OnClickListener editRegularButtonHandler = new View.OnClickListener() {
+    private final View.OnClickListener regularAppButtonHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            binding.regularDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
-            binding.regularDropDown.requestFocus();
+            //binding.regularTextView.setText(binding.regularAppDropDown.getText().toString());
+            binding.regularTextView.setText(strategy.getUri(binding.regularAppDropDown.getText().toString()));
+            /*binding.regularAppDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
+            binding.regularAppDropDown.requestFocus();
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(binding.regularDropDown, InputMethodManager.SHOW_IMPLICIT);
+            imm.showSoftInput(binding.regularAppDropDown, InputMethodManager.SHOW_IMPLICIT);*/
         }
     };
 
-    private final View.OnClickListener editReverseButtonHandler = new View.OnClickListener() {
+    private final View.OnClickListener reverseAppButtonHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            binding.reverseDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
-            binding.reverseDropDown.requestFocus();
+            //binding.reverseTextView.setText(binding.reverseAppDropDown.getText().toString());
+            binding.reverseTextView.setText(strategy.getUri(binding.reverseAppDropDown.getText().toString()));
+
+            /*binding.reverseAppDropDown.setInputType(InputType.TYPE_CLASS_TEXT);
+            binding.reverseAppDropDown.requestFocus();
             InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(binding.reverseDropDown, InputMethodManager.SHOW_IMPLICIT);
+            imm.showSoftInput(binding.reverseAppDropDown, InputMethodManager.SHOW_IMPLICIT);*/
         }
     };
 
@@ -187,15 +191,16 @@ public class LocalTaskFragment extends Fragment {
 
     private void loadLastSet() {
 
-        binding.regularDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR));
-        binding.regularDropDown.setAdapter(installedAppsDropDownAdapter);
+        binding.regularTextView.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR));
+
+        binding.regularAppDropDown.setAdapter(installedAppsDropDownAdapter);
 
         binding.regularIntervalTextView.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY, "5"));
         binding.regularTimeUnitDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY, MINUTES_CAPITALIZED));
         binding.regularTimeUnitDropDown.setAdapter(timeUnitDropdownAdapter);
 
         //binding.reverseDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE));
-        binding.reverseDropDown.setAdapter(installedAppsDropDownAdapter);
+        binding.reverseAppDropDown.setAdapter(installedAppsDropDownAdapter);
 
         binding.reverseIntervalTextView.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY, "5"));
         binding.reverseTimeUnitDropDown.setText(store.getString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY, MINUTES_CAPITALIZED));
@@ -207,8 +212,8 @@ public class LocalTaskFragment extends Fragment {
 
     void saveSet(boolean regularAndReverseAreSame) {
 
-        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR, binding.regularDropDown.getText().toString());
-        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE, binding.reverseDropDown.getText().toString());
+        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR, binding.regularTextView.getText().toString());
+        store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE, binding.regularAppDropDown.getText().toString());
 
         store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY, binding.regularIntervalTextView.getText().toString());
         store.setString(view.getContext(), SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY, binding.reverseIntervalTextView.getText().toString());
@@ -222,13 +227,16 @@ public class LocalTaskFragment extends Fragment {
     }
 
     private boolean regularIsSet() {
-        return !isNothing(binding.regularDropDown.getText().toString()) &&
+        return !isNothing(binding.regularTextView.getText().toString()) &&
                 !isNothing(binding.regularIntervalTextView.getText().toString()) &&
                 !isNothing(binding.regularTimeUnitDropDown.getText().toString());
+        /*return !isNothing(binding.regularAppDropDown.getText().toString()) &&
+                !isNothing(binding.regularIntervalTextView.getText().toString()) &&
+                !isNothing(binding.regularTimeUnitDropDown.getText().toString());*/
     }
 
     private boolean reverseIsSet() {
-        return !binding.reverseDropDown.getText().toString().isEmpty();
+        return !binding.reverseTextView.getText().toString().isEmpty();
     }
 
     long toInterval(String value) {
@@ -244,8 +252,8 @@ public class LocalTaskFragment extends Fragment {
     }
 
     private void setButtons(boolean isStartingOrStarted){
-        binding.editRegularButton.setEnabled(!isStartingOrStarted);
-        binding.editReverseButton.setEnabled(!isStartingOrStarted);
+        binding.regularAppButton.setEnabled(!isStartingOrStarted);
+        binding.reverseAppButton.setEnabled(!isStartingOrStarted);
         binding.startButton.setEnabled(!isStartingOrStarted);
         binding.stopButton.setEnabled(isStartingOrStarted);
     }

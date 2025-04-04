@@ -20,7 +20,8 @@
             android:ellipsize="none"
             android:scrollHorizontally="false"
             android:text=""
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintEnd_toStartOf="@+id/memoOptionsImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -50,6 +51,7 @@
             app:layout_constraintTop_toBottomOf="@+id/dateTextView" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/memoOptionsImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -987,7 +987,27 @@ public class Vocabulary {
             "LocationManager",
             "Manifest",
             "LocationListener",
-            "Vibrator"
+            "Vibrator",
+            "Looper",
+            "Runnable",
+            "Handler",
+            "getInstance",
+            "LayoutManager",
+            "RecyclerView",
+            "LayoutInflater",
+            "getElementById",
+            "EventEmitter",
+            "Robotics",
+            "Embedded Systems Programming",
+            "Automation and Control Systems",
+            "Human-Machine Interaction (HMI)",
+            "Telecommunications",
+            "Biomedical Engineering",
+            "@Test",
+            "Testing",
+            "Signal Processing",
+            "Control Theory",
+            "Machine Learning"
     );
 
 
@@ -1188,7 +1208,27 @@ public class Vocabulary {
             "AlámójútóÀyè",
             "ÌwéÈtò",
             "Olùfetísílẹ̀Àyè",
-            "ÒṣeGbígbọ̀n"
+            "ÒṣeGbígbọ̀n",
+            "ṢeTẹ̀síwájú",
+            "Ṣiṣẹ́Ṣíṣe",
+            "Olùtọ́jú",
+            "gbaǸkanÀìyípadà",
+            "AlákosoÌfilélẹ̀",
+            "ÀàyèÀtúnlò",
+            "OníṣeÌtóbiÌfilélẹ̀",
+            "wáÈròjàNípaseÌdánimọ̀",
+            "ṢeÌṣẹ̀lẹ̀",
+            "Ẹ̀rọ Amúṣẹ́yá",
+            "Ṣíṣe Ètò Ìfibò",
+            "Àdáṣe àti Ìṣàkóso Ṣíṣe Ètò",
+            "Ìbàṣepọ̀ Ènìyàn àti Ẹ̀rọ",
+            "Ìbárasọ̀rọ̀ Pẹ̀lú Ẹ̀rọ",
+            "Ìmọ̀ Ẹ̀rọ Fún Ìtọ́jú Ẹ̀ya Ara",
+            "@Ìdánwò",
+            "ÌṣeÌdánwò",
+            "Ìṣe Ètò Àmì",
+            "Ẹ̀kọ́ Ìṣàkóso",
+            "Kíkọ́ Ẹ̀rọ Ní Ìmọ̀"
     );
     public List<String> CodeInBulgarian = List.of(
             "ширина",
@@ -1387,7 +1427,27 @@ public class Vocabulary {
             "Мениджър_на_местоположението",
             "Манифест",
             "Слушател_на_местоположение",
-            "Вибратор"
+            "Вибратор",
+            "Праветенепрекъснато",
+            "Работим",
+            "Манипулатор",
+            "вземетеекземпляр",
+            "Мениджърнаоформлението",
+            "Изгледзарециклиране",
+            "Раздуваненаоформлението",
+            "вземетеелементпоидентификатор",
+            "Излъчвателнасъбития",
+            "роботика",
+            "Програмиране на вградени системи",
+            "Системи за автоматизация и управление",
+            "Взаимодействие човек-машина",
+            "Телекомуникации",
+            "Биомедицинско инженерство",
+            "@Тест",
+            "Тестване",
+            "Обработка на сигнали",
+            "Теория на управлението",
+            "Машинно обучение"
 
     );
 
@@ -1588,7 +1648,27 @@ public class Vocabulary {
             "a system service in Android that helps apps access the device's location using GPS, Wi-Fi, or cellular networks, e.g. ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, location -> {int latitude = (int) location.getLatitude();}); //gets current latitude of the device (Android/Java)",
             "a special file in an Android app that contains essential information about the app, like its name, version, and permissions it needs to run (Android)",
             "an interface in Android that allows apps to receive updates about the device's location changes in real-time, e.g. LocationListener locationListener = location -> {int longitude = (int) location.getLongitude();}; //gets current longitude of the device (Android/Java)",
-            "a system service in Android that allows you to control the device's vibration feature, e.g. ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(500) //the phone vibrates for half a second, context could be getApplicationContext() or other source (Android/Java)"
+            "a system service in Android that allows you to control the device's vibration feature, e.g. ((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(500) //the phone vibrates for half a second, context could be getApplicationContext() or other source (Android/Java)",
+            "manages a thread's message queue, allowing it to process messages and run tasks, e.g. Looper.prepare(); Looper.loop(); (Android/Java)",
+            "represents a task that can be executed by a thread, e.g. Runnable myRunnable = new Runnable() { public void run() { /* task code */ } }; (Android/Java)",
+            "used to send and process messages or Runnable tasks associated with a thread's Looper, e.g. Handler handler = new Handler(Looper.getMainLooper()); handler.post(myRunnable); (Android/Java)",
+            "Singleton's design pattern's way of ensuring a class has only one instance and provides a global point of access, e.g. public static MySingleton getInstance() { if (instance == null) { instance = new MySingleton(); } return instance; (Java and other languages including c#)",
+            "arranges child views in a RecyclerView, which is a flexible view for displaying large data sets, e.g. recyclerView.setLayoutManager(new LinearLayoutManager(this)); (Android/Java)",
+            "a flexible view for displaying large data sets in a list or grid format, e.g. RecyclerView recyclerView = findViewById(R.id.recyclerView); recyclerView.setAdapter(myAdapter); (Android/Java)",
+            "used to instantiate layout XML files into their corresponding View objects, e.g. View view = LayoutInflater.from(context).inflate(R.layout.my_layout, parent, false); (Android/Java)",
+            "retrieves an HTML element by its unique ID, allowing manipulation of its properties or content, e.g. document.getElementById(\"myElement\").innerHTML = \"Hello, World!\"; (JavaScript)",
+            "Node.js uses an event-driven architecture, allowing asynchronous event handling, e.g. const myEmitter = new EventEmitter(); myEmitter.on('event', () => console.log('An event occurred!')); myEmitter.emit('event'); (Node.js)",
+            "Robotics involves designing, constructing, and operating robots to perform tasks autonomously or semi-autonomously, e.g. rospy.Publisher('/cmd_vel', Twist, queue_size=10).publish(Twist(linear=Vector3(x=0.5))) (Python w/ ROS)",
+            "Programming for embedded systems involves writing software that directly interacts with hardware components, e.g. digitalWrite(13, HIGH); // Turn on LED (C for Arduino)",
+            "Automation and Control Systems manage processes and machinery with minimal human intervention, e.g. plc.write('MyTag', 1)  # Write value 1 to the PLC tag (Python w/ PLC)",
+            "Human-Machine Interaction (HMI) focuses on the interfaces through which humans interact with machines and systems, e.g. new Button(\"Click Me\").setOnAction(e -> System.out.println(\"Button Clicked!\")); (Java with JavaFX)",
+            "Telecommunications involves the transmission of information over distances for communication, e.g. s.sendall(b'Hello, World!') (Python with Socket)",
+            "Biomedical Engineering applies engineering principles to the medical field for healthcare solutions, e.g. mean_heart_rate = mean(data.heart_rate); (MATLAB)",
+            "Annotation to denote a test method (Java)",
+            "Testing involves evaluating software or systems to ensure they meet specified requirements and function correctly, e.g. assertEquals(5, 2 + 3); (Java)",
+            "Signal Processing involves analyzing, modifying, and synthesizing signals such as sound, images, and scientific measurements, e.g. plt.plot(np.linspace(0, 1, 500), np.sin(2 * np.pi * 5 * np.linspace(0, 1, 500))); plt.show(); (Python with NumPy)",
+            "Control theory is a field that focuses on the behavior of dynamical systems and how to manipulate their inputs to achieve desired outputs, e.g. t, y = ctrl.forced_response(ctrl.TransferFunction([1], [1, 2, 1]), T=np.linspace(0, 10, 100), U=np.ones(100)); (Python with Control Library)",
+            "Machine Learning involves algorithms that allow computers to learn from and make predictions based on data, e.g. from sklearn.linear_model import LinearRegression; model = LinearRegression().fit(X, y); (Python with Scikit-Learn)"
     );
 
 
