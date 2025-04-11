@@ -31,6 +31,7 @@ import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
+import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.system.service.ToolkitServiceManager;
 import com.inovationware.toolkit.location.service.LocationService;
 import com.inovationware.toolkit.notification.service.PushNotificationService;
@@ -39,6 +40,8 @@ import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.tts.service.TTSService;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.fragment.MemoBSFragment;
+import com.inovationware.toolkit.ui.fragment.MenuBottomSheetFragment;
 import com.inovationware.toolkit.ui.support.MainAuthority;
 
 import static com.inovationware.toolkit.global.domain.DomainObjects.AGRELLITE;
@@ -128,6 +131,7 @@ public class MainActivity extends BaseActivity {
         NavigationUI.setupActionBarWithNavController(this, fragment, appBarConfiguration);
 
         //customizeBottomNavigationView(bottomNavigationView);
+
     }
 
     private void setupListeners() {
@@ -138,13 +142,20 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        binding.showNavigationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //new MenuBottomSheetFragment().show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
+            }
+        });
+
         /**
          LongClick should stop sending Location Updates
          */
         binding.QuickSendButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                service.stopLocationUpdates();
+                service.updateLocationPeriodically();
                 return true;
             }
         });

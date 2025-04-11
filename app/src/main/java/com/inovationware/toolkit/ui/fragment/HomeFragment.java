@@ -202,7 +202,7 @@ public class HomeFragment extends Fragment {
     private final View.OnLongClickListener guideImageViewLongClick = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
-            service.updateLocationPeriodically();
+            service.stopLocationUpdates();
             Toast.makeText(context, DomainObjects.FRIENDLY_MESSAGES.get(new Random().nextInt(DomainObjects.FRIENDLY_MESSAGES.size() - 0) + 0), Toast.LENGTH_SHORT).show();
             return true;
         }
