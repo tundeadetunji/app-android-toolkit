@@ -318,7 +318,7 @@ public class CodeActivity extends BaseActivity {
         Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
 
 
-        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share this", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
         Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -351,7 +351,7 @@ public class CodeActivity extends BaseActivity {
 
 
 
-        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_edit, 1);
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create note", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
         Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -362,7 +362,7 @@ public class CodeActivity extends BaseActivity {
 
 
 
-        Ui.ButtonObject.ViewInfo saveViewing = new Ui.ButtonObject.ViewInfo("save memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_save, 1);
+        Ui.ButtonObject.ViewInfo saveViewing = new Ui.ButtonObject.ViewInfo("save to device", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_save, 1);
         Ui.ButtonObject saveButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override

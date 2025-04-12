@@ -44,7 +44,7 @@
                 android:layout_weight="2"
                 app:iconGravity="textStart"
                 app:icon="@drawable/baseline_wifi_24"
-                android:text="share" />
+                android:text="send" />
 
             <EditText
                 android:id="@+id/DataTransferSharedTextView"

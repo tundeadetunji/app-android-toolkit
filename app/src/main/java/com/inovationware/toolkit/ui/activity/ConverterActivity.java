@@ -343,7 +343,7 @@ public class ConverterActivity extends BaseActivity {
         }, margins, dimensions, createViewing);
 
 
-        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create note", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
         Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @SneakyThrows
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -363,7 +363,7 @@ public class ConverterActivity extends BaseActivity {
         }, margins, dimensions, updateViewing);
 
 
-        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share this", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
         Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -178,8 +178,11 @@ public class NetworkChecker extends Service {
 
                             if (received.getInfo().trim().isEmpty()) return;
 
-                            if (!received.getTarget().equalsIgnoreCase(store.getUsername(context)) ||
-                                    received.getSender().equalsIgnoreCase(store.getSender(context)))
+                            if (received.getSender().equalsIgnoreCase(store.getSender(context)))
+                                return;
+
+                            if (!received.getTarget().equalsIgnoreCase(store.getUsername(context)) &&
+                                    !received.getTarget().equalsIgnoreCase(store.getID(context)))
                                 return;
 
                             String decrypted = EncryptionManager.getInstance().decrypt(context, store, received.getInfo());

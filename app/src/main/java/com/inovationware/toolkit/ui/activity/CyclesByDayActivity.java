@@ -366,7 +366,7 @@ public class CyclesByDayActivity extends BaseActivity {
         Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
 
 
-        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share this", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
         Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -375,7 +375,7 @@ public class CyclesByDayActivity extends BaseActivity {
         }, margins, dimensions, shareViewing);
 
 
-        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create note", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
         Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -384,7 +384,7 @@ public class CyclesByDayActivity extends BaseActivity {
         }, margins, dimensions, memoViewing);
 
 
-        Ui.ButtonObject.ViewInfo scheduleViewing = new Ui.ButtonObject.ViewInfo("create schedule", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_event_repeat_24, 1);
+        Ui.ButtonObject.ViewInfo scheduleViewing = new Ui.ButtonObject.ViewInfo("create calendar schedule", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_event_repeat_24, 1);
         Ui.ButtonObject scheduleButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

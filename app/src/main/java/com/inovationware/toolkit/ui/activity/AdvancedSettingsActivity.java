@@ -316,7 +316,7 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 public void negativeButtonAction() {
                 }
             };
-            template.setMessage("Really clear memos?");
+            template.setMessage("Really clear notes?");
             template.setPositiveButtonText(DomainObjects.sure);
             template.setNegativeButtonText(DomainObjects.never_mind);
             template.show(AdvancedSettingsActivity.this);

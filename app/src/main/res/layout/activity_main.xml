@@ -43,6 +43,7 @@
         app:srcCompat="@drawable/ic_transfer" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:visibility="gone"
         android:id="@+id/showNavigationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

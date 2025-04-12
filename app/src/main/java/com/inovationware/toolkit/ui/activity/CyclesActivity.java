@@ -649,7 +649,7 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
 
 
-        Ui.ButtonObject.ViewInfo informViewing = new Ui.ButtonObject.ViewInfo("inform", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_inform, 1);
+        Ui.ButtonObject.ViewInfo informViewing = new Ui.ButtonObject.ViewInfo("inform home", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_inform, 1);
         Ui.ButtonObject informButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -658,7 +658,7 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         }, margins, dimensions, informViewing);
 
 
-        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share this", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
         Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -668,7 +668,7 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         }, margins, dimensions, shareViewing);
 
 
-        Ui.ButtonObject.ViewInfo copyViewing = new Ui.ButtonObject.ViewInfo("copy", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_inform, 1);
+        Ui.ButtonObject.ViewInfo copyViewing = new Ui.ButtonObject.ViewInfo("copy to clipboard", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_content_copy_24, 1);
         Ui.ButtonObject copyButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -698,7 +698,7 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         }, margins, dimensions, updateViewing);
 
 
-        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create note", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
         Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override

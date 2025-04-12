@@ -440,7 +440,7 @@ public class GitHubActivity extends BaseActivity {
         Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
 
 
-        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share this", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
         Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
