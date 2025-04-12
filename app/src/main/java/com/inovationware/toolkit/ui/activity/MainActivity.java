@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.button.MaterialButton;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.databinding.ActivityMainBinding;
@@ -32,6 +35,7 @@ import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.SignInManager;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
+import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.system.service.ToolkitServiceManager;
 import com.inovationware.toolkit.location.service.LocationService;
 import com.inovationware.toolkit.notification.service.PushNotificationService;
@@ -61,6 +65,9 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.bistableMana
 import static com.inovationware.toolkit.global.domain.DomainObjects.no;
 import static com.inovationware.toolkit.global.domain.DomainObjects.ttsServiceProvider;
 import static com.inovationware.toolkit.global.domain.DomainObjects.yes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private MainAuthority authority;
@@ -145,7 +152,7 @@ public class MainActivity extends BaseActivity {
         binding.showNavigationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //new MenuBottomSheetFragment().show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
+                new MenuBottomSheetFragment(getButtons()).show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
             }
         });
 
@@ -349,4 +356,85 @@ public class MainActivity extends BaseActivity {
     }
 */
 
+    private List<Ui.ButtonObject> getButtons(){
+        Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
+
+
+        Ui.ButtonObject.ViewInfo pcViewing = new Ui.ButtonObject.ViewInfo("to pc", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_laptop, 1);
+        Ui.ButtonObject pcButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                factory.events.handlers.pcButton(context);
+            }
+        }, margins, dimensions, pcViewing);
+
+
+        Ui.ButtonObject.ViewInfo espViewing = new Ui.ButtonObject.ViewInfo("esp config", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_home, 1);
+        Ui.ButtonObject espButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                factory.events.handlers.espButton(context);
+            }
+        }, margins, dimensions, espViewing);
+
+
+        Ui.ButtonObject.ViewInfo codeViewing = new Ui.ButtonObject.ViewInfo("code", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_code_24, 1);
+        Ui.ButtonObject codeButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                factory.events.handlers.codeButton(context);
+            }
+        }, margins, dimensions, codeViewing);
+
+
+        Ui.ButtonObject.ViewInfo tasksViewing = new Ui.ButtonObject.ViewInfo("reminders from home", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_task_alt_24, 1);
+        Ui.ButtonObject tasksButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                factory.events.handlers.netTimerTasksButton(context);
+            }
+        }, margins, dimensions, tasksViewing);
+
+
+        Ui.ButtonObject.ViewInfo schedulerViewing = new Ui.ButtonObject.ViewInfo("scheduler", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_published_with_changes_24, 1);
+        Ui.ButtonObject schedulerButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                factory.events.handlers.schedulerButton(context);
+            }
+        }, margins, dimensions, schedulerViewing);
+
+
+        Ui.ButtonObject.ViewInfo meetingViewing = new Ui.ButtonObject.ViewInfo("meeting", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_published_with_changes_24, 1);
+        Ui.ButtonObject meetingButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                factory.events.handlers.meetingButton(context);
+            }
+        }, margins, dimensions, meetingViewing);
+
+
+        Ui.ButtonObject.ViewInfo cyclesViewing = new Ui.ButtonObject.ViewInfo("cycles", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_published_with_changes_24, 1);
+        Ui.ButtonObject cyclesButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                factory.events.handlers.cyclesButton(context);
+            }
+        }, margins, dimensions, cyclesViewing);
+
+
+
+
+        List<Ui.ButtonObject> buttons = new ArrayList<>();
+        buttons.add(pcButton);
+        buttons.add(cyclesButton);
+        buttons.add(espButton);
+        buttons.add(codeButton);
+        buttons.add(tasksButton);
+        buttons.add(schedulerButton);
+        buttons.add(meetingButton);
+
+        return buttons;
+    }
 }

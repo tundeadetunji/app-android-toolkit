@@ -10,18 +10,21 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE
 import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.material.button.MaterialButton;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.code.domain.Language;
 import com.inovationware.toolkit.code.entity.VocabularyUnit;
@@ -41,12 +44,16 @@ import com.inovationware.toolkit.global.library.external.GitHubLite;
 import com.inovationware.toolkit.global.library.utility.Code;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StorageClient;
+import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.memo.model.Memo;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
 import com.inovationware.toolkit.ui.adapter.VocabularyRecyclerViewAdapter;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.fragment.MenuBottomSheetFragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CodeActivity extends BaseActivity {
     private ActivityCodeBinding binding;
@@ -56,6 +63,7 @@ public class CodeActivity extends BaseActivity {
     private SharedPreferencesManager store;
     private DeviceClient device;
     private GroupManager machines;
+    private Context context;
 
     private GitHubLite git;
 
@@ -66,7 +74,9 @@ public class CodeActivity extends BaseActivity {
         view = binding.getRoot();
         setContentView(view);
 
+        setReferences();
         setupUi(view);
+        setListeners();
 
     }
 
@@ -90,28 +100,73 @@ public class CodeActivity extends BaseActivity {
         }
     }
 
-
-    private void setupUi(View view) {
+    private void setReferences(){
+        context = CodeActivity.this;
         store = SharedPreferencesManager.getInstance();
         machines = GroupManager.getInstance();
         device = DeviceClient.getInstance();
 
+    }
+
+    private void setupUi(View view) {
+
         factory.ui.bindProperty(view.getContext(), view.findViewById(R.id.programmingLanguageDropDown), service.getLanguages(), R.layout.default_drop_down, DomainObjects.EMPTY_STRING);
 
         setupVocabulary();
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void shareCode(){
+        factory.device.shareText(
+                CodeActivity.this,
+                getTranslation()
+        );
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void createFile(){
+        createInputDialog(
+                EncryptionManager.getInstance().encrypt(CodeActivity.this, store, getTranslation()),
+                POST_PURPOSE_CREATE
+        ).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void updateFile(){
+        createInputDialog(
+                EncryptionManager.getInstance().encrypt(CodeActivity.this, store, getTranslation()),
+                POST_PURPOSE_UPDATE
+        ).show();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void createMemo(){
+        try {
+            KeepIntentService.getInstance(CodeActivity.this, store, device).saveNoteToCloud(Memo.create(
+                    createLocalFilename(),
+                    getTranslation(),
+                    CodeActivity.this, store));
+        } catch (IOException ignored) {
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void saveCode(){
+        if (((TextView) binding.convertedCodeTextView).getText().toString().trim().isEmpty())
+            return;
+
+        String filename = ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(DomainObjects.BEGIN_HTML_TAG) && ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(DomainObjects.END_HTML_TAG) ?
+                DomainObjects.HTML_FILENAME : DomainObjects.JAVA_FILENAME;
+        StorageClient.getInstance(view.getContext()).writeText(getTranslation(), filename,
+                filename + " created in Internal Storage.", DomainObjects.WRITE_FILE_FAILED);
+    }
+
+    private void setListeners(){
         view.findViewById(R.id.saveCodeButton).setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                if (((TextView) binding.convertedCodeTextView).getText().toString().trim().isEmpty())
-                    return;
-
-                String filename = ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(DomainObjects.BEGIN_HTML_TAG) && ((TextView) view.findViewById(R.id.codeTextView)).getText().toString().contains(DomainObjects.END_HTML_TAG) ?
-                        DomainObjects.HTML_FILENAME : DomainObjects.JAVA_FILENAME;
-                StorageClient.getInstance(view.getContext()).writeText(getTranslation(), filename,
-                        filename + " created in Internal Storage.", DomainObjects.WRITE_FILE_FAILED);
+                saveCode();
             }
         });
 
@@ -119,14 +174,7 @@ public class CodeActivity extends BaseActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                try {
-                    KeepIntentService.getInstance(CodeActivity.this, store, device).saveNoteToCloud(Memo.create(
-                            createLocalFilename(),
-                            getTranslation(),
-                            CodeActivity.this, store));
-                } catch (IOException ignored) {
-                }
-
+                createMemo();
             }
         });
 
@@ -149,11 +197,7 @@ public class CodeActivity extends BaseActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                factory.device.shareText(
-                        CodeActivity.this,
-                        getTranslation()
-                );
-
+                new MenuBottomSheetFragment(getButtons()).show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
             }
         });
 
@@ -184,10 +228,7 @@ public class CodeActivity extends BaseActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                createInputDialog(
-                        EncryptionManager.getInstance().encrypt(CodeActivity.this, store, getTranslation()),
-                        POST_PURPOSE_CREATE
-                ).show();
+                createFile();
             }
         });
 
@@ -195,13 +236,9 @@ public class CodeActivity extends BaseActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                createInputDialog(
-                        EncryptionManager.getInstance().encrypt(CodeActivity.this, store, getTranslation()),
-                        POST_PURPOSE_UPDATE
-                ).show();
+                updateFile();
             }
         });
-
     }
 
     private void setupVocabulary() {
@@ -274,4 +311,79 @@ public class CodeActivity extends BaseActivity {
     private String createLocalFilename() {
         return "Code Output.txt";
     }
+
+
+    private List<Ui.ButtonObject> getButtons(){
+        Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
+
+
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                shareCode();
+            }
+        }, margins, dimensions, shareViewing);
+
+
+
+        Ui.ButtonObject.ViewInfo createViewing = new Ui.ButtonObject.ViewInfo("create file", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_insert_drive_file_24, 1);
+        Ui.ButtonObject createButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                createFile();
+            }
+        }, margins, dimensions, createViewing);
+
+
+
+        Ui.ButtonObject.ViewInfo updateViewing = new Ui.ButtonObject.ViewInfo("update file", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_edit, 1);
+        Ui.ButtonObject updateButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                updateFile();
+            }
+        }, margins, dimensions, updateViewing);
+
+
+
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_edit, 1);
+        Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                createMemo();
+            }
+        }, margins, dimensions, memoViewing);
+
+
+
+        Ui.ButtonObject.ViewInfo saveViewing = new Ui.ButtonObject.ViewInfo("save memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_save, 1);
+        Ui.ButtonObject saveButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                saveCode();
+            }
+        }, margins, dimensions, saveViewing);
+
+
+
+
+
+        List<Ui.ButtonObject> buttons = new ArrayList<>();
+        buttons.add(shareButton);
+        buttons.add(createButton);
+        buttons.add(updateButton);
+        buttons.add(memoButton);
+        buttons.add(saveButton);
+
+        return buttons;
+
+    }
+
 }

@@ -14,9 +14,12 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.android.material.button.MaterialButton;
+import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityEspBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
 import com.inovationware.toolkit.esp.model.Configuration;
@@ -49,6 +52,7 @@ import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EspActivity extends BaseActivity {
@@ -93,74 +97,99 @@ public class EspActivity extends BaseActivity {
         ui.bindProperty(context, binding.sensorDelayedOff, TimingValue.listing());
         ui.bindProperty(context, binding.sensorDelayedOn, TimingValue.listing());
 
-        binding.saveConfig.setOnClickListener(saveConfigHandler);
-        binding.shareConfig.setOnClickListener(shareConfigHandler);
-        binding.createConfigFile.setOnClickListener(createConfigFileHandler);
-        binding.updateConfigFile.setOnClickListener(updateConfigFileHandler);
+        binding.saveConfig.setOnClickListener(saveConfigButtonListener);
+        binding.shareConfig.setOnClickListener(shareConfigButtonListener);
+        binding.createConfigFile.setOnClickListener(createConfigFileListener);
+        binding.updateConfigFile.setOnClickListener(updateConfigFileButtonListener);
         binding.copyConfig.setOnClickListener(copyConfigHandler);
         binding.sendConfig.setOnClickListener(sendConfigHandler);
-        binding.saveMemo.setOnClickListener(saveMemo);
+        binding.saveMemo.setOnClickListener(saveMemoButtonListener);
     }
 
-    private final View.OnClickListener saveMemo = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void createMemo(){
+        if (!thereIsInput()) return;
+        try {
+            KeepIntentService.getInstance(context, store, factory.device).saveNoteToCloud(Memo.create(
+                    createTitle(),
+                    Code.formatOutput(context, createConfiguration().toString(), store, factory.device),
+                    context, store));
+        } catch (IOException ignored) {
+        }
+
+    }
+
+    private final View.OnClickListener saveMemoButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onClick(View v) {
-            if (!thereIsInput()) return;
-            try {
-                KeepIntentService.getInstance(context, store, factory.device).saveNoteToCloud(Memo.create(
-                        createTitle(),
-                        Code.formatOutput(context, createConfiguration().toString(), store, factory.device),
-                        context, store));
-            } catch (IOException ignored) {
-            }
-
+createMemo();
         }
     };
 
-    private final View.OnClickListener saveConfigHandler = new View.OnClickListener() {
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void saveConfigToDevice(){
+        if (!thereIsInput()) return;
+
+        String filename = binding.baseName.getText().toString() + ".yaml";
+
+        StorageClient.getInstance(context).writeText(createConfiguration().toString(), filename,
+                filename + " created in Internal Storage.", DomainObjects.WRITE_FILE_FAILED);
+
+    }
+    private final View.OnClickListener saveConfigButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onClick(View v) {
-            if (!thereIsInput()) return;
-
-            String filename = binding.baseName.getText().toString() + ".yaml";
-
-            StorageClient.getInstance(context).writeText(createConfiguration().toString(), filename,
-                    filename + " created in Internal Storage.", DomainObjects.WRITE_FILE_FAILED);
-
+saveConfigToDevice();
         }
     };
 
-    private final View.OnClickListener shareConfigHandler = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void shareConfig(){
+        if (!thereIsInput()) return;
+
+        factory.device.shareText(context, createConfiguration().toString());
+
+    }
+    private final View.OnClickListener shareConfigButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onClick(View v) {
-            if (!thereIsInput()) return;
-
-            factory.device.shareText(context, createConfiguration().toString());
+            shareConfig();
         }
     };
 
-    private final View.OnClickListener createConfigFileHandler = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private  void createConfigFile(){
+        if (!thereIsInput()) return;
+        if (!thereIsInternet(context)) return;
+
+        inputDialog(security.encrypt(context, store, createConfiguration().toString()), POST_PURPOSE_CREATE).show();
+    }
+    private final View.OnClickListener createConfigFileListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onClick(View v) {
-            if (!thereIsInput()) return;
-            if (!thereIsInternet(context)) return;
-
-            inputDialog(security.encrypt(context, store, createConfiguration().toString()), POST_PURPOSE_CREATE).show();
+            createConfigFile();
         }
     };
 
-    private final View.OnClickListener updateConfigFileHandler = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void updateConfigFile(){
+        if (!thereIsInput()) return;
+        if (!thereIsInternet(context)) return;
+
+        inputDialog(security.encrypt(context, store, createConfiguration().toString()), POST_PURPOSE_UPDATE).show();
+
+    }
+
+    private final View.OnClickListener updateConfigFileButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void onClick(View v) {
-            if (!thereIsInput()) return;
-            if (!thereIsInternet(context)) return;
-
-            inputDialog(security.encrypt(context, store, createConfiguration().toString()), POST_PURPOSE_UPDATE).show();
+            updateConfigFile();
         }
     };
 
@@ -255,6 +284,76 @@ public class EspActivity extends BaseActivity {
 
     private String createTitle(){
         return binding.baseName.getText().toString();
+    }
+
+    private List<Ui.ButtonObject> getButtons(){
+        Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
+
+
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                shareConfig();
+            }
+        }, margins, dimensions, shareViewing);
+
+
+        Ui.ButtonObject.ViewInfo createViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_insert_drive_file_24, 1);
+        Ui.ButtonObject createButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                createConfigFile();
+            }
+        }, margins, dimensions, createViewing);
+
+
+        Ui.ButtonObject.ViewInfo updateViewing = new Ui.ButtonObject.ViewInfo("update", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_edit, 1);
+        Ui.ButtonObject updateButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                updateConfigFile();
+            }
+        }, margins, dimensions, updateViewing);
+
+
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
+        Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                createMemo();
+            }
+        }, margins, dimensions, memoViewing);
+
+
+        Ui.ButtonObject.ViewInfo saveViewing = new Ui.ButtonObject.ViewInfo("save to device", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_save, 1);
+        Ui.ButtonObject saveButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                saveConfigToDevice();
+            }
+        }, margins, dimensions, saveViewing);
+
+
+
+
+
+
+        List<Ui.ButtonObject> buttons = new ArrayList<>();
+        buttons.add(shareButton);
+        buttons.add(createButton);
+        buttons.add(updateButton);
+        buttons.add(memoButton);
+        buttons.add(saveButton);
+
+
+        return buttons;
     }
 
 }

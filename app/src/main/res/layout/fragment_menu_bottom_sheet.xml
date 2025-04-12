@@ -7,99 +7,26 @@
     android:fillViewport="false">
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/rootLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="36dp"
+        android:layout_margin="16dp"
         tools:context=".ui.fragment.MenuBottomSheetFragment">
 
-        <LinearLayout
-            android:id="@+id/ServiceNavigationLayout"
-            android:layout_width="match_parent"
+
+        <!--<TextView
+            android:id="@+id/linksLabel"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linksLabel">
-
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/toPcButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_laptop"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/toEspHomeButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_home"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/toCodeButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/baseline_code_24"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/toNetTimerTasksButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/baseline_task_alt_24"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/toScheduleButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/baseline_published_with_changes_24"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/toBoardButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/baseline_comment_bank_24"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-
-
-
-        </LinearLayout>
+            android:text="more options..."
+            android:textAppearance="?attr/textAppearanceHeadline6" />-->
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

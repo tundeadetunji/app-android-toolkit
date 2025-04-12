@@ -251,7 +251,7 @@ public class NetworkChecker extends Service {
                 this,
                 StopServiceActivity.class,
                 "Requests",
-                "Tap to stop receiving requests from base automatically...",
+                "Tap to stop handling default requests from home base automatically...",
                 CHANNEL_ID
         );
     }

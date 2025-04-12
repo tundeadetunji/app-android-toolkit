@@ -19,11 +19,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuCompat;
 
+import com.google.android.material.button.MaterialButton;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.code.domain.Language;
 import com.inovationware.toolkit.code.service.LanguageService;
@@ -61,9 +63,12 @@ import com.inovationware.toolkit.scheduler.model.Schedule;
 import com.inovationware.toolkit.scheduler.service.impl.GCalendarIntentService;
 import com.inovationware.toolkit.scheduler.strategy.impl.GCalendarIntentStrategy;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.fragment.MenuBottomSheetFragment;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CyclesActivity extends BaseActivity implements DetailViewSource, ProfileViewSource, LanguageViewSource {
 
@@ -111,17 +116,17 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         ui.bindProperty(CyclesActivity.this, binding.section, Cycle.listing());
 
         binding.computeCyclesButton.setOnClickListener(handleComputeCycles);
-        binding.createCyclesButton.setOnClickListener(handleCreateCyclesFile);
-        binding.shareCyclesResultButton.setOnClickListener(handleShareCycles);
+        binding.createCyclesButton.setOnClickListener(createCyclesButtonListener);
+        binding.shareCyclesResultButton.setOnClickListener(shareCyclesResultButtonListener);
         binding.sendCyclesResultButton.setOnClickListener(handleSendCycles);
-        binding.copyCyclesResultButton.setOnClickListener(handleCopyCycles);
-        binding.memoCyclesResultButton.setOnClickListener(handleCreateMemo);
-        binding.scheduleCyclesResultButton.setOnClickListener(handleScheduleCycles);
+        binding.copyCyclesResultButton.setOnClickListener(copyCyclesResultButtonListener);
+        binding.memoCyclesResultButton.setOnClickListener(memoCyclesResultButtonListener);
+        binding.scheduleCyclesResultButton.setOnClickListener(scheduleCyclesResultButtonListener);
         binding.convertCyclesButton.setOnClickListener(handleConvertCycleToLanguage);
         binding.addProfileButton.setOnClickListener(handleAddProfile);
         binding.selectProfileButton.setOnClickListener(handleSelectProfile);
-        binding.updateCyclesButton.setOnClickListener(handleUpdateCyclesFile);
-        binding.inform.setOnClickListener(inform);
+        binding.updateCyclesButton.setOnClickListener(updateCyclesButtonListener);
+        binding.inform.setOnClickListener(informButtonListener);
         binding.clear.setOnClickListener(clear);
 
         ui.bindProperty(CyclesActivity.this, binding.cyclesLanguageDropDown, languageServiceLite.getLanguages(), R.layout.default_drop_down, DomainObjects.EMPTY_STRING);
@@ -142,33 +147,37 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         }
     };
 
-    private final View.OnClickListener inform = new View.OnClickListener() {
+
+    private void inform(){
+        if (binding.preview.getText().toString().isEmpty()) return;
+
+        if (!initialParamsAreSet(context, store, machines)) return;
+
+        if (!thereIsInternet(context)) return;
+
+        factory.transfer.service.sendText(
+                context,
+                store,
+                machines,
+                SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
+                        store.getUsername(context),
+                        store.getID(context),
+                        Transfer.Intent.writeText,
+                        store.getSender(context),
+                        determineTarget(context, store, machines),
+                        POST_PURPOSE_INFORM,
+                        determineMeta(context, store),
+                        security.encrypt(context, store, binding.preview.getText().toString()),
+                        DomainObjects.EMPTY_STRING
+                ),
+                DEFAULT_ERROR_MESSAGE_SUFFIX,
+                DEFAULT_FAILURE_MESSAGE_SUFFIX);
+    }
+
+    private final View.OnClickListener informButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (binding.preview.getText().toString().isEmpty()) return;
-
-            if (!initialParamsAreSet(context, store, machines)) return;
-
-            if (!thereIsInternet(context)) return;
-
-            factory.transfer.service.sendText(
-                    context,
-                    store,
-                    machines,
-                    SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
-                            store.getUsername(context),
-                            store.getID(context),
-                            Transfer.Intent.writeText,
-                            store.getSender(context),
-                            determineTarget(context, store, machines),
-                            POST_PURPOSE_INFORM,
-                            determineMeta(context, store),
-                            security.encrypt(context, store, binding.preview.getText().toString()),
-                            DomainObjects.EMPTY_STRING
-                    ),
-                    DEFAULT_ERROR_MESSAGE_SUFFIX,
-                    DEFAULT_FAILURE_MESSAGE_SUFFIX);
-
+            new MenuBottomSheetFragment(getButtons()).show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
         }
     };
 
@@ -205,19 +214,28 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         }
     };
 
-    private final View.OnClickListener handleCreateCyclesFile = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createCycles(){
+        createInputDialog(Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device), POST_PURPOSE_CREATE).show();
+    }
+    private final View.OnClickListener createCyclesButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            createInputDialog(Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device), POST_PURPOSE_CREATE).show();
+            createCycles();
         }
     };
 
-    private final View.OnClickListener handleUpdateCyclesFile = new View.OnClickListener() {
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void updateCycles(){
+        createInputDialog(Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device), POST_PURPOSE_UPDATE).show();
+    }
+    private final View.OnClickListener updateCyclesButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            createInputDialog(Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device), POST_PURPOSE_UPDATE).show();
+            updateCycles();
         }
     };
 
@@ -247,16 +265,21 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         }
     };
 
-    private final View.OnClickListener handleShareCycles = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void share(){
+        if (!facade.userInputIsValid(CyclesActivity.this)) return;
+
+        DeviceClient.getInstance().shareText(
+                CyclesActivity.this,
+                Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device)
+        );
+    }
+
+    private final View.OnClickListener shareCyclesResultButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            if (!facade.userInputIsValid(CyclesActivity.this)) return;
-
-            DeviceClient.getInstance().shareText(
-                    CyclesActivity.this,
-                    Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device)
-            );
+            share();
         }
     };
 
@@ -271,24 +294,29 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         }
     };
 
-    private final View.OnClickListener handleCopyCycles = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void copyCyclesResult(){
+        if (!facade.userInputIsValid(CyclesActivity.this)) return;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            DeviceClient.getInstance().toClipboard(
+                    Code.formatOutput(
+                            CyclesActivity.this,
+                            facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this),
+                            store,
+                            device
+                    ),
+                    CyclesActivity.this
+            );
+        }
+        DeviceClient.getInstance().tell("Information copied to clipboard.", CyclesActivity.this);
+    }
+
+    private final View.OnClickListener copyCyclesResultButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            if (!facade.userInputIsValid(CyclesActivity.this)) return;
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                DeviceClient.getInstance().toClipboard(
-                        Code.formatOutput(
-                                CyclesActivity.this,
-                                facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this),
-                                store,
-                                device
-                        ),
-                        CyclesActivity.this
-                );
-            }
-            DeviceClient.getInstance().tell("Information copied to clipboard.", CyclesActivity.this);
+            copyCyclesResult();
         }
     };
 
@@ -310,43 +338,52 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
     };*/
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private final View.OnClickListener handleCreateMemo = new View.OnClickListener() {
+    private void createMemo(){
+        if (!facade.userInputIsValid(CyclesActivity.this)) return;
+
+        try {
+            KeepIntentService.getInstance(binding.getRoot().getContext(), SharedPreferencesManager.getInstance(), device).saveNoteToCloud(Memo.create(
+                    createTitle(),
+                    Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device),
+                    binding.getRoot().getContext(), SharedPreferencesManager.getInstance()));
+        } catch (IOException ignored) {
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private final View.OnClickListener memoCyclesResultButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!facade.userInputIsValid(CyclesActivity.this)) return;
-
-            try {
-                KeepIntentService.getInstance(binding.getRoot().getContext(), SharedPreferencesManager.getInstance(), device).saveNoteToCloud(Memo.create(
-                        createTitle(),
-                        Code.formatOutput(CyclesActivity.this, facade.scroll(CyclesActivity.this, CyclesActivity.this, CyclesActivity.this), store, device),
-                        binding.getRoot().getContext(), SharedPreferencesManager.getInstance()));
-            } catch (IOException ignored) {
-            }
-
+            createMemo();
         }
     };
 
-    private final View.OnClickListener handleScheduleCycles = new View.OnClickListener() {
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createSchedule(){
+        if (!facade.userInputIsValid(CyclesActivity.this) || !facade.personalCyclesArePresent(CyclesActivity.this) || binding.datesDropDown.getText().toString().isEmpty())
+            return;
+
+        CyclesFacade.DateResource token = CyclesFacade.DateResource.create(binding.datesDropDown.getText().toString(), profiler);
+        GCalendarIntentService.getInstance(GCalendarIntentStrategy.getInstance(binding.getRoot().getContext()))
+                .createSchedule(
+                        Schedule.create(
+                                facade.createTitleForSchedule(CyclesActivity.this),
+                                facade.createDescriptionForSchedule(CyclesActivity.this),
+                                LocalDate.now().getYear(),
+                                token.getMonth(),
+                                token.getDay(),
+                                Schedule.Recurrence.YEARLY,
+                                0,
+                                0
+                        )
+                );
+    }
+    private final View.OnClickListener scheduleCyclesResultButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            if (!facade.userInputIsValid(CyclesActivity.this) || !facade.personalCyclesArePresent(CyclesActivity.this) || binding.datesDropDown.getText().toString().isEmpty())
-                return;
-
-            CyclesFacade.DateResource token = CyclesFacade.DateResource.create(binding.datesDropDown.getText().toString(), profiler);
-            GCalendarIntentService.getInstance(GCalendarIntentStrategy.getInstance(binding.getRoot().getContext()))
-                    .createSchedule(
-                            Schedule.create(
-                                    facade.createTitleForSchedule(CyclesActivity.this),
-                                    facade.createDescriptionForSchedule(CyclesActivity.this),
-                                    LocalDate.now().getYear(),
-                                    token.getMonth(),
-                                    token.getDay(),
-                                    Schedule.Recurrence.YEARLY,
-                                    0,
-                                    0
-                            )
-                    );
+            createSchedule();
         }
     };
 
@@ -607,5 +644,91 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         clearPreview();
     }
 
+    private List<Ui.ButtonObject> getButtons(){
+        Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
+
+
+        Ui.ButtonObject.ViewInfo informViewing = new Ui.ButtonObject.ViewInfo("inform", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_inform, 1);
+        Ui.ButtonObject informButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inform();
+            }
+        }, margins, dimensions, informViewing);
+
+
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                share();
+            }
+        }, margins, dimensions, shareViewing);
+
+
+        Ui.ButtonObject.ViewInfo copyViewing = new Ui.ButtonObject.ViewInfo("copy", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_inform, 1);
+        Ui.ButtonObject copyButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                copyCyclesResult();
+            }
+        }, margins, dimensions, copyViewing);
+
+
+        Ui.ButtonObject.ViewInfo createViewing = new Ui.ButtonObject.ViewInfo("create file", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_insert_drive_file_24, 1);
+        Ui.ButtonObject createButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                createCycles();
+            }
+        }, margins, dimensions, createViewing);
+
+
+        Ui.ButtonObject.ViewInfo updateViewing = new Ui.ButtonObject.ViewInfo("update file", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_edit, 1);
+        Ui.ButtonObject updateButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                updateCycles();
+            }
+        }, margins, dimensions, updateViewing);
+
+
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
+        Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                createMemo();
+            }
+        }, margins, dimensions, memoViewing);
+
+
+        Ui.ButtonObject.ViewInfo scheduleViewing = new Ui.ButtonObject.ViewInfo("create schedule", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_event_repeat_24, 1);
+        Ui.ButtonObject scheduleButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                createSchedule();
+            }
+        }, margins, dimensions, scheduleViewing);
+
+
+
+        List<Ui.ButtonObject> buttons = new ArrayList<>();
+        buttons.add(informButton);
+        buttons.add(shareButton);
+        buttons.add(copyButton);
+        buttons.add(createButton);
+        buttons.add(updateButton);
+        buttons.add(memoButton);
+
+        return buttons;
+
+    }
 
 }

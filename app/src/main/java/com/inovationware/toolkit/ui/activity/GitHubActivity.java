@@ -15,11 +15,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.view.MenuCompat;
 
+import com.google.android.material.button.MaterialButton;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityGitHubBinding;
 import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
@@ -40,8 +42,11 @@ import com.inovationware.toolkit.global.library.utility.StorageClient;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.global.library.utility.Ui;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.fragment.MenuBottomSheetFragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GitHubActivity extends BaseActivity {
     private ActivityGitHubBinding binding;
@@ -51,6 +56,7 @@ public class GitHubActivity extends BaseActivity {
     private GroupManager machines;
     private DeviceClient device;
     private StorageClient storage;
+    private Context context;
 
 
 
@@ -60,11 +66,13 @@ public class GitHubActivity extends BaseActivity {
         binding = ActivityGitHubBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setStrategy();
+        setReferences();
+        setListeners();
         setupUi(Ui.getInstance());
     }
 
-    private void setStrategy() {
+    private void setReferences() {
+        context = GitHubActivity.this;
         resolver = Resolver.getInstance();
         store = SharedPreferencesManager.getInstance();
         service = RestDataTransferService.getInstance(RestDataTransferStrategy.getInstance());
@@ -77,18 +85,21 @@ public class GitHubActivity extends BaseActivity {
         return GitHubActivity.this;
     }
 
-    private void setupUi(Ui ui) {
-        ui.bindProperty(getContext(), binding.githubOperationsDropDown, GithubOperation.listing());
-        ui.bindProperty(getContext(), binding.booleanDropDown, BooleanValue.listing());
-
+    private void setListeners(){
         binding.presetParamsButton.setOnClickListener(handlePresetParamsButton);
         binding.executeGitHubOperationButton.setOnClickListener(handleExecuteGitHubOperationButton);
         binding.githubRepositoryTextView.setText(store.getGithubDefaultRepository(GitHubActivity.this));
         binding.githubBranchTextView.setText(store.getGithubDefaultBranch(GitHubActivity.this));
         binding.sendGithubResultButton.setOnClickListener(handleSendGithubResultButton);
-        binding.shareGithubResultButton.setOnClickListener(handleShareGithubResultButton);
+        binding.shareGithubResultButton.setOnClickListener(shareGithubResultButtonListener);
         binding.copyGithubResultButton.setOnClickListener(handleCopyGithubResultButton);
         binding.saveGithubResultButton.setOnClickListener(handleSaveGithubResultButton);
+
+    }
+    private void setupUi(Ui ui) {
+        ui.bindProperty(getContext(), binding.githubOperationsDropDown, GithubOperation.listing());
+        ui.bindProperty(getContext(), binding.booleanDropDown, BooleanValue.listing());
+
     }
 
     private void clearFields() {
@@ -257,15 +268,20 @@ public class GitHubActivity extends BaseActivity {
         }
     };
 
-    View.OnClickListener handleShareGithubResultButton = new View.OnClickListener() {
+    private void shareGithubResult(){
+        if(Support.isEmpty(binding.githubResultTextView)) return;
+
+        device.shareText(
+                GitHubActivity.this,
+                binding.githubResultTextView.getText().toString()
+        );
+
+    }
+
+    View.OnClickListener shareGithubResultButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(Support.isEmpty(binding.githubResultTextView)) return;
-
-            device.shareText(
-                    GitHubActivity.this,
-                    binding.githubResultTextView.getText().toString()
-            );
+            new MenuBottomSheetFragment(getButtons()).show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
         }
     };
 
@@ -281,18 +297,23 @@ public class GitHubActivity extends BaseActivity {
         }
     };
 
+    private void saveResult(){
+        //ToDo check if path from binding.param1TextView.getText() is valid file path
+        if(Support.isEmpty(binding.githubResultTextView) || Support.isEmpty(binding.param1TextView)) return;
+
+        storage.writeText(
+                binding.githubResultTextView.getText().toString(),
+                binding.param1TextView.getText().toString(),
+                binding.param1TextView.getText().toString() + " created in Internal Storage.",
+                DomainObjects.WRITE_FILE_FAILED
+        );
+
+    }
+
     View.OnClickListener handleSaveGithubResultButton = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            //ToDo check if path from binding.param1TextView.getText() is valid file path
-            if(Support.isEmpty(binding.githubResultTextView) || Support.isEmpty(binding.param1TextView)) return;
-
-            storage.writeText(
-                    binding.githubResultTextView.getText().toString(),
-                    binding.param1TextView.getText().toString(),
-                    binding.param1TextView.getText().toString() + " created in Internal Storage.",
-                    DomainObjects.WRITE_FILE_FAILED
-            );
+            saveResult();
         }
     };
 
@@ -412,6 +433,41 @@ public class GitHubActivity extends BaseActivity {
             }
         }).start();
 
+    }
+
+    private List<Ui.ButtonObject> getButtons(){
+        Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
+
+
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareGithubResult();
+            }
+        }, margins, dimensions, shareViewing);
+
+
+        Ui.ButtonObject.ViewInfo saveViewing = new Ui.ButtonObject.ViewInfo("save to device", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_save, 1);
+        Ui.ButtonObject saveButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveResult();
+            }
+        }, margins, dimensions, saveViewing);
+
+
+
+
+
+
+        List<Ui.ButtonObject> buttons = new ArrayList<>();
+        buttons.add(shareButton);
+        buttons.add(saveButton);
+
+
+        return buttons;
     }
 
 }

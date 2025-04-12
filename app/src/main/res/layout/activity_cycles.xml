@@ -492,7 +492,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:icon="@drawable/ic_inform" />
+                app:icon="@drawable/baseline_apps_24" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save"
@@ -517,7 +517,9 @@
                 app:icon="@drawable/baseline_wifi_24" />
 
         </LinearLayout>
+
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/shareCopyButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -554,6 +556,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/filerButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -592,6 +595,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/cyclesOnlineButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

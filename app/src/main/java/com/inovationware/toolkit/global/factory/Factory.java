@@ -1,6 +1,7 @@
 package com.inovationware.toolkit.global.factory;
 
 import com.inovationware.toolkit.code.verb.Vocabulary;
+import com.inovationware.toolkit.global.library.app.EventHandlers;
 import com.inovationware.toolkit.global.library.app.FeedbackManager;
 import com.inovationware.toolkit.global.library.external.EncoderLite;
 import com.inovationware.toolkit.global.library.app.GlideClient;
@@ -34,7 +35,7 @@ public class Factory {
     public Vocabulary vocabulary = Vocabulary.getInstance();
     public Ui ui = Ui.getInstance();
     public DeviceClient device = DeviceClient.getInstance();
-
+    public EventHandlerFactory events = EventHandlerFactory.getInstance();
 
 
 
@@ -42,6 +43,18 @@ public class Factory {
     public static Factory getInstance(){
         if(instance == null) instance = new Factory();
         return instance;
+    }
+
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class EventHandlerFactory{
+        private static EventHandlerFactory instance;
+
+        public static EventHandlerFactory getInstance() {
+            if (instance == null) instance = new EventHandlerFactory();
+            return instance;
+        }
+
+        public final EventHandlers handlers = EventHandlers.getInstance();
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)

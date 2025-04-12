@@ -193,7 +193,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                app:icon="@drawable/ic_share"
+                app:icon="@drawable/baseline_apps_24"
                 app:iconGravity="textStart"
                 android:text="" />
 
@@ -223,6 +223,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/filerButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -261,6 +262,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lowerButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

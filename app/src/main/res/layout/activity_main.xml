@@ -51,5 +51,5 @@
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/QuickSendButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_more_vert" />
+        app:srcCompat="@drawable/baseline_apps_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

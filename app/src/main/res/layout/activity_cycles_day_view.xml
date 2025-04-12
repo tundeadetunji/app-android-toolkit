@@ -294,7 +294,7 @@
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                app:icon="@drawable/ic_share"
+                app:icon="@drawable/baseline_apps_24"
                 app:iconGravity="textStart"
                 android:text="" />
 
@@ -324,6 +324,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lowerButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -346,7 +347,7 @@
                 android:text="" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/schedule"
+                android:id="@+id/scheduleCyclesButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
@@ -359,6 +360,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/lowestButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

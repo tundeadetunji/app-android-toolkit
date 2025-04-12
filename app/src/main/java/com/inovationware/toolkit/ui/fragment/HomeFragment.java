@@ -185,7 +185,6 @@ public class HomeFragment extends Fragment {
     private final View.OnClickListener meetingButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            SignInManager.getInstance().beginLoginProcess(context, BoardActivity.class.getSimpleName());
         }
     };
 

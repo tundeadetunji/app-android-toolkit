@@ -12,16 +12,19 @@ import static com.inovationware.toolkit.global.library.utility.Support.determine
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuCompat;
 
+import com.google.android.material.button.MaterialButton;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.converter.domain.DataUnit;
 import com.inovationware.toolkit.converter.service.ConverterService;
@@ -44,10 +47,13 @@ import com.inovationware.toolkit.memo.model.Memo;
 import com.inovationware.toolkit.memo.service.MemoService;
 import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.fragment.MenuBottomSheetFragment;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.SneakyThrows;
 
@@ -61,6 +67,7 @@ public class ConverterActivity extends BaseActivity {
     private GroupManager machines;
     private EncryptionManager security;
     private MemoService memoService;
+    private Context context;
 
 
     @Override
@@ -94,15 +101,16 @@ public class ConverterActivity extends BaseActivity {
         binding.shareConversionButton.setOnClickListener(handleShareConversionButtonClick);
         binding.copyConversionButton.setOnClickListener(handleCopyConversionButtonClick);
         binding.sendConversionButton.setOnClickListener(handleSendConversionButton);
-        binding.saveConversionButton.setOnClickListener(handleSaveConversion);
-        binding.createConversionButton.setOnClickListener(handleCreateConversionFile);
-        binding.updateConversionButton.setOnClickListener(handleUpdateConversionFile);
-        binding.saveMemoButton.setOnClickListener(handleMemo);
+        binding.saveConversionButton.setOnClickListener(saveConversionButtonListener);
+        binding.createConversionButton.setOnClickListener(createConversionButtonListener);
+        binding.updateConversionButton.setOnClickListener(updateConversionButtonListener);
+        binding.saveMemoButton.setOnClickListener(saveMemoButtonListener);
         ui.bindProperty(ConverterActivity.this, binding.fromUnitDropDown, DataUnit.toStringArray());
         ui.bindProperty(ConverterActivity.this, binding.toUnitDropDown, DataUnit.toStringArray());
     }
 
     private void initializeValues() {
+        context = ConverterActivity.this;
         service = ConverterServiceImpl.getInstance();
         device = DeviceClient.getInstance();
         ui = Ui.getInstance();
@@ -113,38 +121,53 @@ public class ConverterActivity extends BaseActivity {
         memoService = KeepIntentService.getInstance(ConverterActivity.this, store, device);
     }
 
-    private final View.OnClickListener handleCreateConversionFile = new View.OnClickListener() {
+    private void createConversion(){
+        if (Support.isEmpty(binding.conversionResultTextView)) return;
+        if (!thereIsInternet(ConverterActivity.this)) return;
+        createInputDialog(
+                Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device),
+                POST_PURPOSE_CREATE
+        ).show();
+
+    }
+
+    private final View.OnClickListener createConversionButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (Support.isEmpty(binding.conversionResultTextView)) return;
-            if (!thereIsInternet(ConverterActivity.this)) return;
-            createInputDialog(
-                    Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device),
-                    POST_PURPOSE_CREATE
-            ).show();
+            createConversion();
         }
     };
 
-    private final View.OnClickListener handleUpdateConversionFile = new View.OnClickListener() {
+    private void updateConversion(){
+        if (Support.isEmpty(binding.conversionResultTextView)) return;
+        if (!thereIsInternet(ConverterActivity.this)) return;
+        createInputDialog(
+                Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device),
+                POST_PURPOSE_UPDATE
+        ).show();
+    }
+
+    private final View.OnClickListener updateConversionButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (Support.isEmpty(binding.conversionResultTextView)) return;
-            if (!thereIsInternet(ConverterActivity.this)) return;
-            createInputDialog(
-                    Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device),
-                    POST_PURPOSE_UPDATE
-            ).show();
+            updateConversion();
         }
     };
 
-    private final View.OnClickListener handleMemo = new View.OnClickListener() {
+    @SneakyThrows
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void createMemo(){
+        if (Support.isEmpty(binding.conversionResultTextView)) return;
+        //if (!thereIsInternet(ConverterActivity.this)) return;
+        memoService.saveNoteToCloud(Memo.create(createTitle(), Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device), ConverterActivity.this, store));
+
+    }
+    private final View.OnClickListener saveMemoButtonListener = new View.OnClickListener() {
         @SneakyThrows
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            if (Support.isEmpty(binding.conversionResultTextView)) return;
-            //if (!thereIsInternet(ConverterActivity.this)) return;
-            memoService.saveNoteToCloud(Memo.create(createTitle(), Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device), ConverterActivity.this, store));
+            createMemo();
         }
     };
 
@@ -195,12 +218,16 @@ public class ConverterActivity extends BaseActivity {
         }
     };
 
+    private void shareConversion(){
+        if (Support.isEmpty(binding.conversionResultTextView)) return;
+        device.shareText(ConverterActivity.this,
+                Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device));
+
+    }
     private final View.OnClickListener handleShareConversionButtonClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (Support.isEmpty(binding.conversionResultTextView)) return;
-            device.shareText(ConverterActivity.this,
-                    Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device));
+            new MenuBottomSheetFragment(getButtons()).show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
         }
     };
 
@@ -215,21 +242,25 @@ public class ConverterActivity extends BaseActivity {
         }
     };
 
-    private final View.OnClickListener handleSaveConversion = new View.OnClickListener() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void saveConversion(){
+        if (Support.isEmpty(binding.conversionResultTextView)) return;
+
+        String filename = createFilename();
+
+        StorageClient.getInstance(binding.getRoot().getContext()).writeText(
+                Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device),
+                filename,
+                filename + " created in Internal Storage.",
+                DomainObjects.WRITE_FILE_FAILED
+        );
+    }
+
+    private final View.OnClickListener saveConversionButtonListener = new View.OnClickListener() {
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         public void onClick(View v) {
-            if (Support.isEmpty(binding.conversionResultTextView)) return;
-
-            String filename = createFilename();
-
-            StorageClient.getInstance(binding.getRoot().getContext()).writeText(
-                    Code.formatOutput(ConverterActivity.this, binding.conversionResultTextView.getText().toString(), store, device),
-                    filename,
-                    filename + " created in Internal Storage.",
-                    DomainObjects.WRITE_FILE_FAILED
-            );
-
+            saveConversion();
         }
     };
 
@@ -298,5 +329,70 @@ public class ConverterActivity extends BaseActivity {
         return "Conversion " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm"));
     }
 
+    private List<Ui.ButtonObject> getButtons(){
+        Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
 
+
+        Ui.ButtonObject.ViewInfo createViewing = new Ui.ButtonObject.ViewInfo("create file", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_insert_drive_file_24, 1);
+        Ui.ButtonObject createButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createConversion();
+            }
+        }, margins, dimensions, createViewing);
+
+
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
+        Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @SneakyThrows
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                createMemo();
+            }
+        }, margins, dimensions, memoViewing);
+
+
+        Ui.ButtonObject.ViewInfo updateViewing = new Ui.ButtonObject.ViewInfo("update file", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_edit, 1);
+        Ui.ButtonObject updateButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateConversion();
+            }
+        }, margins, dimensions, updateViewing);
+
+
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareConversion();
+            }
+        }, margins, dimensions, shareViewing);
+
+
+        Ui.ButtonObject.ViewInfo saveViewing = new Ui.ButtonObject.ViewInfo("save to device", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_save, 1);
+        Ui.ButtonObject saveButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View v) {
+                saveConversion();
+            }
+        }, margins, dimensions, saveViewing);
+
+
+
+
+
+
+        List<Ui.ButtonObject> buttons = new ArrayList<>();
+        buttons.add(shareButton);
+        buttons.add(createButton);
+        buttons.add(updateButton);
+        buttons.add(memoButton);
+        buttons.add(saveButton);
+
+        return buttons;
+    }
 }

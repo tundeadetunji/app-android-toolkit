@@ -17,10 +17,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuCompat;
 
+import com.google.android.material.button.MaterialButton;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.cycles.library.CalendarLite;
 import com.inovationware.toolkit.cycles.model.DayToken;
@@ -49,11 +51,14 @@ import com.inovationware.toolkit.scheduler.model.Schedule;
 import com.inovationware.toolkit.scheduler.service.impl.GCalendarIntentService;
 import com.inovationware.toolkit.scheduler.strategy.impl.GCalendarIntentStrategy;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
+import com.inovationware.toolkit.ui.fragment.MenuBottomSheetFragment;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CyclesByDayActivity extends BaseActivity {
@@ -99,13 +104,13 @@ public class CyclesByDayActivity extends BaseActivity {
         binding.load.setOnClickListener(load);
         binding.setTimer.setOnClickListener(setTimer);
         binding.visit.setOnClickListener(visit);
-        binding.share.setOnClickListener(share);
+        binding.share.setOnClickListener(shareButtonListener);
         binding.copy.setOnClickListener(copy);
         binding.send.setOnClickListener(send);
-        binding.memo.setOnClickListener(sendMemo);
-        binding.schedule.setOnClickListener(schedule);
-        binding.inform.setOnClickListener(inform);
-        binding.save.setOnClickListener(save);
+        binding.memo.setOnClickListener(sendMemoButtonListener);
+        binding.scheduleButton.setOnClickListener(scheduleButtonListener);
+        binding.inform.setOnClickListener(informButtonListener);
+        binding.save.setOnClickListener(saveButtonListener);
     }
 
     private final View.OnClickListener loadDayOfWeek = new View.OnClickListener() {
@@ -163,11 +168,16 @@ public class CyclesByDayActivity extends BaseActivity {
         }
     };
 
-    private final View.OnClickListener share = new View.OnClickListener() {
+
+    private void share(){
+        if (binding.preview.getText().toString().isEmpty()) return;
+        factory.device.shareText(context, createSummary());
+    }
+
+    private final View.OnClickListener shareButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (binding.preview.getText().toString().isEmpty()) return;
-            factory.device.shareText(context, createSummary());
+            new MenuBottomSheetFragment(getButtons()).show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
         }
     };
 
@@ -208,96 +218,104 @@ public class CyclesByDayActivity extends BaseActivity {
         }
     };
 
-    private final View.OnClickListener sendMemo = new View.OnClickListener() {
+    private void createMemo(){
+        if (binding.headline.getText().toString().isEmpty()) return;
+        try {
+            KeepIntentService.getInstance(context, store, device).saveNoteToCloud(Memo.create(
+                    service.createTitle(),
+                    Code.formatOutput(context, createPrintout(), store, device),
+                    context, store));
+        } catch (IOException ignored) {
+        }
+    }
+    private final View.OnClickListener sendMemoButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (binding.headline.getText().toString().isEmpty()) return;
-            try {
-                KeepIntentService.getInstance(context, store, device).saveNoteToCloud(Memo.create(
-                        service.createTitle(),
-                        Code.formatOutput(context, createPrintout(), store, device),
-                        context, store));
-            } catch (IOException ignored) {
+            createMemo();
+        }
+    };
+
+    private void scheduleCycles(){
+        if (binding.headline.getText().toString().isEmpty()) return;
+
+        InputDialog dialog = new InputDialog(context, "Title...", "What's the title of this schedule?", "") {
+            @Override
+            public void positiveButtonAction() throws IOException {
+                if (this.getText().isEmpty()) return;
+
+                LocalTime startOfCurrentPeriod = service.getBeginningOfPeriod(service.getCurrentPeriod());
+
+                GCalendarIntentService.getInstance(GCalendarIntentStrategy.getInstance(binding.getRoot().getContext()))
+                        .createSchedule(
+                                Schedule.create(
+                                        this.getText().toString(),
+                                        "Daily Cycle Event",
+                                        LocalDate.now().getYear(),
+                                        LocalDate.now().getMonth().ordinal(),
+                                        LocalDate.now().getDayOfMonth(),
+                                        Schedule.Recurrence.WEEKLY,
+                                        startOfCurrentPeriod.getHour(),
+                                        startOfCurrentPeriod.getMinute()
+                                )
+                        );
             }
+
+            @Override
+            public void negativeButtonAction() {
+
+            }
+        };
+        dialog.show();
+    }
+
+    private final View.OnClickListener scheduleButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            scheduleCycles();
         }
     };
 
-    private final View.OnClickListener schedule = new View.OnClickListener() {
+    private void informCycles(){
+        if (binding.preview.getText().toString().isEmpty()) return;
+
+        if (!initialParamsAreSet(context, store, machines)) return;
+
+        if (!thereIsInternet(context)) return;
+
+        factory.transfer.service.sendText(
+                context,
+                store,
+                machines,
+                SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
+                        store.getUsername(context),
+                        store.getID(context),
+                        Transfer.Intent.writeText,
+                        store.getSender(context),
+                        determineTarget(context, store, machines),
+                        POST_PURPOSE_INFORM,
+                        determineMeta(context, store),
+                        security.encrypt(context, store, binding.preview.getText().toString()),
+                        DomainObjects.EMPTY_STRING
+                ),
+                DEFAULT_ERROR_MESSAGE_SUFFIX,
+                DEFAULT_FAILURE_MESSAGE_SUFFIX);
+    }
+    private final View.OnClickListener informButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (binding.headline.getText().toString().isEmpty()) return;
-
-            InputDialog dialog = new InputDialog(context, "Title...", "What's the title of this schedule?", "") {
-                @Override
-                public void positiveButtonAction() throws IOException {
-                    if (this.getText().isEmpty()) return;
-
-                    LocalTime startOfCurrentPeriod = service.getBeginningOfPeriod(service.getCurrentPeriod());
-
-                    GCalendarIntentService.getInstance(GCalendarIntentStrategy.getInstance(binding.getRoot().getContext()))
-                            .createSchedule(
-                                    Schedule.create(
-                                            this.getText().toString(),
-                                            "Daily Cycle Event",
-                                            LocalDate.now().getYear(),
-                                            LocalDate.now().getMonth().ordinal(),
-                                            LocalDate.now().getDayOfMonth(),
-                                            Schedule.Recurrence.WEEKLY,
-                                            startOfCurrentPeriod.getHour(),
-                                            startOfCurrentPeriod.getMinute()
-                                    )
-                            );
-                }
-
-                @Override
-                public void negativeButtonAction() {
-
-                }
-            };
-            dialog.show();
-
-
+            informCycles();
         }
     };
 
-    private final View.OnClickListener inform = new View.OnClickListener() {
+    private void saveCycles(){
+        if (binding.headline.getText().toString().isEmpty()) return;
+        String filename = binding.headline.getText().toString() + " " + Support.createTimestamp(Support.FormatForDateAndTime.TIME).replace(":", "-") + ".txt";
+        StorageClient.getInstance(context).writeText(createPrintout(), filename, filename + " created in Internal Storage", "Could not create file.");
+    }
+    private final View.OnClickListener saveButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (binding.preview.getText().toString().isEmpty()) return;
-
-            if (!initialParamsAreSet(context, store, machines)) return;
-
-            if (!thereIsInternet(context)) return;
-
-            factory.transfer.service.sendText(
-                    context,
-                    store,
-                    machines,
-                    SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
-                            store.getUsername(context),
-                            store.getID(context),
-                            Transfer.Intent.writeText,
-                            store.getSender(context),
-                            determineTarget(context, store, machines),
-                            POST_PURPOSE_INFORM,
-                            determineMeta(context, store),
-                            security.encrypt(context, store, binding.preview.getText().toString()),
-                            DomainObjects.EMPTY_STRING
-                    ),
-                    DEFAULT_ERROR_MESSAGE_SUFFIX,
-                    DEFAULT_FAILURE_MESSAGE_SUFFIX);
-
-
-        }
-    };
-
-    private final View.OnClickListener save = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (binding.headline.getText().toString().isEmpty()) return;
-            String filename = binding.headline.getText().toString() + " " + Support.createTimestamp(Support.FormatForDateAndTime.TIME).replace(":", "-") + ".txt";
-            StorageClient.getInstance(context).writeText(createPrintout(), filename, filename + " created in Internal Storage", "Could not create file.");
-
+            saveCycles();
         }
     };
 
@@ -342,5 +360,71 @@ public class CyclesByDayActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private List<Ui.ButtonObject> getButtons(){
+        Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
+        Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
+
+
+        Ui.ButtonObject.ViewInfo shareViewing = new Ui.ButtonObject.ViewInfo("share", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_share, 1);
+        Ui.ButtonObject shareButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                share();
+            }
+        }, margins, dimensions, shareViewing);
+
+
+        Ui.ButtonObject.ViewInfo memoViewing = new Ui.ButtonObject.ViewInfo("create memo", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_sticky_note_2_24, 1);
+        Ui.ButtonObject memoButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createMemo();
+            }
+        }, margins, dimensions, memoViewing);
+
+
+        Ui.ButtonObject.ViewInfo scheduleViewing = new Ui.ButtonObject.ViewInfo("create schedule", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.baseline_event_repeat_24, 1);
+        Ui.ButtonObject scheduleButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scheduleCycles();
+            }
+        }, margins, dimensions, scheduleViewing);
+
+
+        Ui.ButtonObject.ViewInfo informViewing = new Ui.ButtonObject.ViewInfo("inform home", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_inform, 1);
+        Ui.ButtonObject informButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                informCycles();
+            }
+        }, margins, dimensions, informViewing);
+
+
+        Ui.ButtonObject.ViewInfo saveViewing = new Ui.ButtonObject.ViewInfo("save to device", MaterialButton.ICON_GRAVITY_TEXT_START, R.drawable.ic_save, 1);
+        Ui.ButtonObject saveButton = new Ui.ButtonObject(context, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveCycles();
+            }
+        }, margins, dimensions, saveViewing);
+
+
+
+
+
+
+        List<Ui.ButtonObject> buttons = new ArrayList<>();
+        buttons.add(shareButton);
+        buttons.add(memoButton);
+        buttons.add(scheduleButton);
+        buttons.add(informButton);
+        buttons.add(saveButton);
+
+
+        return buttons;
+    }
+
 
 }
