@@ -70,6 +70,7 @@ public class DomainObjects {
     public static final String CHOSEN = "Chosen";
     public static final String WARM = "Warm";
     public static final String FLUORITE = "Fluorite";
+    public static final String SHARED_PREFERENCES_MEMO_TITLES_KEY = "MEMO_TITLES_KEY";
     public static final String SHARED_PREFERENCES_SITES_KEY = "SITES";
     public static final String SHARED_PREFERENCES_DEFAULT_DEVICE = "DEFAULT_MACHINE";
     public static final String SHARED_PREFERENCES_TARGET_MODE = "TARGET_MODE";

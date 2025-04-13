@@ -62,7 +62,7 @@ public class MemoRecyclerViewAdapter extends RecyclerView.Adapter<MemoRecyclerVi
 
         holder.timeTextField.setText(
                 "created on " + memos.get(holder.getAdapterPosition()).getNoteDate() + "\nat " +
-                memos.get(holder.getAdapterPosition()).getNoteTime()
+                memos.get(holder.getAdapterPosition()).getNoteTime() + "\nby " + memos.get(holder.getAdapterPosition()).getSender()
         );
         holder.dateTextField.setText("in " + memos.get(holder.getAdapterPosition()).getNoteTitle());
 

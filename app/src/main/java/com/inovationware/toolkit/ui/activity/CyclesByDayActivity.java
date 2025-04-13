@@ -99,6 +99,8 @@ public class CyclesByDayActivity extends BaseActivity {
         ui.bindProperty(context, binding.section, Section.listing());
         ui.bindProperty(context, binding.day, CalendarLite.getInstance().WEEK_DAY_LISTING);
 
+        binding.preview.setFocusable(false);
+        binding.preview.setClickable(false);
 
         binding.loadDayOfWeek.setOnClickListener(loadDayOfWeek);
         binding.load.setOnClickListener(load);

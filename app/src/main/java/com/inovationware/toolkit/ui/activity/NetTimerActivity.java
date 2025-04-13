@@ -87,6 +87,8 @@ public class NetTimerActivity extends BaseActivity {
                 public void onResponse(Call<String> call, Response<String> response) {
                     if (response.isSuccessful()) {
                         if (response.body().trim().length() < 1) {
+                            feedback.toast("Nothing from home at the moment.", Toast.LENGTH_SHORT);
+                            progressBar.setVisibility(View.INVISIBLE);
                             return;
                         }
                         if (!responseStringIsValid(response.body())) {

@@ -7,7 +7,9 @@ import android.widget.TextView;
 
 import com.inovationware.toolkit.R;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
 import static com.inovationware.toolkit.global.library.utility.Code.clean;
@@ -35,7 +37,17 @@ public class GroupManager {
     }
 
     public String[] list(Context context, boolean excludeGroup) {
-        return store.getString(context, SHARED_PREFERENCES_MACHINES_KEY, EMPTY_STRING).replace(store.getID(context), "").trim().split("\n");
+        if (excludeGroup) return list(context);
+
+        /*if (Arrays.asList(list(context)).contains(clean(store.getID(context)))){
+            return list(context);
+        }*/
+
+        String[] saved = list(context);
+        //String[] result = new String[list(context).length + 1];
+        String[] result =Arrays.copyOf(saved, saved.length + 1);
+        result[result.length - 1] = store.getID(context);
+        return result;
     }
 
     /*private boolean exists(String machine) {

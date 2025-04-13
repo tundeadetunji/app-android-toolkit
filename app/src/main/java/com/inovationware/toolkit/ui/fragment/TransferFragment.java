@@ -145,6 +145,9 @@ public class TransferFragment extends Fragment {
         binding.ReadOutLoudOnReceiveCheckBox.setChecked(store.getChecked(view.getContext(), SHARED_PREFERENCES_READ_OUT_LOUD_ON_RECEIVE_KEY, false));
         binding.SearchOnReceiveCheckBox.setChecked(store.getChecked(view.getContext(), SHARED_PREFERENCES_SEARCH_ON_RECEIVE_KEY, false));
         binding.UpdatePeriodicallyCheckBox.setChecked(store.getChecked(view.getContext(), SHARED_PREFERENCES_PERIODIC_UPDATES_KEY, false));
+
+        store.setDropDown(context, binding.memoTitle, factory.memo.titles.listing(context, store));
+
     }
 
     private void postSetup(){
@@ -386,6 +389,7 @@ public class TransferFragment extends Fragment {
         memento.clear(view.getContext(), store, DomainObjects.TRANSFER_FRAGMENT_MEMENTO_KEY);
         cachedMemos = null;
         store.setString(view.getContext(), DomainObjects.MEMO_TOPIC_KEY, binding.memoTitle.getText().toString());
+        factory.memo.titles.addTitle(context, binding.memoTitle.getText().toString(), store);
         try {
             memoService.saveNoteToCloud(memo);
         }

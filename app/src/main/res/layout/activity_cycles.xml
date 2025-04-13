@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="false"
     android:layout_marginBottom="70dp"
+    android:fillViewport="false"
     tools:context=".ui.activity.CyclesActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_marginTop="16dp"
+        android:orientation="vertical"
         tools:context=".ui.fragment.CyclesActivity">
 
         <LinearLayout
@@ -38,16 +38,16 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="10"
                 android:hint=""
-                app:startIconDrawable="@drawable/baseline_person_24"
-                app:endIconMode="dropdown_menu">
+                app:endIconMode="dropdown_menu"
+                app:startIconDrawable="@drawable/baseline_person_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/profileDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="#000000"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#000000" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -58,10 +58,10 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
-                app:icon="@drawable/ic_check"
-                app:iconGravity="textStart"
                 android:layout_weight="1"
-                android:text="" />
+                android:text=""
+                app:icon="@drawable/ic_check"
+                app:iconGravity="textStart" />
 
 
         </LinearLayout>
@@ -88,8 +88,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:hint=""
-                app:startIconDrawable="@drawable/baseline_calendar_month_24"
-                app:endIconMode="dropdown_menu">
+                app:endIconMode="dropdown_menu"
+                app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/monthDropDown"
@@ -97,8 +97,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="none"
-                    android:textColor="#000000"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#000000" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -110,8 +110,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:hint=""
-                app:startIconDrawable="@drawable/baseline_calendar_month_24"
-                app:endIconMode="dropdown_menu">
+                app:endIconMode="dropdown_menu"
+                app:startIconDrawable="@drawable/baseline_calendar_month_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/dayDropDown"
@@ -119,8 +119,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="none"
-                    android:textColor="#000000"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#000000" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -145,9 +145,9 @@
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:text=""
                 app:icon="@drawable/ic_check"
-                app:iconGravity="textStart"
-                android:text="" />
+                app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clear"
@@ -156,9 +156,9 @@
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:text=""
                 app:icon="@drawable/baseline_clear_24"
-                app:iconGravity="textStart"
-                android:text="" />
+                app:iconGravity="textStart" />
 
 
             <com.google.android.material.button.MaterialButton
@@ -168,25 +168,25 @@
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
-                app:icon="@drawable/baseline_person_add_24"
-                app:iconGravity="textStart"
                 android:layout_weight="1"
-                android:text="" />
+                android:text=""
+                app:icon="@drawable/baseline_person_add_24"
+                app:iconGravity="textStart" />
 
             <TextView
                 android:id="@+id/placeholderTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginEnd="8dp"
-                android:layout_gravity="center"
+                android:layout_weight="6"
                 android:ellipsize="none"
                 android:scrollHorizontally="false"
                 android:text=""
-                android:layout_weight="6"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -195,10 +195,10 @@
             android:id="@+id/headlineTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="start"
             android:layout_marginStart="20dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="8dp"
-            android:layout_gravity="start"
             android:ellipsize="none"
             android:scrollHorizontally="false"
             android:text=""
@@ -206,7 +206,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/computeDetailLayout"/>
+            app:layout_constraintTop_toBottomOf="@+id/computeDetailLayout" />
 
 
         <LinearLayout
@@ -231,8 +231,8 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="8"
                 android:hint=""
-                app:startIconDrawable="@drawable/baseline_event_repeat_24"
-                app:endIconMode="dropdown_menu">
+                app:endIconMode="dropdown_menu"
+                app:startIconDrawable="@drawable/baseline_event_repeat_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/datesDropDown"
@@ -240,8 +240,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:inputType="none"
-                    android:textColor="#000000"
-                    android:text="" />
+                    android:text=""
+                    android:textColor="#000000" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
@@ -283,15 +283,16 @@
                 android:id="@+id/visit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_check"
-                app:iconGravity="textStart"
                 android:layout_gravity="center"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:text="" />
+                android:text=""
+                app:icon="@drawable/ic_check"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/previewTextInputLayout"
@@ -303,19 +304,19 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint=""
-            android:scrollbars="vertical"
             app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/preview"
-                android:inputType="none"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:scrollbars="vertical" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <com.google.android.material.textfield.TextInputLayout
-            android:visibility="gone"
             android:id="@+id/personalTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -325,22 +326,22 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint="Personal"
+            android:visibility="gone"
             app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/datesLinearLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
                 android:id="@+id/personalTextView"
-                android:inputType="none"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="150dp"
+                android:inputType="none"
+                android:scrollHorizontally="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:visibility="gone"
             android:id="@+id/healthTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -350,23 +351,23 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint="Health"
+            android:visibility="gone"
             app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/personalTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
                 android:id="@+id/healthTextView"
-                android:scrollbars="vertical"
-                android:inputType="none"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="150dp"
+                android:inputType="none"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:visibility="gone"
             android:id="@+id/businessTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -376,23 +377,23 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint="Business"
+            android:visibility="gone"
             app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/healthTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
                 android:id="@+id/businessTextView"
-                android:scrollbars="vertical"
-                android:inputType="none"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="150dp"
+                android:inputType="none"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:visibility="gone"
             android:id="@+id/soulTextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -403,18 +404,19 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:hint="Soul"
+            android:visibility="gone"
             app:boxBackgroundMode="outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/businessTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
-                android:scrollbars="vertical"
-                android:inputType="none"
                 android:id="@+id/soulTextView"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="150dp"
+                android:inputType="none"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -440,9 +442,9 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="3"
                 app:endIconMode="dropdown_menu"
-                app:startIconDrawable="@drawable/baseline_language_24"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:startIconDrawable="@drawable/baseline_language_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/cyclesLanguageDropDown"
@@ -462,9 +464,9 @@
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
+                android:text=""
                 app:icon="@drawable/ic_check"
-                app:iconGravity="textStart"
-                android:text="" />
+                app:iconGravity="textStart" />
 
         </LinearLayout>
 
@@ -485,41 +487,40 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/inform"
-                app:iconGravity="textStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:icon="@drawable/baseline_apps_24" />
+                app:icon="@drawable/baseline_apps_24"
+                app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save"
-                app:iconGravity="textStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:icon="@drawable/ic_save" />
+                app:icon="@drawable/ic_save"
+                app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sendCyclesResultButton"
-                app:iconGravity="textStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:icon="@drawable/baseline_wifi_24" />
+                app:icon="@drawable/baseline_wifi_24"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/shareCopyButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -529,6 +530,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="0dp"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent">
 
             <com.google.android.material.button.MaterialButton
@@ -539,33 +541,33 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:iconGravity="textStart"
-                app:icon="@drawable/ic_share" />
+                app:icon="@drawable/ic_share"
+                app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/copyCyclesResultButton"
-                app:iconGravity="textStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:icon="@drawable/baseline_content_copy_24" />
+                app:icon="@drawable/baseline_content_copy_24"
+                app:iconGravity="textStart" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/filerButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="0dp"
-            android:layout_gravity="center"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cyclesOnlineButtonsLayout">
@@ -577,9 +579,9 @@
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                app:iconGravity="textStart"
+                android:text=""
                 app:icon="@drawable/baseline_insert_drive_file_24"
-                android:text="" />
+                app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/updateCyclesButton"
@@ -588,14 +590,13 @@
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                app:iconGravity="textStart"
+                android:text=""
                 app:icon="@drawable/ic_edit"
-                android:text="" />
+                app:iconGravity="textStart" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/cyclesOnlineButtonsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -606,31 +607,32 @@
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="140dp"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cyclesOutgoingButtonsLayout">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/memoCyclesResultButton"
-                app:iconGravity="textStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:icon="@drawable/baseline_sticky_note_2_24" />
+                app:icon="@drawable/baseline_sticky_note_2_24"
+                app:iconGravity="textStart" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/scheduleCyclesResultButton"
-                app:iconGravity="textStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:text=""
-                app:icon="@drawable/baseline_event_repeat_24" />
+                app:icon="@drawable/baseline_event_repeat_24"
+                app:iconGravity="textStart" />
 
 
         </LinearLayout>

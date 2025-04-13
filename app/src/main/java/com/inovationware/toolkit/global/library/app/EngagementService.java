@@ -42,6 +42,12 @@ public class EngagementService {
         isPing;
 
     }
+
+    public enum EngagementSection{
+        Pc,
+        Power,
+        Engaging
+    }
     public enum Engagement {
         Hibernate,
         Increase_Volume,
@@ -68,15 +74,52 @@ public class EngagementService {
         }
 
     }
+    public enum EngagingEngagement {
+        Who_Is,
+        Who_Was,
+        Last_30,
+        What_Is_On,
+        Ping
+
+    }
+
+    public enum PcEngagement {
+        Increase_Volume,
+        Mute,
+        Dim_Screen,
+        Reduce_Volume,
+        Workstation,
+        Task_Manager,
+        Volume_Down,
+        Volume_Up;
+
+    }
+
+    public enum PowerEngagement {
+        Hibernate,
+        Restart,
+        Shutdown;
+
+    }
 
     public EngagementResponseType from(Engagement engagement) {
         return engagementResponseTypes.get(engagement);
     }
 
-    public List<String> listing() {
+    public List<String> listing(EngagementSection section) {
         List<String> result = new ArrayList<>();
-        for (Engagement value : Engagement.values()) {
-            result.add(value.name().replace("_", " "));
+        if (section == EngagementSection.Pc){
+            for (PcEngagement value : PcEngagement.values()) {
+                result.add(value.name().replace("_", " "));
+            }
+        }else if (section == EngagementSection.Engaging){
+            for (EngagingEngagement value : EngagingEngagement.values()) {
+                result.add(value.name().replace("_", " "));
+            }
+        }else if (section == EngagementSection.Power){
+            for (PowerEngagement value : PowerEngagement.values()) {
+                result.add(value.name().replace("_", " "));
+            }
         }
         Collections.sort(result);
         return result;

@@ -49,6 +49,7 @@ import static com.inovationware.generalmodule.Device.clipboardSetText;
 import static com.inovationware.generalmodule.Device.thereIsInternet;
 import static com.inovationware.toolkit.global.domain.DomainObjects.HIBERNATE;
 import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.LOCK;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_ENGAGE;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LAST_30;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_PING;
@@ -93,6 +94,7 @@ public class ReplyActivity extends BaseActivity {
         setContentView(binding.getRoot());
 
         initializeVariables();
+        setListeners();
         setupUi();
         otherToDos();
 
@@ -111,6 +113,9 @@ public class ReplyActivity extends BaseActivity {
         disk = StorageClient.getInstance(context);
         authority = EngageAuthority.getInstance(context);
         downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+
+        //dataTransferSharedTextView = findViewById(R.id.DataTransferSharedTextView);
+
     }
 
     private void otherToDos() {
@@ -125,17 +130,27 @@ public class ReplyActivity extends BaseActivity {
 
     }
 
-    private void setupUi() {
-        store.setDropDown(ReplyActivity.this, binding.engageOperationDropDown, engagementService.listing().toArray(new String[0]), HIBERNATE);
-        machines.setDropDown(ReplyActivity.this, binding.engageMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
-        machines.setDropDown(ReplyActivity.this, binding.interactMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
-        dataTransferSharedTextView = findViewById(R.id.DataTransferSharedTextView);
-        store.setDropDown(ReplyActivity.this, binding.interactOpDropDown, InteractionToken.opListing());
-
+    private void setListeners(){
         binding.copySharedTextButton.setOnClickListener(handleCopySharedTextButton);
         binding.DataTransferSendButton.setOnClickListener(handleDataTransferSendButton);
+        binding.powerButton.setOnClickListener(handlePowerButton);
+        binding.pcButton.setOnClickListener(handlePcButton);
         binding.engageButton.setOnClickListener(handleEngageButton);
         binding.interactNowButton.setOnClickListener(handleInteractNowButton);
+    }
+    private void setupUi() {
+        store.setDropDown(ReplyActivity.this, binding.powerDropDown, engagementService.listing(EngagementService.EngagementSection.Power).toArray(new String[0]), HIBERNATE);
+        machines.setDropDown(ReplyActivity.this, binding.powerMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
+
+        store.setDropDown(ReplyActivity.this, binding.pcDropDown, engagementService.listing(EngagementService.EngagementSection.Pc).toArray(new String[0]), LOCK);
+        machines.setDropDown(ReplyActivity.this, binding.pcMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
+
+        store.setDropDown(ReplyActivity.this, binding.engageOperationDropDown, engagementService.listing(EngagementService.EngagementSection.Engaging).toArray(new String[0]));
+        machines.setDropDown(ReplyActivity.this, binding.engageMachineDropDown, machines.list(context, true), machines.getDefaultDevice(context));
+
+
+        machines.setDropDown(ReplyActivity.this, binding.interactMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
+        store.setDropDown(ReplyActivity.this, binding.interactOpDropDown, InteractionToken.opListing());
     }
 
     private final View.OnClickListener handleInteractNowButton = new View.OnClickListener() {
@@ -162,6 +177,44 @@ public class ReplyActivity extends BaseActivity {
                     sendInteraction(Json.from(token));
                 } catch (IOException ignored) {
                 }
+            }
+        }
+    };
+
+    private final View.OnClickListener handlePowerButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Todo Also see where login is necessary in other parts of the app before doing anything
+            if (!thereIsInternet(ReplyActivity.this)) return;
+
+            if (!user.isLoggedIn(ReplyActivity.this)) {
+                SignInManager.getInstance().beginLoginProcess(ReplyActivity.this, ReplyActivity.class.getSimpleName());
+                return;
+            }
+
+            if (canSend()) {
+                binding.powerButton.setEnabled(false);
+                requestEngage(binding.powerDropDown.getText().toString(), content(binding.powerMachineDropDown));
+                binding.powerButton.setEnabled(true);
+            }
+        }
+    };
+
+    private final View.OnClickListener handlePcButton = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Todo Also see where login is necessary in other parts of the app before doing anything
+            if (!thereIsInternet(ReplyActivity.this)) return;
+
+            if (!user.isLoggedIn(ReplyActivity.this)) {
+                SignInManager.getInstance().beginLoginProcess(ReplyActivity.this, ReplyActivity.class.getSimpleName());
+                return;
+            }
+
+            if (canSend()) {
+                binding.pcButton.setEnabled(false);
+                requestEngage(binding.pcDropDown.getText().toString(), content(binding.pcMachineDropDown));
+                binding.pcButton.setEnabled(true);
             }
         }
     };

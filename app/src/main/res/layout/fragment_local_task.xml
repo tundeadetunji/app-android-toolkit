@@ -100,6 +100,7 @@
                 android:scrollHorizontally="true"
                 android:id="@+id/regularTextView"
                 android:layout_width="match_parent"
+                android:textStyle="bold"
                 android:layout_height="120dp" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -316,6 +317,7 @@
                 android:scrollHorizontally="true"
                 android:id="@+id/reverseTextView"
                 android:layout_width="match_parent"
+                android:textStyle="bold"
                 android:layout_height="120dp" />
 
         </com.google.android.material.textfield.TextInputLayout>

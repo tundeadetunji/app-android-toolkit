@@ -52,6 +52,18 @@ public class ProfilerActivity extends BaseActivity {
     void setupUi() {
         ui.bindProperty(ProfilerActivity.this, binding.namesDropDown, profiler.getNameListing());
 
+        binding.personalsTextView.setFocusable(false);
+        binding.personalsTextView.setClickable(false);
+
+        binding.healthsTextView.setFocusable(false);
+        binding.healthsTextView.setClickable(false);
+
+        binding.businessesTextView.setFocusable(false);
+        binding.businessesTextView.setClickable(false);
+
+        binding.soulsTextView.setFocusable(false);
+        binding.soulsTextView.setClickable(false);
+
         binding.computeProfilesButton.setOnClickListener(handleComputeProfiles);
         binding.computeFirstProfileButton.setOnClickListener(handleComputeFirstProfile);
         binding.computeSecondProfileButton.setOnClickListener(handleComputeSecondProfile);

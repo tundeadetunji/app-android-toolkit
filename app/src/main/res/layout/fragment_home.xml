@@ -86,13 +86,15 @@
             android:text="Links"
             android:textAppearance="?attr/textAppearanceHeadline6" />
 
+
+        <!--android:layout_gravity="center"-->
         <LinearLayout
             android:id="@+id/LinksLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:layout_gravity="center"
+            android:layout_gravity="fill"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

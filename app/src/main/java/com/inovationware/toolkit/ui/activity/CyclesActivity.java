@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -115,6 +116,9 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
         ui.bindProperty(CyclesActivity.this, binding.monthDropDown, calendarLite.MONTH_LISTING);
         ui.bindProperty(CyclesActivity.this, binding.section, Cycle.listing());
 
+        binding.preview.setFocusable(false);
+        binding.preview.setClickable(false);
+
         binding.computeCyclesButton.setOnClickListener(handleComputeCycles);
         binding.createCyclesButton.setOnClickListener(createCyclesButtonListener);
         binding.shareCyclesResultButton.setOnClickListener(shareCyclesResultButtonListener);
@@ -133,6 +137,8 @@ public class CyclesActivity extends BaseActivity implements DetailViewSource, Pr
 
         binding.visit.setOnClickListener(visit);
         binding.save.setOnClickListener(save);
+
+
     }
 
     private final View.OnClickListener save = new View.OnClickListener() {

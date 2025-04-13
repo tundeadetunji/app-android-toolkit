@@ -104,6 +104,7 @@ public class AdvancedSettingsActivity extends BaseActivity {
         binding.resetNotesButton.setOnClickListener(resetNotesButtonHandler);
         binding.saveLinksButton.setOnClickListener(saveLinksButtonHandler);
         binding.startNetworkServiceButton.setOnClickListener(startNetworkServiceButtonHandler);
+        binding.resetNotesTitlesButton.setOnClickListener(resetNotesTitlesButtonListener);
 
         /*resetLocalTasksKeysButton = findViewById(R.id.resetLocalTasksKeysButton);
         resetLocalTasksKeysButton.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +165,26 @@ public class AdvancedSettingsActivity extends BaseActivity {
         setGithubDetails();
     }
 
+    private final View.OnClickListener resetNotesTitlesButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            MessageBox template = new MessageBox() {
+                @Override
+                public void positiveButtonAction() {
+                    factory.memo.titles.clearTitles(context, store);
+                }
+
+                @Override
+                public void negativeButtonAction() {
+                }
+            };
+            template.setMessage("Really clear notes' titles?");
+            template.setPositiveButtonText(DomainObjects.exactly);
+            template.setNegativeButtonText(DomainObjects.no);
+            template.show(AdvancedSettingsActivity.this);
+
+        }
+    };
     private final View.OnClickListener startNetworkServiceButtonHandler = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -317,8 +338,8 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 }
             };
             template.setMessage("Really clear notes?");
-            template.setPositiveButtonText(DomainObjects.sure);
-            template.setNegativeButtonText(DomainObjects.never_mind);
+            template.setPositiveButtonText(DomainObjects.exactly);
+            template.setNegativeButtonText(DomainObjects.no);
             template.show(AdvancedSettingsActivity.this);
         }
     };

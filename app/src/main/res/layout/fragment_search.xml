@@ -28,7 +28,8 @@
                 android:id="@+id/searchTermTextBox"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:scrollHorizontally="true" />
+                android:scrollHorizontally="true"
+                android:textStyle="bold" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

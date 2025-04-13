@@ -91,7 +91,7 @@ public class MemoBSFragment extends BottomSheetDialogFragment {
         if (memo != null) {
             binding.detailCaption.setText(
                     "Note in " + memo.getNoteTitle() + "\ncreated on " + memo.getNoteDate() +
-                            "\n at " + memo.getNoteTime().toLowerCase()
+                            "\nat " + memo.getNoteTime().toLowerCase() + "\nfrom " + memo.getTimezone()
             );
         }
     }

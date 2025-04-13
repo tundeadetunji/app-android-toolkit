@@ -458,18 +458,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint="Personal"
-            app:boxBackgroundMode="outline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/seventhLinearLayout">
+            app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
-                android:scrollbars="vertical"
                 android:id="@+id/personalsTextView"
                 android:inputType="none"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -483,18 +478,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint="Health"
-            app:boxBackgroundMode="outline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/personalsTextInputLayout">
+            app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
                 android:id="@+id/healthsTextView"
-                android:scrollbars="vertical"
                 android:inputType="none"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -508,18 +498,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:hint="Business"
-            app:boxBackgroundMode="outline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/healthsTextInputLayout">
+            app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
                 android:id="@+id/businessesTextView"
-                android:scrollbars="vertical"
                 android:inputType="none"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -534,18 +519,13 @@
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:hint="Soul"
-            app:boxBackgroundMode="outline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/businessesTextInputLayout">
+            app:boxBackgroundMode="outline">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:scrollHorizontally="true"
-                android:scrollbars="vertical"
                 android:inputType="none"
                 android:id="@+id/soulsTextView"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" />
+                android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

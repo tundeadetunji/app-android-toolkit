@@ -14,6 +14,7 @@ import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStra
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.StringFunctions;
 import com.inovationware.toolkit.global.library.utility.Ui;
+import com.inovationware.toolkit.memo.title.TitleService;
 import com.inovationware.toolkit.tts.service.TTSService;
 
 import lombok.AccessLevel;
@@ -36,17 +37,31 @@ public class Factory {
     public Ui ui = Ui.getInstance();
     public DeviceClient device = DeviceClient.getInstance();
     public EventHandlerFactory events = EventHandlerFactory.getInstance();
-
+    public MemoFactory memo = MemoFactory.getInstance();
 
 
     private static Factory instance;
-    public static Factory getInstance(){
-        if(instance == null) instance = new Factory();
+
+    public static Factory getInstance() {
+        if (instance == null) instance = new Factory();
         return instance;
     }
 
+
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class EventHandlerFactory{
+    public static class MemoFactory {
+        private static MemoFactory instance;
+        public static MemoFactory getInstance(){
+            if (instance == null) instance = new MemoFactory();
+            return instance;
+        }
+
+        public final TitleService titles = new TitleService();
+    }
+
+
+    @NoArgsConstructor(access = AccessLevel.PRIVATE)
+    public static class EventHandlerFactory {
         private static EventHandlerFactory instance;
 
         public static EventHandlerFactory getInstance() {
@@ -94,9 +109,10 @@ public class Factory {
     }
 
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
-    public static class FeedbackManagerFactory{
+    public static class FeedbackManagerFactory {
         private static FeedbackManagerFactory instance;
-        public static FeedbackManagerFactory getInstance(){
+
+        public static FeedbackManagerFactory getInstance() {
             if (instance == null) instance = new FeedbackManagerFactory();
             return instance;
         }

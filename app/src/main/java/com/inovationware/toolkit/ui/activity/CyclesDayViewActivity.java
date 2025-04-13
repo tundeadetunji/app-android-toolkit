@@ -100,6 +100,8 @@ public class CyclesDayViewActivity extends BaseActivity {
         ui.bindProperty(context, binding.section, Section.listing());
         ui.bindProperty(context, binding.timezone, TimeBelt.listing());
 
+        binding.preview.setFocusable(false);
+        binding.preview.setClickable(false);
 
         binding.refresh.setOnClickListener(refresh);
         binding.searchByKeyword.setOnClickListener(searchByKeyword);

@@ -99,5 +99,5 @@ dependencies {
     */
 
     implementation group: 'org.kohsuke', name: 'github-api', version: '1.323'
-
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 }

@@ -42,6 +42,8 @@ public final class Memo {
     private String noteDate;
     @JsonProperty
     private String noteTime;
+    @JsonProperty
+    private String timezone;
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM, yyyy");
     private static SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
@@ -55,7 +57,8 @@ public final class Memo {
                 store.getSender(context),
                 store.getID(context),
                 dateFormat.format(date),
-                timeFormat.format(date)
+                timeFormat.format(date),
+                Code.getTimezone()
         );
     }
 
@@ -68,7 +71,8 @@ public final class Memo {
                 store.getSender(context),
                 store.getID(context),
                 dateFormat.format(date),
-                timeFormat.format(date)
+                timeFormat.format(date),
+                Code.getTimezone()
         );
     }
 
@@ -80,8 +84,6 @@ public final class Memo {
 
         memos = Json.asList(response.body(), new TypeReference<List<Memo>>() {
         });
-        //Todo Comparator of int, using RecordSerial
-        //Collections.sort(memos, this);
         return memos;
     }
 
@@ -130,43 +132,6 @@ public final class Memo {
             }
         }
     }
-
-    /*private static class MemoComparator implements Comparator<Memo>{
-
-        @SneakyThrows
-        @Override
-        public int compare(Memo o1, Memo o2) {
-            String lowerDateString = o1.noteDate;
-            String lowerTimeString = o1.noteTime;
-
-            Date lowerDate = dateFormat.parse(lowerDateString);
-            Date lowerTime = timeFormat.parse(lowerTimeString);
-
-            Calendar lowerCalendar = Calendar.getInstance();
-            lowerCalendar.setTime(lowerDate);
-            lowerCalendar.set(Calendar.HOUR_OF_DAY, lowerTime.getHours());
-            lowerCalendar.set(Calendar.MINUTE, lowerTime.getMinutes());
-            lowerCalendar.set(Calendar.AM_PM, lowerTime.getHours() >= 12 ? Calendar.PM : Calendar.AM);
-
-            Date lower = lowerCalendar.getTime();
-
-            String upperDateString = o2.noteDate;
-            String upperTimeString = o2.noteTime;
-
-            Date upperDate = dateFormat.parse(upperDateString);
-            Date upperTime = timeFormat.parse(upperTimeString);
-
-            Calendar upperCalendar = Calendar.getInstance();
-            upperCalendar.setTime(upperDate);
-            upperCalendar.set(Calendar.HOUR_OF_DAY, upperTime.getHours());
-            upperCalendar.set(Calendar.MINUTE, upperTime.getMinutes());
-            upperCalendar.set(Calendar.AM_PM, upperTime.getHours() >= 12 ? Calendar.PM : Calendar.AM);
-
-            Date upper = upperCalendar.getTime();
-
-            return upper.after(lower) ? -1 : upper.equals(lower) ? 0 : 1;
-        }
-    }*/
 }
 
 
