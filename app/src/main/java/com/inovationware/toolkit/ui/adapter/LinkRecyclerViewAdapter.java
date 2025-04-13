@@ -25,6 +25,7 @@ import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -56,6 +57,10 @@ public class LinkRecyclerViewAdapter extends RecyclerView.Adapter<LinkRecyclerVi
         factory = Factory.getInstance();
     }
 
+    /*public void updateDataAfterRefresh(List<String> apps){
+        this.apps = apps;
+        notifyDataSetChanged();
+    }*/
 
     @NonNull
     @Override

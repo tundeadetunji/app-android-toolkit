@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentLinkBinding;
@@ -42,6 +43,7 @@ public class LinkFragment extends Fragment {
     private FragmentLinkBinding binding;
     private Handler getAppsListRoutineHandler;
     private Feedback feedback;
+    private LinkRecyclerViewAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +52,9 @@ public class LinkFragment extends Fragment {
 
         setupAccess();
         setupReferences();
+        setSwipeToRefresh();
         setupUi();
+
 
         return view;
     }
@@ -105,12 +109,14 @@ public class LinkFragment extends Fragment {
                             feedback.toast("There aren't any applications at the moment, you can try again after a while.", Toast.LENGTH_LONG);
                             return;
                         }
+
                         if (responseStringIsValid(response.body())) {
                             store.setString(view.getContext(), SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, response.body().replace(store.getSender(view.getContext()), "").trim());
                             try {
                                 apps = stringToList(response.body());
                                 hideProgressBar();
                                 setupRecyclerView();
+                                setupRecyclerViewAfterRefresh();
                                 showRecyclerView();
                             } catch (Exception ignored) {
                                 if (!store.shouldDisplayErrorMessage(view.getContext())) {
@@ -146,10 +152,32 @@ public class LinkFragment extends Fragment {
         binding = null;
     }
 
-    private void setupRecyclerView(){
-        binding.linkRecyclerView.setAdapter(new LinkRecyclerViewAdapter(view.getContext(), apps));
-        binding.linkRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+    private void setSwipeToRefresh(){
+        binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Call your method to refresh data
+                showProgressBar();
+                hideRecyclerView();
+                getAppsListRoutineHandler.post(getAppsListRoutine);
+            }
+        });
 
+    }
+
+    private void setupRecyclerViewAfterRefresh(){
+
+        try{
+            if (binding.swipeRefreshLayout.isRefreshing()) {
+                adapter.notifyDataSetChanged();
+                binding.swipeRefreshLayout.setRefreshing(false);
+            }
+        }catch (Exception ignored){}
+    }
+    private void setupRecyclerView(){
+        adapter = new LinkRecyclerViewAdapter(view.getContext(), apps);
+        binding.linkRecyclerView.setAdapter(adapter);
+        binding.linkRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
     }
 
     private void showRecyclerView(){
