@@ -42,8 +42,8 @@ public final class Memo {
     private String noteDate;
     @JsonProperty
     private String noteTime;
-    @JsonProperty
-    private String timezone;
+    /*@JsonProperty
+    private String timezoneInfo;*/
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("d MMMM, yyyy");
     private static SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
@@ -57,8 +57,7 @@ public final class Memo {
                 store.getSender(context),
                 store.getID(context),
                 dateFormat.format(date),
-                timeFormat.format(date),
-                Code.getTimezone()
+                timeFormat.format(date)
         );
     }
 
@@ -71,8 +70,7 @@ public final class Memo {
                 store.getSender(context),
                 store.getID(context),
                 dateFormat.format(date),
-                timeFormat.format(date),
-                Code.getTimezone()
+                timeFormat.format(date)
         );
     }
 

@@ -410,6 +410,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     List<Memo> memos;
+                    //System.out.println("\n***\n" + response.body() + "\n***");
                     try {
                         memos = Memo.listing(response);
                         Collections.sort(memos, new Memo.MemoComparator());
