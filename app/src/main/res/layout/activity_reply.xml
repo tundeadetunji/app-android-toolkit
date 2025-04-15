@@ -84,6 +84,92 @@
 
 
         <LinearLayout
+            android:id="@+id/resumeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="0dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/resumeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_margin="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                app:iconGravity="textStart"
+                app:icon="@drawable/ic_app"
+                android:text="resume my work" />
+
+            <LinearLayout
+                android:id="@+id/resumeAppLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="0dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/resumeAppDropDownLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="12"
+                    app:endIconMode="dropdown_menu"
+                    app:startIconDrawable="@drawable/baseline_work_24">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/resumeDropDown"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:inputType="none"
+                        android:maxLines="1"
+                        android:text=""
+                        android:textColor="#000000" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/resumeMachineLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="0dp"
+                app:endIconMode="dropdown_menu"
+                app:startIconDrawable="@drawable/ic_laptop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/resumeMachineDropDown"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:inputType="none"
+                    android:text=""
+                    android:textColor="#000000" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
             android:id="@+id/powerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

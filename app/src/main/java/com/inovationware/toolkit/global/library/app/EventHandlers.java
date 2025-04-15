@@ -60,10 +60,14 @@ public class EventHandlers {
             SignInManager.getInstance().beginLoginProcess(context, BoardActivity.class.getSimpleName());*/
     }
 
-    public void resumeWorkButton(Context context, Factory factory, SharedPreferencesManager store, GroupManager machines){
+    public void resumeWorkButton(Context context, Factory factory, SharedPreferencesManager store, GroupManager machines, String app){
 
         if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines))
             return;
+
+        String file = app == null ? "" : app;
+        if (app.isEmpty()) file = "";
+
 
         factory.transfer.service.sendText(
                 context,
@@ -77,7 +81,7 @@ public class EventHandlers {
                         determineTarget(context, store, machines),
                         POST_PURPOSE_RESUME_WORK,
                         DomainObjects.EMPTY_STRING,
-                        DomainObjects.EMPTY_STRING,
+                        file,
                         DomainObjects.EMPTY_STRING
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,

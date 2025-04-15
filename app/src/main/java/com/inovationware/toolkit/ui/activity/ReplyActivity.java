@@ -53,7 +53,6 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.LOCK;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_ENGAGE;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LAST_30;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_PING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_RESUME_WORK;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_WHAT_IS_ON;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
@@ -138,6 +137,7 @@ public class ReplyActivity extends BaseActivity {
         binding.pcButton.setOnClickListener(handlePcButton);
         binding.engageButton.setOnClickListener(handleEngageButton);
         binding.interactNowButton.setOnClickListener(handleInteractNowButton);
+        binding.resumeButton.setOnClickListener(resumeButtonListener);
     }
 
     private void setupUi() {
@@ -152,7 +152,60 @@ public class ReplyActivity extends BaseActivity {
 
         machines.setDropDown(ReplyActivity.this, binding.interactMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
         store.setDropDown(ReplyActivity.this, binding.interactOpDropDown, InteractionToken.opListing());
+
+        machines.setDropDown(ReplyActivity.this, binding.resumeMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
+        setResumeDropDown();
     }
+
+    private void setResumeDropDown() {
+        binding.resumeDropDown.setEnabled(false);
+
+        if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines))
+            return;
+
+        Retrofit retrofitImpl = Repo.getInstance().create(context, store);
+
+        Call<String> navigate = retrofitImpl.readText(
+                HTTP_TRANSFER_URL(context, store),
+                store.getUsername(context),
+                store.getID(context),
+                String.valueOf(Transfer.Intent.readResumeWorkAppsListing),
+                DomainObjects.EMPTY_STRING
+        );
+        navigate.enqueue(new Callback<String>() {
+            @SneakyThrows
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+
+                    if (response.body() == null) return;
+
+                    if (DomainObjects.resumeAppsListing == null) {
+                        DomainObjects.resumeAppsListing = response.body().toString().split("\n");
+                    }
+
+                    store.setDropDown(context, binding.resumeDropDown, DomainObjects.resumeAppsListing);
+                    binding.resumeDropDown.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                if (SharedPreferencesManager.getInstance().shouldDisplayErrorMessage(context)) {
+                    new Feedback(context).toast(DEFAULT_FAILURE_MESSAGE_SUFFIX);
+                }
+            }
+        });
+
+    }
+
+    private final View.OnClickListener resumeButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            factory.events.handlers.resumeWorkButton(context, factory, store, machines, binding.resumeDropDown.getText().toString().trim());
+        }
+    };
 
     private final View.OnClickListener handleInteractNowButton = new View.OnClickListener() {
         @Override

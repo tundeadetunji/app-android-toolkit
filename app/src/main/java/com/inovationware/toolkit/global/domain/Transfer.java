@@ -32,7 +32,7 @@ public class Transfer {
         readHaptic,
         clearHaptic,
         readLocationRequest,
-        readResumeWorkApps
+        readResumeWorkAppsListing
     }
 
     public enum Tag{

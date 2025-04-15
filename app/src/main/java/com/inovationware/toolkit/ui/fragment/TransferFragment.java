@@ -402,17 +402,6 @@ public class TransferFragment extends Fragment {
         if (!thereIsInternet(view.getContext()) || !initialParamsAreSet(view.getContext(), store, machines))
             return;
 
-
-        /*factory.transfer.service.readText(view.getContext(),
-                ReadTextRequest.create(
-                        HTTP_TRANSFER_URL,
-                        store.getUsername(view.getContext()),
-                        store.getID(view.getContext()),
-                        Noun.Intent.readText
-                ),
-                DEFAULT_ERROR_MESSAGE_SUFFIX,
-                DEFAULT_FAILURE_MESSAGE_SUFFIX);*/
-
         Retrofit retrofitImpl = Repo.getInstance().create(context, store);
 
         Call<String> navigate = retrofitImpl.readText(

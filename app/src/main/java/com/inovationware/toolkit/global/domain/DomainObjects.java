@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 
 public class DomainObjects {
 
+    public static String[] resumeAppsListing;
     public static final String START_LOCATION_UPDATES_MESSAGE = "Have a nice day!";
 
     public static List<String> apps = new ArrayList<>();
