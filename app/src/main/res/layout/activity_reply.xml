@@ -172,18 +172,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/resumeWorkButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_weight="1"
-                app:iconGravity="textStart"
-                android:text="resume my work" />
-
         </LinearLayout>
 
 

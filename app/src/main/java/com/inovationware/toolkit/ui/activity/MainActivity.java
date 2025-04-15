@@ -250,6 +250,9 @@ public class MainActivity extends BaseActivity {
         } else if (item.getItemId() == R.id.helpMainMenuItem) {
             startActivity(new Intent(MainActivity.this, HelpActivity.class));
             return true;
+        } else if (item.getItemId() == R.id.resumeWorkMainMenuItem) {
+            factory.events.handlers.resumeWorkButton(context, factory, store, machines);
+            return true;
         } else if (item.getItemId() == R.id.aboutMainMenuItem) {
             startActivity(new Intent(MainActivity.this, AboutActivity.class));
             return true;

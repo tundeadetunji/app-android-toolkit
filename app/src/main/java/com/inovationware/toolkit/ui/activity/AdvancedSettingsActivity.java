@@ -172,6 +172,7 @@ public class AdvancedSettingsActivity extends BaseActivity {
                 @Override
                 public void positiveButtonAction() {
                     factory.memo.titles.clearTitles(context, store);
+                    store.setString(context, DomainObjects.MEMO_TOPIC_KEY, "");
                 }
 
                 @Override

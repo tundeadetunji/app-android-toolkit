@@ -23,6 +23,14 @@
             android:title="Settings"
             app:showAsAction="never" />
     </group>
+    <group android:id="@+id/mode">
+        <item
+            android:id="@+id/resumeWorkMainMenuItem"
+            android:icon="@drawable/baseline_palette_24"
+            android:title="Resume My Work"
+            app:showAsAction="never" />
+
+    </group>
     <group android:id="@+id/stub">
 
         <item

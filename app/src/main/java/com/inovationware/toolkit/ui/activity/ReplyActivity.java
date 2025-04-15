@@ -138,7 +138,6 @@ public class ReplyActivity extends BaseActivity {
         binding.pcButton.setOnClickListener(handlePcButton);
         binding.engageButton.setOnClickListener(handleEngageButton);
         binding.interactNowButton.setOnClickListener(handleInteractNowButton);
-        binding.resumeWorkButton.setOnClickListener(resumeWorkButtonListener);
     }
 
     private void setupUi() {
@@ -154,32 +153,6 @@ public class ReplyActivity extends BaseActivity {
         machines.setDropDown(ReplyActivity.this, binding.interactMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
         store.setDropDown(ReplyActivity.this, binding.interactOpDropDown, InteractionToken.opListing());
     }
-
-    private final View.OnClickListener resumeWorkButtonListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines))
-                return;
-
-            factory.transfer.service.sendText(
-                    context,
-                    store,
-                    machines,
-                    SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
-                            store.getUsername(context),
-                            store.getID(context),
-                            Transfer.Intent.writeText,
-                            store.getSender(context),
-                            determineTarget(context, store, machines),
-                            POST_PURPOSE_RESUME_WORK,
-                            DomainObjects.EMPTY_STRING,
-                            DomainObjects.EMPTY_STRING,
-                            DomainObjects.EMPTY_STRING
-                    ),
-                    DEFAULT_ERROR_MESSAGE_SUFFIX,
-                    DEFAULT_FAILURE_MESSAGE_SUFFIX);
-        }
-    };
 
     private final View.OnClickListener handleInteractNowButton = new View.OnClickListener() {
         @Override

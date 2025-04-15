@@ -1,8 +1,20 @@
 package com.inovationware.toolkit.global.library.app;
 
+import static com.inovationware.generalmodule.Device.thereIsInternet;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_RESUME_WORK;
+import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
+import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+
 import android.content.Context;
 import android.content.Intent;
 
+import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.global.domain.DomainObjects;
+import com.inovationware.toolkit.global.domain.Transfer;
+import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.ui.activity.BoardActivity;
 import com.inovationware.toolkit.ui.activity.CodeActivity;
 import com.inovationware.toolkit.ui.activity.CyclesActivity;
@@ -48,7 +60,30 @@ public class EventHandlers {
             SignInManager.getInstance().beginLoginProcess(context, BoardActivity.class.getSimpleName());*/
     }
 
+    public void resumeWorkButton(Context context, Factory factory, SharedPreferencesManager store, GroupManager machines){
 
+        if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines))
+            return;
+
+        factory.transfer.service.sendText(
+                context,
+                store,
+                machines,
+                SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
+                        store.getUsername(context),
+                        store.getID(context),
+                        Transfer.Intent.writeText,
+                        store.getSender(context),
+                        determineTarget(context, store, machines),
+                        POST_PURPOSE_RESUME_WORK,
+                        DomainObjects.EMPTY_STRING,
+                        DomainObjects.EMPTY_STRING,
+                        DomainObjects.EMPTY_STRING
+                ),
+                DEFAULT_ERROR_MESSAGE_SUFFIX,
+                DEFAULT_FAILURE_MESSAGE_SUFFIX);
+
+    }
 
 
 }
