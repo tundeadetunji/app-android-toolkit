@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.FragmentHomeBinding;
+import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
 import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
@@ -48,9 +51,13 @@ import com.inovationware.toolkit.ui.activity.ScheduleActivity;
 import com.inovationware.toolkit.ui.activity.SettingsActivity;
 import com.inovationware.toolkit.ui.adapter.MemoRecyclerViewAdapter;
 
+import static com.inovationware.generalmodule.Device.clipboardSetText;
 import static com.inovationware.generalmodule.Device.thereIsInternet;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
 import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LOGGER;
 import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_FAVORITE_URL_KEY;
 import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PINNED_KEY;
 import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_READING_KEY;
@@ -58,13 +65,19 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFE
 import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SCRATCH_KEY;
 import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_TODO_KEY;
 import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
+import static com.inovationware.toolkit.global.library.utility.Code.content;
+import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
+import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import lombok.SneakyThrows;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -97,6 +110,7 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
 
     private void setupVariables() {
         context = view.getContext();

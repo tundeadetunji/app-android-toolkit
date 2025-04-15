@@ -121,10 +121,9 @@ public class DomainObjects {
 
     public static final String SHARED_PREFERENCES_MEMO_CACHED_KEY = "MEMO_CACHED";
     public static final String SHARED_PREFERENCES_MEMO_CACHED_LENGTH_KEY = "MEMO_CACHED_LENGTH";
+    public static final String SHARED_PREFERENCES_LAST_RESUME_WORK_APP = "LAST_RESUME_WORK_APP";
 
     public static List<Memo> cachedMemos = new ArrayList<>();
-
-
 
     public enum SendFrom {
         TextView, Clipboard
@@ -207,6 +206,7 @@ public class DomainObjects {
     public static final String POST_RECORD_TARGET = "Target";
     public static final String POST_RECORD_PURPOSE = "Purpose";
     public static final String POST_RECORD_INFO = "Info";
+    public static final String POST_PURPOSE_RESUME_WORK = "ResumeWork";
     public static final String POST_PURPOSE_BLOB_AUDIO = "BlobAudio";
     public static final String POST_PURPOSE_BLOB_EXCEL = "BlobExcelSpreadsheet";
     public static final String POST_PURPOSE_BLOB_PDF = "BlobPdf";

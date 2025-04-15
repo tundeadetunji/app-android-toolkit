@@ -273,5 +273,4 @@ public class SharedPreferencesManager {
         //return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
     }
 
-
 }

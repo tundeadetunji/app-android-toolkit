@@ -44,7 +44,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:visibility="gone"
-        android:id="@+id/showNavigationButton"
+        android:id="@+id/resumeWorkButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -52,5 +52,5 @@
         android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/QuickSendButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/baseline_apps_24" />
+        app:srcCompat="@drawable/baseline_work_24" />
 </androidx.constraintlayout.widget.ConstraintLayout>

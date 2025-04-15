@@ -53,6 +53,7 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.LOCK;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_ENGAGE;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LAST_30;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_PING;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_RESUME_WORK;
 import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_WHAT_IS_ON;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
 import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
@@ -130,14 +131,16 @@ public class ReplyActivity extends BaseActivity {
 
     }
 
-    private void setListeners(){
+    private void setListeners() {
         binding.copySharedTextButton.setOnClickListener(handleCopySharedTextButton);
         binding.DataTransferSendButton.setOnClickListener(handleDataTransferSendButton);
         binding.powerButton.setOnClickListener(handlePowerButton);
         binding.pcButton.setOnClickListener(handlePcButton);
         binding.engageButton.setOnClickListener(handleEngageButton);
         binding.interactNowButton.setOnClickListener(handleInteractNowButton);
+        binding.resumeWorkButton.setOnClickListener(resumeWorkButtonListener);
     }
+
     private void setupUi() {
         store.setDropDown(ReplyActivity.this, binding.powerDropDown, engagementService.listing(EngagementService.EngagementSection.Power).toArray(new String[0]), HIBERNATE);
         machines.setDropDown(ReplyActivity.this, binding.powerMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
@@ -148,10 +151,35 @@ public class ReplyActivity extends BaseActivity {
         store.setDropDown(ReplyActivity.this, binding.engageOperationDropDown, engagementService.listing(EngagementService.EngagementSection.Engaging).toArray(new String[0]));
         machines.setDropDown(ReplyActivity.this, binding.engageMachineDropDown, machines.list(context, true), machines.getDefaultDevice(context));
 
-
         machines.setDropDown(ReplyActivity.this, binding.interactMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
         store.setDropDown(ReplyActivity.this, binding.interactOpDropDown, InteractionToken.opListing());
     }
+
+    private final View.OnClickListener resumeWorkButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines))
+                return;
+
+            factory.transfer.service.sendText(
+                    context,
+                    store,
+                    machines,
+                    SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
+                            store.getUsername(context),
+                            store.getID(context),
+                            Transfer.Intent.writeText,
+                            store.getSender(context),
+                            determineTarget(context, store, machines),
+                            POST_PURPOSE_RESUME_WORK,
+                            DomainObjects.EMPTY_STRING,
+                            DomainObjects.EMPTY_STRING,
+                            DomainObjects.EMPTY_STRING
+                    ),
+                    DEFAULT_ERROR_MESSAGE_SUFFIX,
+                    DEFAULT_FAILURE_MESSAGE_SUFFIX);
+        }
+    };
 
     private final View.OnClickListener handleInteractNowButton = new View.OnClickListener() {
         @Override
@@ -294,12 +322,12 @@ public class ReplyActivity extends BaseActivity {
                 binding.engageButton.setEnabled(false);
                 factory.image.service.loadGifImage(ReplyActivity.this, binding.engageImageView, R.drawable.placeholder);
                 showEngageControl();
-                if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isRequest){
+                if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isRequest) {
                     //ToDo incorporate others in EngagementResponseType
                     //getTimestamp();
                     engagementHandler.postDelayed(readWhoIsRunnable, 30000);
                     return;
-                }else if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isPing){
+                } else if (engagementService.from(EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString())) == EngagementService.EngagementResponseType.isPing) {
                     requestPing(DomainObjects.IGNORE, determineTarget(context, store, machines));
                     return;
                 }

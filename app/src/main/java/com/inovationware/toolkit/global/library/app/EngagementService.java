@@ -46,10 +46,12 @@ public class EngagementService {
     public enum EngagementSection{
         Pc,
         Power,
-        Engaging
+        Engaging,
+        Now
     }
     public enum Engagement {
         Hibernate,
+        Now,
         Increase_Volume,
         Mute,
         Reduce_Volume,
@@ -73,6 +75,10 @@ public class EngagementService {
             return Engagement.valueOf(engagement.replace(space, underscore));
         }
 
+    }
+
+    public enum NowEngagement{
+        Now
     }
     public enum EngagingEngagement {
         Who_Is,
@@ -120,9 +126,14 @@ public class EngagementService {
             for (PowerEngagement value : PowerEngagement.values()) {
                 result.add(value.name().replace("_", " "));
             }
+        }else if (section == EngagementSection.Now){
+            for (NowEngagement value : NowEngagement.values()) {
+                result.add(value.name().replace("_", " "));
+            }
         }
         Collections.sort(result);
         return result;
     }
+
 
 }

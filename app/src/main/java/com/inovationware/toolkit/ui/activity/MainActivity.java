@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.view.MenuCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -25,14 +27,20 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
+import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.databinding.ActivityMainBinding;
+import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
+import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.domain.DomainObjects;
 import com.inovationware.toolkit.global.library.app.EncryptionManager;
 import com.inovationware.toolkit.global.library.app.MessageBox;
 import com.inovationware.toolkit.global.library.app.SignInManager;
+import com.inovationware.toolkit.global.library.app.retrofit.Repo;
+import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.external.ApkClient;
 import com.inovationware.toolkit.global.library.utility.DeviceClient;
 import com.inovationware.toolkit.global.library.utility.Ui;
@@ -48,9 +56,18 @@ import com.inovationware.toolkit.ui.fragment.MemoBSFragment;
 import com.inovationware.toolkit.ui.fragment.MenuBottomSheetFragment;
 import com.inovationware.toolkit.ui.support.MainAuthority;
 
+import static com.inovationware.generalmodule.Device.clipboardSetText;
+import static com.inovationware.generalmodule.Device.thereIsInternet;
 import static com.inovationware.toolkit.global.domain.DomainObjects.AGRELLITE;
 import static com.inovationware.toolkit.global.domain.DomainObjects.BLUISH;
 import static com.inovationware.toolkit.global.domain.DomainObjects.CHOSEN;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_APP;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LOGGER;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_RESUME_WORK;
 import static com.inovationware.toolkit.global.domain.DomainObjects.TAN;
 import static com.inovationware.toolkit.global.domain.DomainObjects.DARKER;
 import static com.inovationware.toolkit.global.domain.DomainObjects.NATURAL;
@@ -65,9 +82,19 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.bistableMana
 import static com.inovationware.toolkit.global.domain.DomainObjects.no;
 import static com.inovationware.toolkit.global.domain.DomainObjects.ttsServiceProvider;
 import static com.inovationware.toolkit.global.domain.DomainObjects.yes;
+import static com.inovationware.toolkit.global.library.utility.Code.content;
+import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
+import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
+import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.SneakyThrows;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends BaseActivity {
     private MainAuthority authority;
@@ -123,7 +150,6 @@ public class MainActivity extends BaseActivity {
         apps = null;
         DomainObjects.cachedMemos = null;
         DomainObjects.getListOfInstalledApps(apkClient, getPackageManager(), true);
-
     }
 
     private void setupConfigurations() {
@@ -149,10 +175,29 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        binding.showNavigationButton.setOnClickListener(new View.OnClickListener() {
+        binding.resumeWorkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new MenuBottomSheetFragment(getButtons()).show(getSupportFragmentManager(), MenuBottomSheetFragment.TAG);
+                if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines))
+                    return;
+
+                factory.transfer.service.sendText(
+                        context,
+                        store,
+                        machines,
+                        SendTextRequest.create(HTTP_TRANSFER_URL(context, store),
+                                store.getUsername(context),
+                                store.getID(context),
+                                Transfer.Intent.writeText,
+                                store.getSender(context),
+                                determineTarget(context, store, machines),
+                                POST_PURPOSE_RESUME_WORK,
+                                DomainObjects.EMPTY_STRING,
+                                DomainObjects.EMPTY_STRING,
+                                DomainObjects.EMPTY_STRING
+                        ),
+                        DEFAULT_ERROR_MESSAGE_SUFFIX,
+                        DEFAULT_FAILURE_MESSAGE_SUFFIX);
             }
         });
 
@@ -212,7 +257,7 @@ public class MainActivity extends BaseActivity {
             showThemeMenu();
             return true;
         } else if (item.getItemId() == R.id.logoutMainMenuItem) {
-            new MessageBox("Really log out?", yes,no) {
+            new MessageBox("Really log out?", yes, no) {
                 @Override
                 public void positiveButtonAction() {
                     performLogout();
@@ -356,7 +401,7 @@ public class MainActivity extends BaseActivity {
     }
 */
 
-    private List<Ui.ButtonObject> getButtons(){
+    private List<Ui.ButtonObject> getButtons() {
         Ui.ButtonObject.DimensionInfo dimensions = new Ui.ButtonObject.DimensionInfo(LinearLayout.LayoutParams.MATCH_PARENT, 100);
         Ui.ButtonObject.MarginInfo margins = new Ui.ButtonObject.MarginInfo();
 
@@ -422,8 +467,6 @@ public class MainActivity extends BaseActivity {
                 factory.events.handlers.cyclesButton(context);
             }
         }, margins, dimensions, cyclesViewing);
-
-
 
 
         List<Ui.ButtonObject> buttons = new ArrayList<>();
