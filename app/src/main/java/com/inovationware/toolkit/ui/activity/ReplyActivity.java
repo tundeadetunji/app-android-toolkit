@@ -203,7 +203,7 @@ public class ReplyActivity extends BaseActivity {
     private final View.OnClickListener resumeButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            factory.events.handlers.resumeWorkButton(context, factory, store, machines, binding.resumeDropDown.getText().toString().trim());
+            factory.events.handlers.resumeWorkButton(context, factory, store, machines, binding.resumeDropDown.getText().toString().trim(), binding.resumeMachineDropDown.getText().toString());
         }
     };
 

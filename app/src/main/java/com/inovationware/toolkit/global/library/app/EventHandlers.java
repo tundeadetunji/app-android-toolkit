@@ -60,7 +60,7 @@ public class EventHandlers {
             SignInManager.getInstance().beginLoginProcess(context, BoardActivity.class.getSimpleName());*/
     }
 
-    public void resumeWorkButton(Context context, Factory factory, SharedPreferencesManager store, GroupManager machines, String app){
+    public void resumeWorkButton(Context context, Factory factory, SharedPreferencesManager store, GroupManager machines, String app, String target){
 
         if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines))
             return;
@@ -78,7 +78,7 @@ public class EventHandlers {
                         store.getID(context),
                         Transfer.Intent.writeText,
                         store.getSender(context),
-                        determineTarget(context, store, machines),
+                        target,
                         POST_PURPOSE_RESUME_WORK,
                         DomainObjects.EMPTY_STRING,
                         file,
