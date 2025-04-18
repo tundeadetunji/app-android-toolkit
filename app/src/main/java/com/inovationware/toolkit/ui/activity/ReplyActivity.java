@@ -284,47 +284,6 @@ public class ReplyActivity extends BaseActivity {
                 return;
             }
 
-            /*Last_30Ex
-            if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Last_30.name().replace("_", " "))) {
-                factory.image.service.loadPlaceholder(context, binding.engageImageView);
-                binding.engageButton.setEnabled(false);
-                requestLast30(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
-                //Todo when checking ifThereIsInternet, also always check if canSend()
-                return;
-            }*/
-
-           /* Last_30
-            if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.Last_30) {
-                binding.engageButton.setEnabled(false);
-                factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
-                requestLast30(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
-                //engagementHandler.post(readLast30);
-                return;
-            }*/
-
-            /*Who_Was
-            if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Who_Was.name().replace("_", " "))) {
-                hideEngageControl();
-                binding.engageButton.setEnabled(false);
-                //ToDo
-                //getTimestamp();
-                factory.image.service.loadGifImage(ReplyActivity.this, binding.engageImageView, R.drawable.placeholder);
-                factory.image.service.loadStaticImage(ReplyActivity.this, binding.engageImageView, authority.getEngagementUrl(), R.mipmap.ic_launcher, R.drawable.baseline_question_mark_24, R.drawable.baseline_question_mark_24);
-                binding.engageButton.setEnabled(true);
-                showEngageControl();
-                return;
-            }*/
-
-            /*if (canSend() && binding.engageOperationDropDown.getText().toString().equalsIgnoreCase(EngagementService.Engagement.Ping.name().replace("_", " "))) {
-                hideEngageControl();
-                requestPing(binding.engageOperationDropDown.getText().toString(), content(binding.engageMachineDropDown));
-                binding.engageButton.setEnabled(false);
-                factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
-                showEngageControl();
-                engagementHandler.postDelayed(readPingHandler, 20000);
-                return;
-            }*/
-
             //What_Is_On
             if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.What_Is_On) {
                 hideEngageControl();
@@ -333,6 +292,27 @@ public class ReplyActivity extends BaseActivity {
                 factory.image.service.loadPlaceholder(ReplyActivity.this, binding.engageImageView);
                 showEngageControl();
                 engagementHandler.postDelayed(readWhatIsOnRunnable, 30000);
+                return;
+            }
+
+            //Who_Was
+            if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.Who_Was) {
+                hideEngageControl();
+                binding.engageButton.setEnabled(false);
+                showEngageControl();
+                //factory.image.service.loadStaticImage(ReplyActivity.this, binding.engageImageView, authority.getWhatIsOnUrl(), R.mipmap.ic_launcher, R.drawable.baseline_question_mark_24, R.drawable.baseline_question_mark_24);
+                factory.image.service.loadStaticImage(ReplyActivity.this, binding.engageImageView, authority.getEngagementUrl(), R.mipmap.ic_launcher, R.drawable.baseline_question_mark_24, R.drawable.baseline_question_mark_24);
+                binding.engageButton.setEnabled(true);
+                return;
+            }
+
+            //What_Was_On
+            if (canSend() && EngagementService.Engagement.fromCanonicalString(binding.engageOperationDropDown.getText().toString()) == EngagementService.Engagement.What_Was_On) {
+                hideEngageControl();
+                binding.engageButton.setEnabled(false);
+                showEngageControl();
+                factory.image.service.loadStaticImage(ReplyActivity.this, binding.engageImageView, authority.getWhatIsOnUrl(), R.mipmap.ic_launcher, R.drawable.baseline_question_mark_24, R.drawable.baseline_question_mark_24);
+                binding.engageButton.setEnabled(true);
                 return;
             }
 

@@ -29,6 +29,7 @@ public class EngagementService {
         engagementResponseTypes.put(Engagement.Who_Was, EngagementResponseType.isRequest);
         engagementResponseTypes.put(Engagement.Last_30, EngagementResponseType.isRequest);
         engagementResponseTypes.put(Engagement.What_Is_On, EngagementResponseType.isRequest);
+        engagementResponseTypes.put(Engagement.What_Was_On, EngagementResponseType.isRequest);
 
         engagementResponseTypes.put(Engagement.Ping, EngagementResponseType.isPing);
 
@@ -65,6 +66,7 @@ public class EngagementService {
         Who_Was,
         Last_30,
         What_Is_On,
+        What_Was_On, //new
         Ping,
         Dim_Screen;
 
@@ -83,7 +85,8 @@ public class EngagementService {
     public enum EngagingEngagement {
         Who_Is,
         Who_Was,
-        Last_30,
+        What_Was_On,
+        //Last_30,
         What_Is_On,
         Ping
 
