@@ -147,11 +147,11 @@ public class ReplyActivity extends BaseActivity {
         store.setDropDown(ReplyActivity.this, binding.pcDropDown, engagementService.listing(EngagementService.EngagementSection.Pc).toArray(new String[0]), LOCK);
         machines.setDropDown(ReplyActivity.this, binding.pcMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
 
-        store.setDropDown(ReplyActivity.this, binding.engageOperationDropDown, engagementService.listing(EngagementService.EngagementSection.Engaging).toArray(new String[0]));
+        store.setDropDown(ReplyActivity.this, binding.engageOperationDropDown, engagementService.listing(EngagementService.EngagementSection.Engaging).toArray(new String[0]), POST_PURPOSE_PING);
         machines.setDropDown(ReplyActivity.this, binding.engageMachineDropDown, machines.list(context, true), machines.getDefaultDevice(context));
 
+        store.setDropDown(ReplyActivity.this, binding.interactOpDropDown, InteractionToken.opListing(), "MediaPlayPause");
         machines.setDropDown(ReplyActivity.this, binding.interactMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
-        store.setDropDown(ReplyActivity.this, binding.interactOpDropDown, InteractionToken.opListing());
 
         machines.setDropDown(ReplyActivity.this, binding.resumeMachineDropDown, machines.list(context, false), machines.getDefaultDevice(context));
         setResumeDropDown();
