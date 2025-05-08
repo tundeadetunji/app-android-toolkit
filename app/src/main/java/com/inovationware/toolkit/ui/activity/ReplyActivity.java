@@ -73,7 +73,6 @@ public class ReplyActivity extends BaseActivity {
     private DeviceClient device;
     private StorageClient disk;
     private Feedback feedback;
-    private EditText dataTransferSharedTextView;
     private ActivityReplyBinding binding;
     private Factory factory;
     private Handler engagementHandler;
@@ -393,9 +392,9 @@ public class ReplyActivity extends BaseActivity {
     private final View.OnClickListener handleCopySharedTextButton = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (!isNothing(dataTransferSharedTextView.getText().toString()))
+            if (!isNothing(binding.DataTransferSharedTextView.getText().toString()))
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    clipboardSetText(getApplicationContext(), dataTransferSharedTextView.getText().toString());
+                    clipboardSetText(getApplicationContext(), binding.DataTransferSharedTextView.getText().toString());
                 }
 
         }
@@ -404,7 +403,7 @@ public class ReplyActivity extends BaseActivity {
     private final View.OnClickListener handleDataTransferSendButton = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (initialParamsAreSet(ReplyActivity.this, store, machines) && !isNothing(content(dataTransferSharedTextView)))
+            if (initialParamsAreSet(ReplyActivity.this, store, machines) && !isNothing(content(binding.DataTransferSharedTextView)))
                 doSendForDataTransfer(POST_PURPOSE_REGULAR, determineMeta(ReplyActivity.this, store));
         }
     };
@@ -418,7 +417,7 @@ public class ReplyActivity extends BaseActivity {
     }
 
     void shareText(Intent intent) {
-        dataTransferSharedTextView.setText(intent.getStringExtra(android.content.Intent.EXTRA_TEXT));
+        binding.DataTransferSharedTextView.setText(intent.getStringExtra(android.content.Intent.EXTRA_TEXT));
     }
 
     boolean canSend() {
@@ -604,7 +603,7 @@ public class ReplyActivity extends BaseActivity {
                 determineTarget(ReplyActivity.this, store, machines),
                 purpose,
                 meta,
-                content(dataTransferSharedTextView),
+                content(binding.DataTransferSharedTextView),
                 DomainObjects.EMPTY_STRING);
 
         navigate.enqueue(new Callback<String>() {

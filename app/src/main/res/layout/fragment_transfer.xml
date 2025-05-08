@@ -333,7 +333,7 @@
                         android:layout_marginRight="0dp"
                         android:layout_weight="1"
                         android:textColor="?attr/colorPrimary"
-                        android:text="Copy to clipboard on receive" />
+                        android:text="Send to clipboard on receive" />
 
                     <CheckBox
                         android:id="@+id/ReadOutLoudOnReceiveCheckBox"

@@ -1,5 +1,6 @@
 package com.inovationware.toolkit.ui.fragment;
 
+import static com.inovationware.generalmodule.Device.clipboardSetText;
 import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
@@ -8,6 +9,7 @@ import static com.inovationware.toolkit.global.library.utility.Support.determine
 import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -50,19 +52,6 @@ public class MemoBSFragment extends BottomSheetDialogFragment {
     @Setter
     private GroupManager machines;
 
-/*
-    @Setter
-    RecyclerView recyclerView;
-
-    @Setter
-    List<Memo> memos;
-
-    @Setter
-    private FragmentManager callerFragmentManager;
-    @Setter
-    private View callerView;
-*/
-
     @Setter
     MemoRecyclerViewAdapter memoRecyclerViewAdapter;
     private View view;
@@ -87,6 +76,8 @@ public class MemoBSFragment extends BottomSheetDialogFragment {
         binding.shareMemoCaption.setOnClickListener(handleShareButton);
         binding.deleteMemoButton.setOnClickListener(handleDeleteButton);
         binding.deleteMemoCaption.setOnClickListener(handleDeleteButton);
+        binding.copyMemoButton.setOnClickListener(handleCopy);
+        binding.copyMemoCaption.setOnClickListener(handleCopy);
 
         if (memo != null) {
             binding.detailCaption.setText(
@@ -160,6 +151,16 @@ public class MemoBSFragment extends BottomSheetDialogFragment {
                     new Feedback(view.getContext()).toast(DEFAULT_FAILURE_MESSAGE_SUFFIX);
                 }
             });
+        }
+    };
+
+    View.OnClickListener handleCopy = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                clipboardSetText(view.getContext(), memo.getPostnote());
+                dismiss();
+            }
         }
     };
 
