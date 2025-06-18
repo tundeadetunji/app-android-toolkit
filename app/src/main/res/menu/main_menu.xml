@@ -10,6 +10,14 @@
             android:visible="false"
             app:showAsAction="never" />
     </group>
+
+    <group android:id="@+id/base">
+        <item
+            android:id="@+id/baseMainMenuItem"
+            android:icon="@drawable/ic_laptop"
+            android:title="Base"
+            app:showAsAction="never" />
+    </group>
     <group android:id="@+id/settings">
         <item
             android:id="@+id/themeMainMenuItem"

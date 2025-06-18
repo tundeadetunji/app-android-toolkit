@@ -20,6 +20,7 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -28,6 +29,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentLocalTaskBinding;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
@@ -37,6 +40,7 @@ import com.inovationware.toolkit.bistable.verb.BistableCommand;
 import com.inovationware.toolkit.bistable.verb.BistableNotifier;
 import com.inovationware.toolkit.global.library.utility.Support;
 import com.inovationware.toolkit.system.foreground.LocalTaskService;
+import com.inovationware.toolkit.ui.adapter.ViewPagerAdapter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -62,7 +66,7 @@ public class LocalTaskFragment extends Fragment {
 
         setupReferences();
         setupListeners();
-        setupUi();
+        setupUi(this);
 
         return view;
     }
@@ -83,12 +87,14 @@ public class LocalTaskFragment extends Fragment {
         binding.reverseAppButton.setOnClickListener(reverseAppButtonHandler);
     }
 
-    private void setupUi() {
+    private void setupUi(Fragment fragment) {
         binding.regularIntervalTextView.setText(String.valueOf(5));
         binding.reverseIntervalTextView.setText(String.valueOf(5));
         loadLastSet();
         setButtons(bistableManager.isNetTimerMobileServiceIsRunning());
+
     }
+
     //end setup
 
     //begin listeners

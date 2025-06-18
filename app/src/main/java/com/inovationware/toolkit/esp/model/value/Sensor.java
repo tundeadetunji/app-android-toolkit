@@ -27,7 +27,7 @@ public class Sensor {
 
     private final SensorPlatform platform;
     private final int pin;
-    private List<Component> components = new ArrayList<>();
+    private List<Component> components = new ArrayList<>(); //Todo compile error - build project to verify status
     private Mode mode;
     private String name;
     private Filter filter;

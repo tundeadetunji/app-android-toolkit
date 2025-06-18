@@ -11,23 +11,19 @@
         android:label=" "
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/linkFragment"
-        android:name="com.inovationware.toolkit.ui.fragment.LinkFragment"
-        android:label=" "
-        tools:layout="@layout/fragment_link" />
+        android:id="@+id/codeFragment"
+        android:name="com.inovationware.toolkit.ui.fragment.CodeFragment"
+        tools:layout="@layout/fragment_code" />
     <fragment
-        android:id="@+id/transferFragment"
-        android:name="com.inovationware.toolkit.ui.fragment.TransferFragment"
-        android:label=" "
-        tools:layout="@layout/fragment_transfer" />
+        android:id="@+id/sendFragment"
+        android:name="com.inovationware.toolkit.ui.fragment.SendFragment"
+        tools:layout="@layout/fragment_send" />
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.inovationware.toolkit.ui.fragment.SearchFragment"
-        android:label=" "
-        tools:layout="@layout/fragment_search" />
+        android:id="@+id/cyclesFragment"
+        android:name="com.inovationware.toolkit.ui.fragment.CyclesFragment"
+        tools:layout="@layout/fragment_cycles" />
     <fragment
-        android:id="@+id/localTaskFragment"
-        android:name="com.inovationware.toolkit.ui.fragment.LocalTaskFragment"
-        android:label=" "
-        tools:layout="@layout/fragment_local_task" />
+        android:id="@+id/tasksFragment"
+        android:name="com.inovationware.toolkit.ui.fragment.TasksFragment"
+        tools:layout="@layout/fragment_tasks" />
 </navigation>

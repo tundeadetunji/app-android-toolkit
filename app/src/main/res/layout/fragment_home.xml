@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="false">
+    android:fillViewport="false"
+    android:layout_marginBottom="72dp">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -12,71 +13,25 @@
         android:orientation="vertical"
         tools:context=".ui.fragment.HomeFragment">
 
+        <include layout="@layout/welcome_caption_shared_layout" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/ToolkitInfoCard"
+        <!--tabs-->
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/homeTabsTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:tabMode="scrollable"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            />
 
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/homeTabsViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <!-- Title, secondary and supporting text -->
-                    <TextView
-                        android:id="@+id/captionTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Welcome"
-                        android:textAppearance="?attr/textAppearanceHeadline6" />
-
-                    <TextView
-                        android:id="@+id/toolkitInfoTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="You're all caught up."
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary" />
-
-                    <!--<Button
-                        android:id="@+id/buttonAddLocalTask"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginLeft="0dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="0dp"
-                        android:layout_marginRight="0dp"
-                        android:text="  add a Task"
-                        app:icon="@drawable/ic_add_task"
-                        style="?attr/borderlessButtonStyle"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        />-->
-
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
+        <!--<TextView
             android:id="@+id/linksLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -84,11 +39,9 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:text="Links"
-            android:textAppearance="?attr/textAppearanceHeadline6" />
+            android:textAppearance="?attr/textAppearanceHeadline6" />-->
 
-
-        <!--android:layout_gravity="center"-->
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/LinksLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -175,7 +128,7 @@
 
 
 
-        </LinearLayout>
+        </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/optionsLayout"
@@ -187,6 +140,7 @@
 
             <!--dapino-girl + LinearLayout-->
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/innerLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -328,17 +282,6 @@
 
         </LinearLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/memoRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="72dp"
-            app:layout_constraintTop_toBottomOf="@+id/LinksLayout"
-            />
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

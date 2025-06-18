@@ -207,6 +207,7 @@ public class DomainObjects {
     public static final String POST_RECORD_TARGET = "Target";
     public static final String POST_RECORD_PURPOSE = "Purpose";
     public static final String POST_RECORD_INFO = "Info";
+    public static final String POST_PURPOSE_NEW_NET_TIMER_TASK = "NewNetTimerTask";
     public static final String POST_PURPOSE_RESUME_WORK = "ResumeWork";
     public static final String POST_PURPOSE_BLOB_AUDIO = "BlobAudio";
     public static final String POST_PURPOSE_BLOB_EXCEL = "BlobExcelSpreadsheet";

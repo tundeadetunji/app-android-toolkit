@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".ui.activity.GitHubActivity"
     android:fillViewport="false">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -12,8 +13,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:orientation="vertical"
-        tools:context=".ui.activity.GitHubActivity">
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/githubRepositoryTextInputLayout"

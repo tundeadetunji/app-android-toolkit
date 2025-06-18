@@ -4,83 +4,37 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.inovationware.generalmodule.Feedback;
-import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.FragmentHomeBinding;
-import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
 import com.inovationware.toolkit.global.factory.Factory;
 import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
 import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
 import com.inovationware.toolkit.global.library.app.SignInManager;
-import com.inovationware.toolkit.global.library.app.retrofit.Repo;
 import com.inovationware.toolkit.global.repository.ResourcesManager;
 import com.inovationware.toolkit.location.service.LocationService;
-import com.inovationware.toolkit.memo.model.Memo;
 import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
-import com.inovationware.toolkit.ui.activity.BoardActivity;
 import com.inovationware.toolkit.ui.activity.CodeActivity;
 import com.inovationware.toolkit.ui.activity.CyclesActivity;
-import com.inovationware.toolkit.ui.activity.CyclesDayViewActivity;
 import com.inovationware.toolkit.ui.activity.EspActivity;
 import com.inovationware.toolkit.ui.activity.NetTimerActivity;
 import com.inovationware.toolkit.ui.activity.ReplyActivity;
 import com.inovationware.toolkit.ui.activity.ScheduleActivity;
-import com.inovationware.toolkit.ui.activity.SettingsActivity;
-import com.inovationware.toolkit.ui.adapter.MemoRecyclerViewAdapter;
+import com.inovationware.toolkit.ui.adapter.ViewPagerAdapter;
 
-import static com.inovationware.generalmodule.Device.clipboardSetText;
-import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_LOGGER;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_FAVORITE_URL_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PINNED_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_READING_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_RUNNING_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SCRATCH_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_TODO_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
 import static com.inovationware.toolkit.global.library.utility.Code.content;
-import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
-import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
-import lombok.SneakyThrows;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     private Context context;
@@ -89,13 +43,10 @@ public class HomeFragment extends Fragment {
     private View view;
     private Factory factory;
 
-    private Handler readNotesHandler;
 
     private FragmentHomeBinding binding;
-    private RecyclerView memoRecyclerView;
 
     private Feedback feedback;
-    private LocationService service;
     private static final int PERMISSION_LOCATION_REQUEST = 997;
 
     @Override
@@ -103,10 +54,9 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
-        memoRecyclerView = view.findViewById(R.id.memoRecyclerView);
         setupVariables();
         setupListeners();
-        setupUi();
+        setupUi(this);
 
         return view;
     }
@@ -118,20 +68,9 @@ public class HomeFragment extends Fragment {
         machines = GroupManager.getInstance();
         feedback = new Feedback(view.getContext());
         factory = Factory.getInstance();
-        readNotesHandler = new Handler();
-        service = LocationServiceImpl.getInstance(context);
     }
 
     private void setupListeners() {
-        binding.pinnedButton.setOnClickListener(pinnedButton);
-        binding.readingLinkButton.setOnClickListener(readingLinkButton);
-        binding.todoLinkButton.setOnClickListener(todoLinkButton);
-        binding.runningLinkButton.setOnClickListener(runningLinkButton);
-        binding.scratchLinkButton.setOnClickListener(scratchLinkButton);
-        binding.extraLinkButton.setOnClickListener(extraLinkButton);
-        binding.captionTextView.setOnClickListener(captionTextView);
-        binding.linksLabel.setOnClickListener(linksLabel);
-        binding.toolkitInfoTextView.setOnClickListener(initialInfoTextViewClick);
         binding.PCButton.setOnClickListener(PCButtonClick);
         binding.EspButton.setOnClickListener(EspButtonClick);
         binding.codeButton.setOnClickListener(codeButtonClick);
@@ -139,23 +78,33 @@ public class HomeFragment extends Fragment {
         binding.schedulerButton.setOnClickListener(schedulerButtonClick);
         binding.meetingButton.setOnClickListener(meetingButtonClick);
         binding.guideImageView.setOnClickListener(guideImageViewClick);
-        binding.guideImageView.setOnLongClickListener(guideImageViewLongClick);
     }
 
-    private void setupUi() {
-        SignInManager signInManager = SignInManager.getInstance();
-        binding.captionTextView.setText(
-                signInManager.thereIsPrincipal(view.getContext()) ?
-                        DomainObjects.WELCOME + signInManager.getSignedInUser(view.getContext()).getName() :
-                        DomainObjects.WELCOME);
-
-        setInitialText(binding.toolkitInfoTextView);
-        setWelcomeText(binding.toolkitInfoTextView);
+    private void setupUi(Fragment fragment) {
 
         //binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage());
         binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage(store.getTheme(context)));
 
-        setupNotes(view);
+        //Todo move this to MainActivity
+//        WelcomeCaptionService.getInstance(this.getActivity(), view.getContext()).setupCaptions(view.findViewById(R.id.captionTextView), view.findViewById(R.id.toolkitInfoTextView), store, machines)
+
+        setupViewPager(fragment);
+    }
+
+    private void setupViewPager(Fragment fragment){
+        ViewPagerAdapter adapter = new ViewPagerAdapter(fragment);
+        TabLayout tabLayout = binding.homeTabsTabLayout;
+        ViewPager2 viewPager = binding.homeTabsViewPager;
+
+        adapter.addFragment(new LinksFragment(), "Pinned" );
+        adapter.addFragment(new NotesFragment(), "Notes" );
+        adapter.addFragment(new SearchFragment(), "Search");
+
+        viewPager.setAdapter(adapter);
+
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(adapter.getPageTitle(position))
+        ).attach();
     }
 
     private final View.OnClickListener PCButtonClick = new View.OnClickListener() {
@@ -212,14 +161,14 @@ public class HomeFragment extends Fragment {
     /**
      * calls #updatePeriodically
      */
-    private final View.OnLongClickListener guideImageViewLongClick = new View.OnLongClickListener() {
+    /*private final View.OnLongClickListener guideImageViewLongClick = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
             service.stopLocationUpdates();
             Toast.makeText(context, DomainObjects.FRIENDLY_MESSAGES.get(new Random().nextInt(DomainObjects.FRIENDLY_MESSAGES.size() - 0) + 0), Toast.LENGTH_SHORT).show();
             return true;
         }
-    };
+    };*/
 
 
     private final View.OnClickListener linksLabel = new View.OnClickListener() {
@@ -229,224 +178,8 @@ public class HomeFragment extends Fragment {
         }
     };
 
-    private final View.OnClickListener initialInfoTextViewClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(context, SettingsActivity.class));
-        }
-    };
 
-    private final View.OnClickListener pinnedButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (store.getString(view.getContext(), SHARED_PREFERENCES_PINNED_KEY, EMPTY_STRING).length() < 1) {
-                //feedback.toast("set URL to open\n(in Settings > Advanced)");
-                return;
-            }
-            try {
-                if (isInternetResource(store.getString(view.getContext(), SHARED_PREFERENCES_PINNED_KEY, EMPTY_STRING))) {
-                    startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(store.getString(view.getContext(), SHARED_PREFERENCES_PINNED_KEY, EMPTY_STRING))));
-                } else {
-                    if (view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_PINNED_KEY, EMPTY_STRING)) != null) {
-                        startActivity(view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_PINNED_KEY, EMPTY_STRING)));
-                    }
-                }
-            } catch (Exception e) {
-                if (!store.shouldDisplayErrorMessage(view.getContext())) {
-                    return;
-                }
-                feedback.toast("resulted in an error, url may not be valid.");
-            }
 
-        }
-    };
-
-    private final View.OnClickListener readingLinkButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (store.getString(view.getContext(), SHARED_PREFERENCES_READING_KEY, EMPTY_STRING).length() < 1) {
-                //feedback.toast("set URL to open\n(in Settings > Advanced)");
-                return;
-            }
-            try {
-                if (isInternetResource(store.getString(view.getContext(), SHARED_PREFERENCES_READING_KEY, EMPTY_STRING))) {
-                    startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(store.getString(view.getContext(), SHARED_PREFERENCES_READING_KEY, EMPTY_STRING))));
-                } else {
-                    if (view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_READING_KEY, EMPTY_STRING)) != null) {
-                        startActivity(view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_READING_KEY, EMPTY_STRING)));
-                    }
-                }
-            } catch (Exception e) {
-                if (!store.shouldDisplayErrorMessage(view.getContext())) {
-                    return;
-                }
-                feedback.toast("resulted in an error, url may not be valid.");
-            }
-        }
-    };
-
-    private final View.OnClickListener todoLinkButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (store.getString(view.getContext(), SHARED_PREFERENCES_TODO_KEY, EMPTY_STRING).length() < 1) {
-                //feedback.toast("set URL to open\n(in Settings > Advanced)");
-                return;
-            }
-            try {
-                if (isInternetResource(store.getString(view.getContext(), SHARED_PREFERENCES_TODO_KEY, EMPTY_STRING))) {
-                    startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(store.getString(view.getContext(), SHARED_PREFERENCES_TODO_KEY, EMPTY_STRING))));
-                } else {
-                    if (view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_TODO_KEY, EMPTY_STRING)) != null) {
-                        startActivity(view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_TODO_KEY, EMPTY_STRING)));
-                    }
-                }
-            } catch (Exception e) {
-                if (!store.shouldDisplayErrorMessage(view.getContext())) {
-                    return;
-                }
-                feedback.toast("resulted in an error, url may not be valid.");
-            }
-        }
-    };
-
-    private final View.OnClickListener runningLinkButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (store.getString(view.getContext(), SHARED_PREFERENCES_RUNNING_KEY, EMPTY_STRING).length() < 1) {
-                //feedback.toast("set URL to open\n(in Settings > Advanced)");
-                return;
-            }
-            try {
-                if (isInternetResource(store.getString(view.getContext(), SHARED_PREFERENCES_RUNNING_KEY, EMPTY_STRING))) {
-                    startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(store.getString(view.getContext(), SHARED_PREFERENCES_RUNNING_KEY, EMPTY_STRING))));
-                } else {
-                    if (view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_RUNNING_KEY, EMPTY_STRING)) != null) {
-                        startActivity(view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_RUNNING_KEY, EMPTY_STRING)));
-                    }
-                }
-            } catch (Exception e) {
-                if (!store.shouldDisplayErrorMessage(view.getContext())) {
-                    return;
-                }
-                feedback.toast("resulted in an error, url may not be valid.");
-            }
-        }
-    };
-
-    private final View.OnClickListener scratchLinkButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (store.getString(view.getContext(), SHARED_PREFERENCES_SCRATCH_KEY, EMPTY_STRING).length() < 1) {
-                //feedback.toast("set URL to open\n(in Settings > Advanced)");
-                return;
-            }
-            try {
-                if (isInternetResource(store.getString(view.getContext(), SHARED_PREFERENCES_SCRATCH_KEY, EMPTY_STRING))) {
-                    startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(store.getString(view.getContext(), SHARED_PREFERENCES_SCRATCH_KEY, EMPTY_STRING))));
-                } else {
-                    if (view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_SCRATCH_KEY, EMPTY_STRING)) != null) {
-                        startActivity(view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_SCRATCH_KEY, EMPTY_STRING)));
-                    }
-                }
-            } catch (Exception e) {
-                if (!store.shouldDisplayErrorMessage(view.getContext())) {
-                    return;
-                }
-                feedback.toast("resulted in an error, url may not be valid.");
-            }
-        }
-    };
-
-    private final View.OnClickListener extraLinkButton = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (store.getString(view.getContext(), SHARED_PREFERENCES_FAVORITE_URL_KEY, EMPTY_STRING).length() < 1) {
-                //feedback.toast("set URL to open\n(in Settings > Advanced)");
-                return;
-            }
-            try {
-                if (isInternetResource(store.getString(view.getContext(), SHARED_PREFERENCES_FAVORITE_URL_KEY, EMPTY_STRING))) {
-                    startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(store.getString(view.getContext(), SHARED_PREFERENCES_FAVORITE_URL_KEY, EMPTY_STRING))));
-                } else {
-                    if (view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_FAVORITE_URL_KEY, EMPTY_STRING)) != null) {
-                        startActivity(view.getContext().getPackageManager().getLaunchIntentForPackage(store.getString(view.getContext(), SHARED_PREFERENCES_FAVORITE_URL_KEY, EMPTY_STRING)));
-                    }
-                }
-            } catch (Exception e) {
-                if (!store.shouldDisplayErrorMessage(view.getContext())) {
-                    return;
-                }
-                feedback.toast("resulted in an error, url may not be valid.");
-            }
-        }
-    };
-
-    private final View.OnClickListener captionTextView = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            startActivity(new Intent(view.getContext(), CyclesDayViewActivity.class));
-        }
-    };
-
-    public void setupNotes(View view) {
-        memoRecyclerView.setVisibility(View.GONE);
-
-        if (cachedMemos != null) {
-            memoRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-            memoRecyclerView.setAdapter(new MemoRecyclerViewAdapter(view.getContext(), cachedMemos, getFragmentManager(), memoRecyclerView, store, machines));
-            memoRecyclerView.setVisibility(View.VISIBLE);
-            return;
-        }
-
-        readNotesHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                readNotes(view.getContext());
-            }
-        });
-    }
-
-    void readNotes(Context context) {
-        if (!thereIsInternet(context) || !initialParamsAreSet(context, store, machines)) return;
-
-        Retrofit retrofitImpl = Repo.getInstance().create(context, store);
-
-        Call<String> navigate = retrofitImpl.readNote(
-                HTTP_TRANSFER_URL(context, store),
-                store.getUsername(context),
-                store.getID(context),
-                String.valueOf(Transfer.Intent.readNote),
-                DomainObjects.POST_PURPOSE_READ_NOTE
-        );
-
-        navigate.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    List<Memo> memos;
-                    //System.out.println("\n***\n" + response.body() + "\n***");
-                    try {
-                        memos = Memo.listing(response);
-                        Collections.sort(memos, new Memo.MemoComparator());
-                        cachedMemos = memos;
-                    } catch (IOException ignored) {
-                        return;
-                    }
-
-                    if (memos == null) return;
-                    if (memos.isEmpty()) return;
-
-                    memoRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                    memoRecyclerView.setAdapter(new MemoRecyclerViewAdapter(view.getContext(), memos, getFragmentManager(), memoRecyclerView, store, machines));
-                    memoRecyclerView.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-            }
-        });
-    }
 
     @Override
     public void onDestroyView() {
@@ -454,48 +187,7 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    void setInitialText(TextView initialInfoTextView) {
-        if (initialParamsAreSet(view.getContext(), store, machines)) {
-            return;
-        }
 
-        initialInfoTextView.setText(
-                "Hotspot information must be present.\n" +
-                        "\nAnd you need to set the id and username," +
-                        "\nand have at least one target device (while" +
-                        "\none of them is set as default)." +
-                        "\n\nYou also need to set the password and " +
-                        "\nsalt for encyption." +
-                        "\n\nYou can get relevant info from the PC" +
-                        "\nby clicking Info on the tray icon." +
-                        "\n\nNote that you have to enter password" +
-                        "\nand salt into your target devices manually." +
-                        "\n\nTap this message to go to Settings.");
-
-        initialInfoTextView.setVisibility(View.VISIBLE);
-    }
-
-    private void setWelcomeText(TextView initialInfoTextView) {
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(view.getContext());
-
-        if (acct != null) {
-            binding.captionTextView.setText(DomainObjects.WELCOME + ", " + acct.getGivenName());
-            /*String personName = acct.getDisplayName();
-            Uri personPhoto = acct.getPhotoUrl();
-
-            textName.setText(personName);
-            //Glide.with(this).load(String.valueOf(personPhoto)).into(imagePicture);
-            Glide.with(this).load(String.valueOf(personPhoto)).circleCrop().into(imagePicture);*/
-        } else {
-            binding.captionTextView.setText(DomainObjects.WELCOME);
-            initialInfoTextView.setVisibility(initialParamsAreSet(view.getContext(), store, machines) ? View.INVISIBLE : View.VISIBLE);
-        }
-
-    }
-
-    boolean isInternetResource(String url) {
-        return url.toLowerCase().startsWith("http");
-    }
 
     private void requestLocationPermissions() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

@@ -347,6 +347,7 @@ public class CyclesByDayActivity extends BaseActivity {
                 .append(service.findByPeriod(DayPeriod.valueOf(binding.headline.getText().toString().replace(DayPeriod.HEADLINE_SUFFIX, "").replace(DayPeriod.HEADLINE_PREFIX, ""))).getDetail())
                 .toString();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_menu, menu);

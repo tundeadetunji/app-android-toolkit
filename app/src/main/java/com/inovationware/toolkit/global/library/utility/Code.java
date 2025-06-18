@@ -30,7 +30,7 @@ import static com.inovationware.toolkit.global.domain.DomainObjects.DATA_TRANSFE
 import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
 import static com.inovationware.toolkit.global.domain.DomainObjects.TIME_UNITS;
-
+import com.inovationware.toolkit.global.model.TextCase;
 public class Code {
     public static String content(TextView view){
         return view.getText().toString();
@@ -289,6 +289,10 @@ public class Code {
      */
     public static List<String> splitTextInSplits(String string, String delimiter, int how_many) {
         return List.of(string.split(delimiter, how_many));
+    }
+    public static List<String> splitTextInSplits(String string) {
+        String delimiter = "\n";
+        return List.of(string.split(delimiter));
     }
 
     /**
@@ -614,4 +618,135 @@ public class Code {
 
         return timeFormatter.format(now) + ", " + dateFormatter.format(now);
     }
+    private static String TransformWord(String word, TextCase casing)
+    {
+        if ((word == null ? null : String.valueOf(word)).length() < 1)
+        {
+            return "";
+        }
+        String s = (word == null ? null : String.valueOf(word));
+        String r = "";
+        switch (casing)
+        {
+            case Capitalize:
+                r = s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+                break;
+            case LowerCase:
+                r = s.toLowerCase();
+                break;
+            case UpperCase:
+                r = s.toUpperCase();
+                break;
+            case None:
+                r = s;
+                break;
+        }
+        return r;
+    }
+    private static String TransformSingleLineText(String text, TextCase casing)
+    {
+        return TransformSingleLineText(text, casing, " ");
+    }
+
+    private static String TransformSingleLineText(String text)
+    {
+        return TransformSingleLineText(text, TextCase.Capitalize, " ");
+    }
+
+    //VB TO JAVA CONVERTER NOTE: Java does not support optional parameters. Overloaded method(s) are created above:
+//ORIGINAL LINE: Private Shared Function TransformSingleLineText(text As Object, Optional casing As TextCase = TextCase.Capitalize, Optional separator_ As String = " ")
+    private static String TransformSingleLineText(String text, TextCase casing, String separator_)
+    {
+        if ((text == null ? null : String.valueOf(text)).strip().length() < 1)
+        {
+            return "";
+        }
+
+        List<String> d = splitTextInSplits((text == null ? null : String.valueOf(text)), separator_);
+        List<String> o = new ArrayList<String>();
+        for (int i = 0; i < d.size(); i++)
+        {
+            o.add(TransformWord(d.get(i), casing));
+        }
+        String r = "";
+        for (int i = 0; i < o.size(); i++)
+        {
+            r += o.get(i);
+            if (i != o.size() - 1)
+            {
+                r += separator_;
+            }
+        }
+        return r.strip();
+    }
+    private static String TransformMultiLineText(String text, TextCase casing)
+    {
+        return TransformMultiLineText(text, casing, " ");
+    }
+
+    private static String TransformMultiLineText(String text)
+    {
+        return TransformMultiLineText(text, TextCase.Capitalize, " ");
+    }
+
+    //VB TO JAVA CONVERTER NOTE: Java does not support optional parameters. Overloaded method(s) are created above:
+//ORIGINAL LINE: Private Shared Function TransformMultiLineText(text As Object, Optional casing As TextCase = TextCase.Capitalize, Optional separator_ As String = " ")
+    private static String TransformMultiLineText(String text, TextCase casing, String separator_)
+    {
+        String s = (text == null ? null : String.valueOf(text)).strip();
+        List<String> o = splitTextInSplits(s, "\r\n");
+        List<String> f = new ArrayList<String>();
+        for (int i = 0; i < o.size(); i++)
+        {
+            f.add(TransformSingleLineText(o.get(i).strip(), casing, separator_));
+        }
+        return listToString(f, "\r\n");
+    }
+    public static String TransformText(String text, TextCase casing)
+    {
+        return TransformText(text, casing, " ");
+    }
+
+    public static String TransformText(String text)
+    {
+        return TransformText(text, TextCase.Capitalize, " ");
+    }
+
+    //VB TO JAVA CONVERTER NOTE: Java does not support optional parameters. Overloaded method(s) are created above:
+//ORIGINAL LINE: Public Shared Function TransformText(text As Object, Optional casing As TextCase = TextCase.Capitalize, Optional separator_ As String = " ")
+    public static String TransformText(String text, TextCase casing, String separator_)
+    {
+        String s = (text == null ? null : String.valueOf(text));
+        if (s.length() < 1)
+        {
+            return "";
+        }
+        if (s.contains("\r\n"))
+        {
+            return TransformMultiLineText(text, casing, separator_);
+        }
+        else
+        {
+            return TransformSingleLineText(text, casing, separator_);
+        }
+    }
+    public static String firstWord(String text)
+    {
+        if (text.length() < 1)
+        {
+            return "";
+        }
+
+        return splitTextInTwo(text.strip(), " ", SideToReturn.Left);
+    }
+    public static String otherWords(String text)
+    {
+        if (text.length() < 1)
+        {
+            return "";
+        }
+
+        return splitTextInTwo(text.strip(), " ", SideToReturn.Right);
+    }
+
 }

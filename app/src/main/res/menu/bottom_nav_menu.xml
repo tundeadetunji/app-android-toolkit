@@ -9,29 +9,32 @@
         />
 
     <item
-        android:id="@+id/localTaskFragment"
+        android:id="@+id/tasksFragment"
         android:icon="@drawable/baseline_task_alt_24"
         android:title=" "
 
         />
 
-
     <item
-        android:id="@+id/searchFragment"
-        android:icon="@drawable/ic_search"
+        android:id="@+id/codeFragment"
+        android:icon="@drawable/baseline_code_24"
         android:title=" "
 
         />
-    <item
-        android:id="@+id/linkFragment"
-        android:icon="@drawable/ic_laptop"
-        android:title=" "
 
-        />
     <item
-        android:id="@+id/transferFragment"
+        android:id="@+id/sendFragment"
         android:icon="@drawable/baseline_wifi_24"
         android:title=" "
 
         />
+
+    <item
+        android:id="@+id/cyclesFragment"
+        android:icon="@drawable/baseline_event_repeat_24"
+        android:title=" "
+
+        />
+
+
 </menu>

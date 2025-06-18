@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -52,12 +54,28 @@ public class LinkFragment extends Fragment {
 
         setupAccess();
         setupReferences();
-        setSwipeToRefresh();
-        setupUi();
 
+        binding.remoteLinkProgressBar.setIndeterminate(true);
+        binding.linkRecyclerView.setVisibility(View.INVISIBLE);
+        binding.remoteLinkProgressBar.setVisibility(View.VISIBLE);
+
+        /*binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Call your method to refresh data
+                binding.remoteLinkProgressBar.setVisibility(View.VISIBLE);
+                binding.linkRecyclerView.setVisibility(View.INVISIBLE);
+                getAppsListRoutineHandler.post(getAppsListRoutine);
+            }
+        });*/
+
+        if (thereIsInternet(view.getContext()) && initialParamsAreSet(view.getContext(), store, GroupManager.getInstance())) {
+            getAppsListRoutineHandler.post(getAppsListRoutine);
+        }
 
         return view;
     }
+
 
     private void setupAccess(){
         feedback = new Feedback(view.getContext());
@@ -68,15 +86,12 @@ public class LinkFragment extends Fragment {
         getAppsListRoutineHandler = new Handler();
     }
 
-    private void setupUi(){
-        setupProgressBar();
+    /*private void setupUi(){
 
         if (!initialParamsAreSet(view.getContext(), store, GroupManager.getInstance())) return;
 
         if (apps == null) {
             if (store.getString(view.getContext(), SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY, EMPTY_STRING).trim().isEmpty() && thereIsInternet(view.getContext())) {
-                showProgressBar();
-                hideRecyclerView();
                 getAppsListRoutineHandler.post(getAppsListRoutine);
             }
         } else {
@@ -85,7 +100,7 @@ public class LinkFragment extends Fragment {
             setupRecyclerView();
             showRecyclerView();
         }
-    }
+    }*/
 
     Runnable getAppsListRoutine = new Runnable() {
         @Override
@@ -116,7 +131,7 @@ public class LinkFragment extends Fragment {
                                 apps = stringToList(response.body());
                                 hideProgressBar();
                                 setupRecyclerView();
-                                setupRecyclerViewAfterRefresh();
+                                //setupRecyclerViewAfterRefresh();
                                 showRecyclerView();
                             } catch (Exception ignored) {
                                 if (!store.shouldDisplayErrorMessage(view.getContext())) {
@@ -152,20 +167,8 @@ public class LinkFragment extends Fragment {
         binding = null;
     }
 
-    private void setSwipeToRefresh(){
-        binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                // Call your method to refresh data
-                showProgressBar();
-                hideRecyclerView();
-                getAppsListRoutineHandler.post(getAppsListRoutine);
-            }
-        });
 
-    }
-
-    private void setupRecyclerViewAfterRefresh(){
+    /*private void setupRecyclerViewAfterRefresh(){
 
         try{
             if (binding.swipeRefreshLayout.isRefreshing()) {
@@ -173,7 +176,7 @@ public class LinkFragment extends Fragment {
                 binding.swipeRefreshLayout.setRefreshing(false);
             }
         }catch (Exception ignored){}
-    }
+    }*/
     private void setupRecyclerView(){
         adapter = new LinkRecyclerViewAdapter(view.getContext(), apps);
         binding.linkRecyclerView.setAdapter(adapter);
@@ -184,20 +187,9 @@ public class LinkFragment extends Fragment {
         binding.linkRecyclerView.setVisibility(View.VISIBLE);
     }
 
-    private void hideRecyclerView(){
-        binding.linkRecyclerView.setVisibility(View.INVISIBLE);
-    }
-
-    private void setupProgressBar(){
-        binding.remoteLinkProgressBar.setIndeterminate(true);
-    }
-
-    private void showProgressBar(){
-        binding.remoteLinkProgressBar.setVisibility(View.VISIBLE);
-    }
 
     private void hideProgressBar(){
-        binding.remoteLinkProgressBar.setVisibility(View.INVISIBLE);
+        binding.remoteLinkProgressBar.setVisibility(View.GONE);
     }
 
 }
