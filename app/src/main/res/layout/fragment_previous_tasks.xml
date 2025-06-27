@@ -21,6 +21,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <ProgressBar
+            android:layout_marginBottom="72dp"
             android:id="@+id/ntProgressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"

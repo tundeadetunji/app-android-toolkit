@@ -1,9 +1,9 @@
 package com.inovationware.toolkit.ui.fragment;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.utility.Support.determineTarget;
+import static com.inovationware.toolkit.common.utility.Support.initialParamsAreSet;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,19 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.FragmentNewTaskBinding;
-import com.inovationware.toolkit.databinding.FragmentRemoteTasksBinding;
-import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.nettimer.model.NetTimerTaskDtoFromNetwork;
-import com.inovationware.toolkit.nettimer.model.NetTimerToDo;
+import com.inovationware.toolkit.features.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.Code;
+import com.inovationware.toolkit.features.nettimer.model.NetTimerTaskDtoFromNetwork;
+import com.inovationware.toolkit.features.nettimer.model.NetTimerToDo;
 
 import java.io.IOException;
 

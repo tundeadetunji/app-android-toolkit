@@ -9,8 +9,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.inovationware.toolkit.databinding.FragmentMenuBottomSheetBinding;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.utility.Ui;
+import com.inovationware.toolkit.common.utility.Ui;
 
 import java.util.ArrayList;
 import java.util.List;

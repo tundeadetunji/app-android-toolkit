@@ -5,9 +5,9 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.Support;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.Support;
 
 public class EngageAuthority {
     private static EngageAuthority instance;

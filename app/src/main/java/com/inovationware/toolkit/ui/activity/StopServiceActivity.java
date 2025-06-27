@@ -1,18 +1,17 @@
 package com.inovationware.toolkit.ui.activity;
 
-import static com.inovationware.toolkit.global.domain.DomainObjects.bistableManager;
-import static com.inovationware.toolkit.global.library.utility.Support.getOutOfThere;
+import static com.inovationware.toolkit.common.domain.DomainObjects.bistableManager;
+import static com.inovationware.toolkit.common.utility.Support.getOutOfThere;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
-import com.inovationware.toolkit.bistable.service.BistableManager;
 import com.inovationware.toolkit.databinding.ActivityStopServiceBinding;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.library.app.MessageBox;
-import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.system.service.ToolkitServiceManager;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.common.utility.MessageBox;
+import com.inovationware.toolkit.common.utility.Support;
+import com.inovationware.toolkit.common.utility.ToolkitServiceManager;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 public class StopServiceActivity extends BaseActivity {

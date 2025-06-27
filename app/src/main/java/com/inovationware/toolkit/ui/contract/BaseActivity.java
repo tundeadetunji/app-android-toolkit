@@ -1,21 +1,21 @@
 package com.inovationware.toolkit.ui.contract;
 
-import static com.inovationware.toolkit.global.domain.DomainObjects.AGRELLITE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.BLUISH;
-import static com.inovationware.toolkit.global.domain.DomainObjects.TAN;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DARKER;
-import static com.inovationware.toolkit.global.domain.DomainObjects.NATURAL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.THROWBACK;
-import static com.inovationware.toolkit.global.domain.DomainObjects.WARM;
-import static com.inovationware.toolkit.global.domain.DomainObjects.PINKY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.FLUORITE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.AGRELLITE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.BLUISH;
+import static com.inovationware.toolkit.common.domain.DomainObjects.TAN;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DARKER;
+import static com.inovationware.toolkit.common.domain.DomainObjects.NATURAL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.THROWBACK;
+import static com.inovationware.toolkit.common.domain.DomainObjects.WARM;
+import static com.inovationware.toolkit.common.domain.DomainObjects.PINKY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.FLUORITE;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
 
 import java.util.HashMap;
 import java.util.Map;

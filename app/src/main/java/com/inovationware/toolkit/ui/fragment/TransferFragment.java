@@ -22,23 +22,23 @@ import androidx.fragment.app.Fragment;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentTransferBinding;
-import com.inovationware.toolkit.datatransfer.dto.request.SendNoteRequest;
-import com.inovationware.toolkit.datatransfer.dto.response.ResponseEntity;
-import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.library.app.EncryptionManager;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.InputDialog;
-import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.library.utility.DeviceClient;
-import com.inovationware.toolkit.global.library.app.retrofit.Repo;
-import com.inovationware.toolkit.memo.model.Memo;
-import com.inovationware.toolkit.memo.service.MemoService;
-import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
+import com.inovationware.toolkit.features.datatransfer.dto.request.SendNoteRequest;
+import com.inovationware.toolkit.features.datatransfer.dto.response.ResponseEntity;
+import com.inovationware.toolkit.features.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.common.utility.EncryptionManager;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.InputDialog;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Retrofit;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.Code;
+import com.inovationware.toolkit.common.utility.DeviceClient;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Repo;
+import com.inovationware.toolkit.features.memo.model.Memo;
+import com.inovationware.toolkit.features.memo.service.MemoService;
+import com.inovationware.toolkit.features.memo.service.impl.KeepIntentService;
 import com.inovationware.toolkit.ui.support.TransferAuthority;
 import com.inovationware.toolkit.ui.memento.UiMemento;
 
@@ -53,30 +53,30 @@ import retrofit2.Response;
 import static com.inovationware.generalmodule.Device.clipboardGetText;
 import static com.inovationware.generalmodule.Device.clipboardSetText;
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_CREATE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_EMPHASIZE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_INFORM;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_UPDATE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_WRITE_NOTE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PERIODIC_UPDATES_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_READ_OUT_LOUD_ON_RECEIVE_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SEARCH_ON_RECEIVE_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SEND_TO_CLIPBOARD_ON_RECEIVE_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SendFrom;
-import static com.inovationware.toolkit.global.domain.DomainObjects.TEXT;
-import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
-import static com.inovationware.toolkit.global.library.utility.Code.content;
-import static com.inovationware.toolkit.global.library.utility.Code.dtoDropDownAdapter;
-import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
-import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
-import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.EMPTY_STRING;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_CREATE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_EMPHASIZE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_INFORM;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_UPDATE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_WRITE_NOTE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_PERIODIC_UPDATES_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_READ_OUT_LOUD_ON_RECEIVE_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_SEARCH_ON_RECEIVE_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_SEND_TO_CLIPBOARD_ON_RECEIVE_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SendFrom;
+import static com.inovationware.toolkit.common.domain.DomainObjects.TEXT;
+import static com.inovationware.toolkit.common.domain.DomainObjects.cachedMemos;
+import static com.inovationware.toolkit.common.utility.Code.content;
+import static com.inovationware.toolkit.common.utility.Code.dtoDropDownAdapter;
+import static com.inovationware.toolkit.common.utility.Code.isNothing;
+import static com.inovationware.toolkit.common.utility.Support.determineMeta;
+import static com.inovationware.toolkit.common.utility.Support.determineTarget;
+import static com.inovationware.toolkit.common.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.common.utility.Support.responseStringIsValid;
 
 public class TransferFragment extends Fragment {
     private FragmentTransferBinding binding;
@@ -131,7 +131,7 @@ public class TransferFragment extends Fragment {
         security = EncryptionManager.getInstance();
         memoService = KeepIntentService.getInstance(view.getContext(), store, device);
         memento = UiMemento.getInstance();
-        authority = new TransferAuthority(factory, binding, context, machines, store);
+        authority = new TransferAuthority(factory, context, machines, store);
     }
 
     private void preSetupUi(){
@@ -490,7 +490,7 @@ public class TransferFragment extends Fragment {
             if (data != null) uri = data.getData();
 
             feedback.toast("Sending...", Toast.LENGTH_LONG);
-            authority.sendFile(uri);
+            authority.sendFile(uri, binding.sendDropDown);
         }
 
         if (requestCode == PICK_FILE_TO_READ && resultCode == Activity.RESULT_OK) {

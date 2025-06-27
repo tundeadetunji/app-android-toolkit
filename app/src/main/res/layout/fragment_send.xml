@@ -1,37 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-tools:context=".ui.fragment.SendFragment"
-android:fillViewport="false"
-android:layout_marginBottom="72dp">
-
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".ui.fragment.SendFragment">
 
-    <include layout="@layout/welcome_caption_shared_layout" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/sendTabsTabLayout"
+    <!--sendLayout-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sendDropDownLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="scrollable"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:endIconMode="dropdown_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconDrawable="@drawable/baseline_wifi_24">
 
-        />
+        <AutoCompleteTextView
+            android:id="@+id/sendDropDown"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:text=""
+            android:textColor="#000000" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/sendTabsViewPager"
+    <!--titleLayout-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/titleDropDownLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:hint="Title"
+        app:endIconMode="dropdown_menu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendDropDownLayout"
+        app:startIconDrawable="@drawable/baseline_sticky_note_2_24">
 
-</LinearLayout>
+        <AutoCompleteTextView
+            android:id="@+id/memoTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="#000000" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/AutoCompleteForDetailsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:hint=""
+        app:boxBackgroundMode="outline"
+        app:endIconMode="clear_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleDropDownLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/detailsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scrollHorizontally="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/sendButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AutoCompleteForDetailsTextView">
 
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/emphasizeButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text=""
+            app:icon="@drawable/ic_stress"
+            app:iconGravity="textStart" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/informButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text=""
+            app:icon="@drawable/ic_inform"
+            app:iconGravity="textStart" />
 
-</ScrollView>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sendButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text=""
+            app:icon="@drawable/baseline_wifi_24"
+            app:iconGravity="textStart" />
+
+    </LinearLayout>
+
+    <!--feedbackButtonLayout-->
+    <LinearLayout
+        android:id="@+id/feedbackLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendButtonLayout">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createFileButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text=""
+            app:icon="@drawable/baseline_insert_drive_file_24"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/updateFileButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text=""
+            app:icon="@drawable/ic_edit"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/noteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text=""
+            app:icon="@drawable/baseline_sticky_note_2_24"
+            app:iconGravity="textStart" />
+
+    </LinearLayout>
+
+    <!--style="?attr/borderlessButtonStyle"-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

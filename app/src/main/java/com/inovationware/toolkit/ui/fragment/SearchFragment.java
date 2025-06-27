@@ -21,14 +21,14 @@ import android.widget.TextView;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.FragmentSearchBinding;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.app.SiteManager;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.SiteManager;
 
 import static com.inovationware.generalmodule.Device.clipboardSetText;
-import static com.inovationware.toolkit.global.library.utility.Code.clean;
-import static com.inovationware.toolkit.global.library.utility.Code.content;
-import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
+import static com.inovationware.toolkit.common.utility.Code.clean;
+import static com.inovationware.toolkit.common.utility.Code.content;
+import static com.inovationware.toolkit.common.utility.Code.isNothing;
 
 public class SearchFragment extends Fragment {
     private GroupManager machines;

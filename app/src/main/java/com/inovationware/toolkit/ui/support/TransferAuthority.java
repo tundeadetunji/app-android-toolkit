@@ -1,52 +1,53 @@
 package com.inovationware.toolkit.ui.support;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.AUDIO;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.EXCEL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_ANY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_AUDIO;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_EXCEL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_PDF;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_PICTURE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_POWERPOINT;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_RAR;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_VIDEO;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MIME_TYPE_WORD;
-import static com.inovationware.toolkit.global.domain.DomainObjects.PDF;
-import static com.inovationware.toolkit.global.domain.DomainObjects.PICTURE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_AUDIO;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_EXCEL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_PDF;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_PICTURE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_POWERPOINT;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_RAR;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_VIDEO;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_BLOB_WORD;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POWERPOINT;
-import static com.inovationware.toolkit.global.domain.DomainObjects.RAR;
-import static com.inovationware.toolkit.global.domain.DomainObjects.VIDEO;
-import static com.inovationware.toolkit.global.domain.DomainObjects.WORD;
-import static com.inovationware.toolkit.global.domain.DomainObjects.ttsServiceProvider;
-import static com.inovationware.toolkit.global.library.utility.Code.content;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
-import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
+import static com.inovationware.toolkit.common.domain.DomainObjects.AUDIO;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.EXCEL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_ANY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_AUDIO;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_EXCEL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_PDF;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_PICTURE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_POWERPOINT;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_RAR;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_VIDEO;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MIME_TYPE_WORD;
+import static com.inovationware.toolkit.common.domain.DomainObjects.PDF;
+import static com.inovationware.toolkit.common.domain.DomainObjects.PICTURE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_AUDIO;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_EXCEL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_PDF;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_PICTURE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_POWERPOINT;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_RAR;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_VIDEO;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_BLOB_WORD;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POWERPOINT;
+import static com.inovationware.toolkit.common.domain.DomainObjects.RAR;
+import static com.inovationware.toolkit.common.domain.DomainObjects.VIDEO;
+import static com.inovationware.toolkit.common.domain.DomainObjects.WORD;
+import static com.inovationware.toolkit.common.domain.DomainObjects.ttsServiceProvider;
+import static com.inovationware.toolkit.common.utility.Code.content;
+import static com.inovationware.toolkit.common.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.common.utility.Support.responseStringIsValid;
 
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.TextView;
 
 import com.inovationware.toolkit.databinding.FragmentTransferBinding;
-import com.inovationware.toolkit.datatransfer.dto.request.SendFileRequest;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.features.datatransfer.dto.request.SendFileRequest;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -59,13 +60,11 @@ import okhttp3.RequestBody;
 public class TransferAuthority {
     private static final int BUF_SIZE = 4096;
     private final Factory factory;
-    private final FragmentTransferBinding binding;
     private final Context context;
     private final GroupManager machines;
     private final SharedPreferencesManager store;
-    public TransferAuthority(Factory factory, FragmentTransferBinding binding, Context context, GroupManager machines, SharedPreferencesManager store){
+    public TransferAuthority(Factory factory, Context context, GroupManager machines, SharedPreferencesManager store){
         this.factory = factory;
-        this.binding = binding;
         this.context = context;
         this.machines = machines;
         this.store = store;
@@ -186,7 +185,7 @@ public class TransferAuthority {
         }*/
     }
 
-    public void sendFile(Uri uri) {
+    public void sendFile(Uri uri, TextView sendDropDown) {
         if (!thereIsInternet(context) || uri == null) return;
 
         factory.transfer.service.sendFile(
@@ -198,9 +197,9 @@ public class TransferAuthority {
                         store.getUsername(context),
                         store.getID(context),
                         Transfer.Intent.writeFile,
-                        MultipartBody.Part.createFormData("file", getFilename(uri), RequestBody.create(MediaType.parse(getType(content(binding.sendDropDown))), getContentData(context, String.valueOf(uri)))),
+                        MultipartBody.Part.createFormData("file", getFilename(uri), RequestBody.create(MediaType.parse(getType(content(sendDropDown))), getContentData(context, String.valueOf(uri)))),
                         getFilename(uri),
-                        getPurpose(content(binding.sendDropDown))
+                        getPurpose(content(sendDropDown))
                 ),
                 DEFAULT_ERROR_MESSAGE_SUFFIX,
                 DEFAULT_FAILURE_MESSAGE_SUFFIX);

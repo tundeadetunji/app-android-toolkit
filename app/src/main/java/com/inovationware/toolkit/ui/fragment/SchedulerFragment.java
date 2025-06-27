@@ -1,11 +1,11 @@
 package com.inovationware.toolkit.ui.fragment;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.utility.Support.determineMeta;
+import static com.inovationware.toolkit.common.utility.Support.determineTarget;
 
 import android.content.Context;
 import android.os.Build;
@@ -20,20 +20,18 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.FragmentSchedulerBinding;
-import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.EncryptionManager;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.Ui;
-import com.inovationware.toolkit.schedule.model.Schedule;
-import com.inovationware.toolkit.schedule.model.ScheduleViewSource;
-import com.inovationware.toolkit.schedule.utility.ScheduleUtility;
-import com.inovationware.toolkit.ui.activity.ScheduleActivity;
+import com.inovationware.toolkit.features.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.EncryptionManager;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.Ui;
+import com.inovationware.toolkit.features.schedule.model.Schedule;
+import com.inovationware.toolkit.features.schedule.model.ScheduleViewSource;
+import com.inovationware.toolkit.features.schedule.utility.ScheduleUtility;
 
 import java.util.ArrayList;
 import java.util.HashSet;

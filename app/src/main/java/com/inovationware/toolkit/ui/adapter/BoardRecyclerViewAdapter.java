@@ -12,8 +12,8 @@ import com.inovationware.toolkit.R;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.meeting.model.Contribution;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.meeting.model.Contribution;
 
 import java.util.List;
 

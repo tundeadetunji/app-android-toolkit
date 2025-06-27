@@ -23,7 +23,7 @@
         />
 
     <item
-        android:id="@+id/sendFragment"
+        android:id="@+id/senderFragment"
         android:icon="@drawable/baseline_wifi_24"
         android:title=" "
 

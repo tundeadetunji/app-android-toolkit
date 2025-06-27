@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ui.fragment.TranslatorFragment"
-android:fillViewport="false">
-
-<androidx.appcompat.widget.LinearLayoutCompat
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    tools:context=".ui.fragment.TranslatorFragment">
 
     <TextView
         android:id="@+id/codeCaptionTextView"
@@ -46,10 +40,10 @@ android:fillViewport="false">
         app:layout_constraintTop_toBottomOf="@id/codeCaptionTextView">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:scrollHorizontally="true"
             android:id="@+id/codeTextView"
             android:layout_width="match_parent"
-            android:layout_height="120dp" />
+            android:layout_height="120dp"
+            android:scrollHorizontally="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -67,7 +61,7 @@ android:fillViewport="false">
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/sourceCodeAutoCompleteLayout"/>
+        app:layout_constraintTop_toBottomOf="@id/sourceCodeAutoCompleteLayout" />
 
     <LinearLayout
         android:id="@+id/codeConvertLayout"
@@ -91,9 +85,9 @@ android:fillViewport="false">
             android:layout_marginEnd="8dp"
             android:layout_weight="3"
             app:endIconMode="dropdown_menu"
-            app:startIconDrawable="@drawable/baseline_language_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:startIconDrawable="@drawable/baseline_language_24">
 
             <AutoCompleteTextView
                 android:id="@+id/programmingLanguageDropDown"
@@ -113,12 +107,11 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/ic_check"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
     </LinearLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/convertedCodeAutoComplete"
@@ -137,23 +130,22 @@ android:fillViewport="false">
         app:layout_constraintTop_toBottomOf="@id/codeConvertLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:scrollHorizontally="true"
             android:id="@+id/convertedCodeTextView"
             android:layout_width="match_parent"
-            android:layout_height="120dp" />
+            android:layout_height="120dp"
+            android:scrollHorizontally="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <LinearLayout
         android:id="@+id/upperButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
-        android:layout_gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -166,9 +158,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/baseline_apps_24"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/copyCodeButton"
@@ -177,9 +169,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/baseline_content_copy_24"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sendCodeButton"
@@ -188,24 +180,23 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/baseline_wifi_24"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/filerButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
-        android:layout_gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lowerButtonsLayout">
@@ -217,9 +208,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/baseline_insert_drive_file_24"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/updateCodeFileButton"
@@ -228,26 +219,24 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/ic_edit"
-            app:iconGravity="textStart"
-            android:text="" />
-
+            app:iconGravity="textStart" />
 
 
     </LinearLayout>
 
-
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/onlineButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
-        android:layout_gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lowerButtonsLayout">
@@ -259,9 +248,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/baseline_sticky_note_2_24"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveCodeButton"
@@ -270,23 +259,19 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/ic_save"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
     </LinearLayout>
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vocabularyRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="72dp"/>
-
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="72dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
-
-</ScrollView>

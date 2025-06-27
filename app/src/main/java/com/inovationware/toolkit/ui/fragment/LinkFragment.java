@@ -8,36 +8,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentLinkBinding;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
-import com.inovationware.toolkit.global.library.app.retrofit.Repo;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Retrofit;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Repo;
 import com.inovationware.toolkit.ui.adapter.LinkRecyclerViewAdapter;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.apps;
-import static com.inovationware.toolkit.global.library.utility.Code.stringToList;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
-import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_REMOTE_LINK_APPS_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.apps;
+import static com.inovationware.toolkit.common.utility.Code.stringToList;
+import static com.inovationware.toolkit.common.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.common.utility.Support.responseStringIsValid;
 
 public class LinkFragment extends Fragment {
     private SharedPreferencesManager store;

@@ -2,13 +2,13 @@ package com.inovationware.toolkit.ui.support;
 
 import static com.inovationware.generalmodule.Device.clipboardGetText;
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.common.utility.Support.determineMeta;
+import static com.inovationware.toolkit.common.utility.Support.determineTarget;
+import static com.inovationware.toolkit.common.utility.Support.initialParamsAreSet;
 
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -17,14 +17,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 
-import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.EncryptionManager;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.app.SignInManager;
+import com.inovationware.toolkit.features.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.EncryptionManager;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.SignInManager;
 import com.inovationware.toolkit.ui.activity.SettingsActivity;
 
 import java.util.List;

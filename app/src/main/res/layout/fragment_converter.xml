@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".ui.fragment.ConverterFragment"
-android:fillViewport="false">
-
-<androidx.appcompat.widget.LinearLayoutCompat
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:fillViewport="false"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.ConverterFragment">
 
     <TextView
         android:id="@+id/initialCaption"
@@ -136,14 +132,14 @@ android:fillViewport="false">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/convertUnitButton"
             android:layout_width="0dp"
-            android:layout_gravity="center"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="2"
-            app:iconGravity="textStart"
+            android:text=""
             app:icon="@drawable/ic_check"
-            android:text="" />
+            app:iconGravity="textStart" />
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -163,24 +159,23 @@ android:fillViewport="false">
         app:layout_constraintTop_toBottomOf="@id/resultLinearLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:scrollHorizontally="true"
-            android:inputType="none"
             android:id="@+id/conversionResultTextView"
             android:layout_width="match_parent"
-            android:layout_height="120dp" />
+            android:layout_height="120dp"
+            android:inputType="none"
+            android:scrollHorizontally="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
 
     <LinearLayout
         android:id="@+id/promptButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
-        android:layout_gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -193,9 +188,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
+            android:text=""
             app:icon="@drawable/baseline_apps_24"
-            app:iconGravity="textStart"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/copyConversionButton"
@@ -204,9 +199,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            app:iconGravity="textStart"
+            android:text=""
             app:icon="@drawable/baseline_content_copy_24"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sendConversionButton"
@@ -215,24 +210,24 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            app:iconGravity="textStart"
+            android:text=""
             app:icon="@drawable/baseline_wifi_24"
-            android:text="" />
+            app:iconGravity="textStart" />
 
 
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/filerButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
-        android:layout_gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lowestButtonsLayout">
@@ -244,9 +239,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            app:iconGravity="textStart"
+            android:text=""
             app:icon="@drawable/baseline_insert_drive_file_24"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/updateConversionButton"
@@ -255,23 +250,23 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            app:iconGravity="textStart"
+            android:text=""
             app:icon="@drawable/ic_edit"
-            android:text="" />
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/lowerButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_margin="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="0dp"
-        android:layout_gravity="center"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lowestButtonsLayout">
@@ -283,9 +278,9 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            app:iconGravity="textStart"
+            android:text=""
             app:icon="@drawable/baseline_sticky_note_2_24"
-            android:text="" />
+            app:iconGravity="textStart" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveConversionButton"
@@ -294,14 +289,11 @@ android:fillViewport="false">
             android:layout_margin="8dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
-            app:iconGravity="textStart"
+            android:text=""
             app:icon="@drawable/ic_save"
-            android:text="" />
+            app:iconGravity="textStart" />
 
     </LinearLayout>
 
-
 </androidx.appcompat.widget.LinearLayoutCompat>
-
-</ScrollView>
 

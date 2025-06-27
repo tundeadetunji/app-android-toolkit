@@ -18,14 +18,14 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.inovationware.generalmodule.Feedback;
+import com.inovationware.toolkit.common.utility.WelcomeCaptionService;
 import com.inovationware.toolkit.databinding.FragmentHomeBinding;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.app.SignInManager;
-import com.inovationware.toolkit.global.repository.ResourcesManager;
-import com.inovationware.toolkit.location.service.LocationService;
-import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.SignInManager;
+import com.inovationware.toolkit.features.location.service.LocationService;
+import com.inovationware.toolkit.features.location.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.ui.activity.CodeActivity;
 import com.inovationware.toolkit.ui.activity.CyclesActivity;
 import com.inovationware.toolkit.ui.activity.EspActivity;
@@ -34,7 +34,7 @@ import com.inovationware.toolkit.ui.activity.ReplyActivity;
 import com.inovationware.toolkit.ui.activity.ScheduleActivity;
 import com.inovationware.toolkit.ui.adapter.ViewPagerAdapter;
 
-import static com.inovationware.toolkit.global.library.utility.Code.content;
+import static com.inovationware.toolkit.common.utility.Code.content;
 
 public class HomeFragment extends Fragment {
     private Context context;
@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment {
         view = binding.getRoot();
 
         setupVariables();
-        setupListeners();
         setupUi(this);
 
         return view;
@@ -70,23 +69,12 @@ public class HomeFragment extends Fragment {
         factory = Factory.getInstance();
     }
 
-    private void setupListeners() {
-        binding.PCButton.setOnClickListener(PCButtonClick);
-        binding.EspButton.setOnClickListener(EspButtonClick);
-        binding.codeButton.setOnClickListener(codeButtonClick);
-        binding.tasksButton.setOnClickListener(tasksButtonClick);
-        binding.schedulerButton.setOnClickListener(schedulerButtonClick);
-        binding.meetingButton.setOnClickListener(meetingButtonClick);
-        binding.guideImageView.setOnClickListener(guideImageViewClick);
-    }
 
     private void setupUi(Fragment fragment) {
 
         //binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage());
-        binding.guideImageView.setImageResource(new ResourcesManager().getWelcomeImage(store.getTheme(context)));
 
-        //Todo move this to MainActivity
-//        WelcomeCaptionService.getInstance(this.getActivity(), view.getContext()).setupCaptions(view.findViewById(R.id.captionTextView), view.findViewById(R.id.toolkitInfoTextView), store, machines)
+        WelcomeCaptionService.getInstance(requireActivity(), context, LocationServiceImpl.getInstance(context)).setupCaptions(binding.welcomeCard.captionTextView, binding.welcomeCard.toolkitInfoTextView, store, machines);
 
         setupViewPager(fragment);
     }

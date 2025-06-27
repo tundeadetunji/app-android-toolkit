@@ -1,290 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="false"
-    android:layout_marginBottom="72dp">
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <!--    android:fillViewport="false"
+    android:layout_marginBottom="72dp"-->
+
+    <include
+        android:id="@+id/welcomeCard"
+        layout="@layout/welcome_caption_shared_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.fragment.HomeFragment">
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <include layout="@layout/welcome_caption_shared_layout" />
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/homeTabsTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeCard"
+        app:tabMode="scrollable" />
 
-        <!--tabs-->
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/homeTabsTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-
-            />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/homeTabsViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <!--<TextView
-            android:id="@+id/linksLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
-            android:text="Links"
-            android:textAppearance="?attr/textAppearanceHeadline6" />-->
-
-        <!--<LinearLayout
-            android:id="@+id/LinksLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_gravity="fill"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linksLabel">
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/homeTabsViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeTabsTabLayout" />
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/pinnedButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_push_pin"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/readingLinkButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_reading"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/todoLinkButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_todo"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/runningLinkButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_running"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/scratchLinkButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_scratch"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/extraLinkButton"
-                app:cornerRadius="25dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="8dp"
-                app:iconGravity="top"
-                app:icon="@drawable/ic_open_in_new"
-                style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-                android:text="" />
-
-
-
-
-        </LinearLayout>-->
-
-        <LinearLayout
-            android:id="@+id/optionsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
-
-            <!--dapino-girl + LinearLayout-->
-            <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/innerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <!--guideImageView-->
-                <ImageView
-                    android:id="@+id/guideImageView"
-                    android:layout_width="159dp"
-                    android:layout_height="178dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/boss_baby_1" />
-
-                <!--buttons racks-->
-                <LinearLayout
-                    android:id="@+id/buttonsLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:id="@+id/topButtonLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="0dp"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="0dp"
-                        android:orientation="horizontal">
-
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/PCButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="2"
-                            app:icon="@drawable/ic_laptop"
-                            app:iconGravity="textStart"
-                            android:text="" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/EspButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            app:iconGravity="start"
-                            app:icon="@drawable/ic_home"
-                            android:text="" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/middleButtonLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="0dp"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="0dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/codeButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            app:iconGravity="start"
-                            app:icon="@drawable/baseline_code_24"
-                            android:text="" />
-
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/tasksButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="2"
-                            app:icon="@drawable/baseline_task_alt_24"
-                            app:iconGravity="textStart"
-                            android:text="" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bottomButtonLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="0dp"
-                        android:layout_marginStart="0dp"
-                        android:layout_marginTop="0dp"
-                        android:layout_marginEnd="0dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/schedulerButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="2"
-                            app:iconGravity="textStart"
-                            app:icon="@drawable/baseline_published_with_changes_24"
-                            android:text="" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/meetingButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_weight="1"
-                            app:iconGravity="textStart"
-                            app:icon="@drawable/baseline_comment_bank_24"
-                            android:text="" />
-
-                    </LinearLayout>
-
-
-
-
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

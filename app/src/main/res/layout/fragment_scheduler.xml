@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="false">
+    android:layout_marginBottom="72dp"
+    android:fillViewport="false"
+    tools:context=".ui.fragment.SchedulerFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".ui.fragment.SchedulerFragment">
+        android:orientation="vertical">
 
 
         <TextView

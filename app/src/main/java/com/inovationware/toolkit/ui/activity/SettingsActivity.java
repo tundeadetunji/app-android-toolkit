@@ -14,24 +14,24 @@ import android.widget.Toast;
 
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivitySettingsBinding;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.library.app.MessageBox;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.Code;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.common.utility.MessageBox;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.Code;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
-import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PROMPT_TO_SYNC_NOTE;
-import static com.inovationware.toolkit.global.library.utility.Code.content;
-import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_DISPLAY_ERROR_MESSAGE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_ID_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SENDER;
-import static com.inovationware.toolkit.global.library.utility.Support.*;
+import static com.inovationware.toolkit.common.domain.DomainObjects.EMPTY_STRING;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_APPEND_TIMEZONE_WHEN_SENDING;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_APPEND_UUID_WHEN_SENDING;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_PROMPT_TO_SYNC_NOTE;
+import static com.inovationware.toolkit.common.utility.Code.content;
+import static com.inovationware.toolkit.common.utility.Code.isNothing;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_DISPLAY_ERROR_MESSAGE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_ID_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_SENDER;
+import static com.inovationware.toolkit.common.utility.Support.*;
 
 public class SettingsActivity extends BaseActivity {
     private ActivitySettingsBinding binding;

@@ -16,15 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.nettimer.model.NetTimerObject;
+import com.inovationware.toolkit.features.nettimer.model.NetTimerObject;
 import com.inovationware.toolkit.ui.activity.NetTimerResponseActivity;
 
 import java.util.List;
 
-import static com.inovationware.toolkit.global.domain.DomainObjects.DETAILS;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HEADLINE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.TIME_STRING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.ZONE_STRING;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DETAILS;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HEADLINE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.TIME_STRING;
+import static com.inovationware.toolkit.common.domain.DomainObjects.ZONE_STRING;
 
 public class NetTimerObjectRecyclerViewAdapter extends RecyclerView.Adapter<NetTimerObjectRecyclerViewAdapter.ViewHolder> {
     Animation animation;

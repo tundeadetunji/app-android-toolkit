@@ -1,20 +1,20 @@
 package com.inovationware.toolkit.ui.activity;
 
-import static com.inovationware.toolkit.global.library.utility.Code.content;
+import static com.inovationware.toolkit.common.utility.Code.content;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.meeting.model.Meeting;
-import com.inovationware.toolkit.meeting.service.impl.MeetingServiceImpl;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.common.utility.Code;
+import com.inovationware.toolkit.features.meeting.model.Meeting;
+import com.inovationware.toolkit.features.meeting.service.impl.MeetingServiceImpl;
 import com.inovationware.toolkit.databinding.ActivityManageBoardBinding;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.time.LocalDateTime;

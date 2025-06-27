@@ -13,17 +13,21 @@
     <fragment
         android:id="@+id/codeFragment"
         android:name="com.inovationware.toolkit.ui.fragment.CodeFragment"
+        android:label=" "
         tools:layout="@layout/fragment_code" />
-    <fragment
-        android:id="@+id/sendFragment"
-        android:name="com.inovationware.toolkit.ui.fragment.SendFragment"
-        tools:layout="@layout/fragment_send" />
     <fragment
         android:id="@+id/cyclesFragment"
         android:name="com.inovationware.toolkit.ui.fragment.CyclesFragment"
+        android:label=" "
         tools:layout="@layout/fragment_cycles" />
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.inovationware.toolkit.ui.fragment.TasksFragment"
+        android:label=" "
         tools:layout="@layout/fragment_tasks" />
+    <fragment
+        android:id="@+id/senderFragment"
+        android:name="com.inovationware.toolkit.ui.fragment.SenderFragment"
+        android:label=" "
+        tools:layout="@layout/fragment_sender" />
 </navigation>

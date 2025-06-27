@@ -1,12 +1,12 @@
 package com.inovationware.toolkit.ui.fragment;
 
 import static com.inovationware.generalmodule.Device.clipboardSetText;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_APP;
-import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_APP;
+import static com.inovationware.toolkit.common.utility.Support.determineMeta;
+import static com.inovationware.toolkit.common.utility.Support.determineTarget;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
@@ -21,14 +21,14 @@ import android.view.ViewGroup;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentMemoBSBinding;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.DeviceClient;
-import com.inovationware.toolkit.global.library.app.retrofit.Repo;
-import com.inovationware.toolkit.memo.model.Memo;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Retrofit;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.DeviceClient;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Repo;
+import com.inovationware.toolkit.features.memo.model.Memo;
 import com.inovationware.toolkit.ui.adapter.MemoRecyclerViewAdapter;
 
 import lombok.Setter;

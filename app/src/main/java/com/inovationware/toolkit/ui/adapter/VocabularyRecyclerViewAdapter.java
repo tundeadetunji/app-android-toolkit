@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.card.MaterialCardView;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.code.entity.VocabularyUnit;
-import com.inovationware.toolkit.code.verb.Vocabulary;
+import com.inovationware.toolkit.features.code.entity.VocabularyUnit;
 
 import java.util.List;
 

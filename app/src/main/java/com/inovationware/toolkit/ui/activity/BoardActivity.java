@@ -1,9 +1,9 @@
 package com.inovationware.toolkit.ui.activity;
 
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.library.utility.Code.stringToList;
-import static com.inovationware.toolkit.global.library.utility.Support.responseStringIsValid;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.utility.Code.stringToList;
+import static com.inovationware.toolkit.common.utility.Support.responseStringIsValid;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,18 +20,18 @@ import androidx.core.view.MenuCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.library.app.retrofit.Repo;
-import com.inovationware.toolkit.meeting.model.Contribution;
-import com.inovationware.toolkit.meeting.service.impl.MeetingServiceImpl;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Retrofit;
+import com.inovationware.toolkit.common.utility.Code;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Repo;
+import com.inovationware.toolkit.features.meeting.model.Contribution;
+import com.inovationware.toolkit.features.meeting.service.impl.MeetingServiceImpl;
 import com.inovationware.toolkit.databinding.ActivityBoardBinding;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.app.SignInManager;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.SignInManager;
 import com.inovationware.toolkit.ui.adapter.BoardRecyclerViewAdapter;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 

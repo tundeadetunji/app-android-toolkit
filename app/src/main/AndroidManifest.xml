@@ -26,7 +26,7 @@
     </queries>
 
     <application
-        android:name=".global.library.app.Shared"
+        android:name=".common.utility.Shared"
         android:allowBackup="true"
         android:clearTaskOnLaunch="true"
         android:icon="@mipmap/ic_launcher"
@@ -153,21 +153,21 @@
         </activity>
 
         <service
-            android:name=".notification.service.PushNotificationService"
+            android:name=".features.notification.service.PushNotificationService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
-            android:name=".system.foreground.NetworkChecker"
+            android:name=".application.system.foreground.NetworkChecker"
             android:foregroundServiceType="dataSync" />
         <service
-            android:name=".system.foreground.LocalTaskService"
+            android:name=".application.system.foreground.LocalTaskService"
             android:foregroundServiceType="dataSync" />
 
         <receiver
-            android:name=".system.broadcast.OsBootReceiver"
+            android:name=".application.system.broadcast.OsBootReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

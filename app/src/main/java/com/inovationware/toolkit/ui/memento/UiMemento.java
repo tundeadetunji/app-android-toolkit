@@ -3,8 +3,8 @@ package com.inovationware.toolkit.ui.memento;
 import android.content.Context;
 import android.widget.TextView;
 
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
 
 public class UiMemento {
     private static UiMemento instance;

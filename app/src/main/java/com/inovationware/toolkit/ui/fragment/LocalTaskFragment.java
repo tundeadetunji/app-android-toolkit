@@ -1,18 +1,18 @@
 package com.inovationware.toolkit.ui.fragment;
 
-import static com.inovationware.toolkit.global.domain.DomainObjects.HOURS_CAPITALIZED;
-import static com.inovationware.toolkit.global.domain.DomainObjects.MINUTES_CAPITALIZED;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REPEAT_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.bistableManager;
-import static com.inovationware.toolkit.global.domain.DomainObjects.ttsServiceProvider;
-import static com.inovationware.toolkit.global.library.utility.Code.configureTimeUnitDropDownAdapter;
-import static com.inovationware.toolkit.global.library.utility.Code.isNothing;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HOURS_CAPITALIZED;
+import static com.inovationware.toolkit.common.domain.DomainObjects.MINUTES_CAPITALIZED;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_INTERVAL_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REGULAR_TIME_UNIT_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REPEAT_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_INTERVAL_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.SHARED_PREFERENCES_LOCAL_TASK_REVERSE_TIME_UNIT_KEY;
+import static com.inovationware.toolkit.common.domain.DomainObjects.bistableManager;
+import static com.inovationware.toolkit.common.domain.DomainObjects.ttsServiceProvider;
+import static com.inovationware.toolkit.common.utility.Code.configureTimeUnitDropDownAdapter;
+import static com.inovationware.toolkit.common.utility.Code.isNothing;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,27 +20,21 @@ import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.databinding.FragmentLocalTaskBinding;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.external.ApkClient;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.bistable.verb.BistableCommand;
-import com.inovationware.toolkit.bistable.verb.BistableNotifier;
-import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.system.foreground.LocalTaskService;
-import com.inovationware.toolkit.ui.adapter.ViewPagerAdapter;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.ApkClient;
+import com.inovationware.toolkit.common.utility.Code;
+import com.inovationware.toolkit.features.bistable.verb.BistableCommand;
+import com.inovationware.toolkit.features.bistable.verb.BistableNotifier;
+import com.inovationware.toolkit.common.utility.Support;
+import com.inovationware.toolkit.application.system.foreground.LocalTaskService;
 
 import java.util.concurrent.TimeUnit;
 

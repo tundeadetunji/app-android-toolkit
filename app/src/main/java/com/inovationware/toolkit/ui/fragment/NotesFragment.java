@@ -1,20 +1,11 @@
 package com.inovationware.toolkit.ui.fragment;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.EMPTY_STRING;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_FAVORITE_URL_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_PINNED_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_READING_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_RUNNING_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_SCRATCH_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.SHARED_PREFERENCES_TODO_KEY;
-import static com.inovationware.toolkit.global.domain.DomainObjects.cachedMemos;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.cachedMemos;
+import static com.inovationware.toolkit.common.utility.Support.initialParamsAreSet;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,19 +17,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.inovationware.generalmodule.Feedback;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.databinding.FragmentLinksBinding;
 import com.inovationware.toolkit.databinding.FragmentNotesBinding;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.app.retrofit.Repo;
-import com.inovationware.toolkit.global.library.app.retrofit.Retrofit;
-import com.inovationware.toolkit.location.service.impl.LocationServiceImpl;
-import com.inovationware.toolkit.memo.model.Memo;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Repo;
+import com.inovationware.toolkit.common.infrastructure.retrofit.Retrofit;
+import com.inovationware.toolkit.features.memo.model.Memo;
 import com.inovationware.toolkit.ui.adapter.MemoRecyclerViewAdapter;
 
 import java.io.IOException;

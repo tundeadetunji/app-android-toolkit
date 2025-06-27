@@ -4,10 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.inovationware.toolkit.databinding.ActivityHelpBinding;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 public class HelpActivity extends BaseActivity {

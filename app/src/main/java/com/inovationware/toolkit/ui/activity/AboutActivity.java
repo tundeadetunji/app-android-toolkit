@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityAboutBinding;
-import com.inovationware.toolkit.global.domain.DomainObjects;
+import com.inovationware.toolkit.common.domain.DomainObjects;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 public class AboutActivity extends BaseActivity {

@@ -16,7 +16,7 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.inovationware.toolkit.R;
 import com.inovationware.toolkit.databinding.ActivityLoginBinding;
-import com.inovationware.toolkit.global.domain.DomainObjects;
+import com.inovationware.toolkit.common.domain.DomainObjects;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 public class LoginActivity extends BaseActivity {

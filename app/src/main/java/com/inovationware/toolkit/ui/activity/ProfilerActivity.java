@@ -8,18 +8,17 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.MenuCompat;
 
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.cycles.model.Entity;
-import com.inovationware.toolkit.cycles.model.domain.Period;
-import com.inovationware.toolkit.cycles.service.CyclesFacade;
+import com.inovationware.toolkit.features.cycles.model.Entity;
+import com.inovationware.toolkit.features.cycles.model.domain.Period;
+import com.inovationware.toolkit.features.cycles.service.CyclesFacade;
 import com.inovationware.toolkit.databinding.ActivityProfilerBinding;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.Ui;
-import com.inovationware.toolkit.profile.model.Profile;
-import com.inovationware.toolkit.profile.strategy.ProfileManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.Ui;
+import com.inovationware.toolkit.features.profile.model.Profile;
+import com.inovationware.toolkit.features.profile.strategy.ProfileManager;
 import com.inovationware.toolkit.ui.contract.BaseActivity;
 
 import java.util.ArrayList;

@@ -12,8 +12,12 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.inovationware.toolkit.R;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.WelcomeCaptionService;
 import com.inovationware.toolkit.databinding.FragmentCodeBinding;
 import com.inovationware.toolkit.databinding.FragmentHomeBinding;
+import com.inovationware.toolkit.features.location.service.impl.LocationServiceImpl;
 import com.inovationware.toolkit.ui.adapter.ViewPagerAdapter;
 
 public class CodeFragment extends Fragment {
@@ -26,8 +30,13 @@ public class CodeFragment extends Fragment {
         binding = FragmentCodeBinding.inflate(inflater, container, false);
         view = binding.getRoot();
 
-        setupViewPager(this);
+        setupUi(this);
         return view;
+    }
+    private void setupUi(Fragment fragment){
+        WelcomeCaptionService.getInstance(requireActivity(), view.getContext(), LocationServiceImpl.getInstance(view.getContext())).setupCaptions(binding.welcomeCard.captionTextView, binding.welcomeCard.toolkitInfoTextView, SharedPreferencesManager.getInstance(), GroupManager.getInstance());
+        setupViewPager(this);
+
     }
 
     private void setupViewPager(Fragment fragment){

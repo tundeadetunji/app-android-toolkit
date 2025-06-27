@@ -1,14 +1,14 @@
 package com.inovationware.toolkit.ui.fragment;
 
 import static com.inovationware.generalmodule.Device.thereIsInternet;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
-import static com.inovationware.toolkit.global.domain.DomainObjects.HTTP_TRANSFER_URL;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_INFORM;
-import static com.inovationware.toolkit.global.domain.DomainObjects.POST_PURPOSE_REGULAR;
-import static com.inovationware.toolkit.global.library.utility.Support.determineMeta;
-import static com.inovationware.toolkit.global.library.utility.Support.determineTarget;
-import static com.inovationware.toolkit.global.library.utility.Support.initialParamsAreSet;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_ERROR_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.DEFAULT_FAILURE_MESSAGE_SUFFIX;
+import static com.inovationware.toolkit.common.domain.DomainObjects.HTTP_TRANSFER_URL;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_INFORM;
+import static com.inovationware.toolkit.common.domain.DomainObjects.POST_PURPOSE_REGULAR;
+import static com.inovationware.toolkit.common.utility.Support.determineMeta;
+import static com.inovationware.toolkit.common.utility.Support.determineTarget;
+import static com.inovationware.toolkit.common.utility.Support.initialParamsAreSet;
 
 import android.content.Context;
 import android.os.Build;
@@ -24,33 +24,32 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.button.MaterialButton;
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.cycles.library.CalendarLite;
-import com.inovationware.toolkit.cycles.model.DayToken;
-import com.inovationware.toolkit.cycles.model.domain.DayPeriod;
-import com.inovationware.toolkit.cycles.service.DailyCycleService;
+import com.inovationware.toolkit.features.cycles.library.CalendarLite;
+import com.inovationware.toolkit.features.cycles.model.DayToken;
+import com.inovationware.toolkit.features.cycles.model.domain.DayPeriod;
+import com.inovationware.toolkit.features.cycles.service.DailyCycleService;
 import com.inovationware.toolkit.databinding.FragmentWeekBinding;
-import com.inovationware.toolkit.datatransfer.dto.request.SendTextRequest;
-import com.inovationware.toolkit.datatransfer.service.rest.RestDataTransferService;
-import com.inovationware.toolkit.datatransfer.strategy.rest.RestDataTransferStrategy;
-import com.inovationware.toolkit.global.domain.DomainObjects;
-import com.inovationware.toolkit.global.domain.Section;
-import com.inovationware.toolkit.global.domain.Transfer;
-import com.inovationware.toolkit.global.factory.Factory;
-import com.inovationware.toolkit.global.library.app.EncryptionManager;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.InputDialog;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.Code;
-import com.inovationware.toolkit.global.library.utility.DeviceClient;
-import com.inovationware.toolkit.global.library.utility.StorageClient;
-import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.global.library.utility.Ui;
-import com.inovationware.toolkit.memo.model.Memo;
-import com.inovationware.toolkit.memo.service.impl.KeepIntentService;
-import com.inovationware.toolkit.scheduler.model.Schedule;
-import com.inovationware.toolkit.scheduler.service.impl.GCalendarIntentService;
-import com.inovationware.toolkit.scheduler.strategy.impl.GCalendarIntentStrategy;
-import com.inovationware.toolkit.ui.activity.CyclesByDayActivity;
+import com.inovationware.toolkit.features.datatransfer.dto.request.SendTextRequest;
+import com.inovationware.toolkit.features.datatransfer.service.rest.RestDataTransferService;
+import com.inovationware.toolkit.features.datatransfer.strategy.rest.RestDataTransferStrategy;
+import com.inovationware.toolkit.common.domain.DomainObjects;
+import com.inovationware.toolkit.features.cycles.domain.Section;
+import com.inovationware.toolkit.features.datatransfer.domain.Transfer;
+import com.inovationware.toolkit.application.factory.Factory;
+import com.inovationware.toolkit.common.utility.EncryptionManager;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.InputDialog;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.Code;
+import com.inovationware.toolkit.common.utility.DeviceClient;
+import com.inovationware.toolkit.common.utility.StorageClient;
+import com.inovationware.toolkit.common.utility.Support;
+import com.inovationware.toolkit.common.utility.Ui;
+import com.inovationware.toolkit.features.memo.model.Memo;
+import com.inovationware.toolkit.features.memo.service.impl.KeepIntentService;
+import com.inovationware.toolkit.features.scheduler.model.Schedule;
+import com.inovationware.toolkit.features.scheduler.service.impl.GCalendarIntentService;
+import com.inovationware.toolkit.features.scheduler.strategy.impl.GCalendarIntentStrategy;
 
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -112,10 +111,6 @@ public class WeekFragment extends Fragment {
         binding.share.setOnClickListener(shareButtonListener);
         binding.copy.setOnClickListener(copy);
         binding.send.setOnClickListener(send);
-        binding.memo.setOnClickListener(sendMemoButtonListener);
-        binding.scheduleButton.setOnClickListener(scheduleButtonListener);
-        binding.inform.setOnClickListener(informButtonListener);
-        binding.save.setOnClickListener(saveButtonListener);
     }
 
     private final View.OnClickListener loadDayOfWeek = new View.OnClickListener() {

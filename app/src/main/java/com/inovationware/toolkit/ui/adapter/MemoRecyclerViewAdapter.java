@@ -14,11 +14,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.inovationware.toolkit.R;
-import com.inovationware.toolkit.global.library.app.GroupManager;
-import com.inovationware.toolkit.global.library.app.SharedPreferencesManager;
-import com.inovationware.toolkit.global.library.utility.DeviceClient;
-import com.inovationware.toolkit.global.library.utility.Support;
-import com.inovationware.toolkit.memo.model.Memo;
+import com.inovationware.toolkit.common.utility.GroupManager;
+import com.inovationware.toolkit.common.utility.SharedPreferencesManager;
+import com.inovationware.toolkit.common.utility.DeviceClient;
+import com.inovationware.toolkit.common.utility.Support;
+import com.inovationware.toolkit.features.memo.model.Memo;
 import com.inovationware.toolkit.ui.fragment.MemoBSFragment;
 
 import java.util.List;
